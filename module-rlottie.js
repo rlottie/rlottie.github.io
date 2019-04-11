@@ -30,6 +30,7 @@ var RLottieModule = (function () {
     obj.rafId = {};
     obj.resizeId = {};
     obj.playing = true;
+    obj.wasPlaying = false;
 
     // keep the api list
     function initApi() {
@@ -58,8 +59,6 @@ var RLottieModule = (function () {
         obj.lottieHandle = obj.Api.init();
         obj.Api.resize(obj.lottieHandle, obj.canvas.width, obj.canvas.height);
         obj.frameCount = obj.Api.frameCount(obj.lottieHandle);
-        console.log(obj.canvas.width);
-        console.log(obj.canvas.height);
         // hook to the main loop
         mainLoop();
     }
@@ -88,6 +87,11 @@ var RLottieModule = (function () {
       obj.curFrame = 0;
       // force a render in pause state
       sliderReset();
+      obj.update();
+      _free(stringOnWasmHeap);
+    }
+
+    obj.update = function () {
       if (!obj.playing)
         window.requestAnimationFrame( obj.render);
     }
@@ -133,11 +137,19 @@ var RLottieModule = (function () {
 
      function windowResizeDone() {
         relayoutCanvas();
-        obj.play();
+        if (obj.wasPlaying) {
+          obj.wasPlaying = false;
+          obj.play();
+        } else {
+          obj.update();
+        }
      }
 
      function windowResize() {
-          if (obj.isPlaying()) obj.pause();
+          if (obj.isPlaying()) {
+            obj.wasPlaying = true;
+            obj.pause();
+          }
           clearTimeout(obj.resizeId);
           obj.resizeId = setTimeout(windowResizeDone, 150);
      }
@@ -212,4 +224,5 @@ function onResizeSliderDrag(value) {
   size = size | 0;
   document.getElementById("myCanvas").width  = size;
   document.getElementById("myCanvas").height  = size;
+  RLottieModule.update();
 }

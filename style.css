@@ -3,12 +3,13 @@ html, body {
   width: 100%;
   margin: 0;
 }
-.app {
+
+.window {
   display: flex;
   width: 100%;
   height: 100%;
   flex-direction: column;
-  #background-color: blue;
+  justify-content: center;
 }
 
 .header {
@@ -34,10 +35,12 @@ html, body {
 
 .footer {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
   height: 15%;
+  min-width: 250px;
 }
 
 .slider {
@@ -45,23 +48,22 @@ html, body {
   flex-direction: row;
   justify-content: center; 
   align-items: center;
-  width: 30%;
-  min-height: 50%;
+  width: 250px;
+  height: 50px;
 }
 
 .bg_color_container {
-  min-height: 50%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 30%;
-  min-width: 250px;
+  width: 250px;
+  height: 50px;
 }
 
 .speed {
-  min-height: 50%;
-  width: 30%;
+  width: 250px;
+  height: 50px;
   display: flex;
   flex-direction: row;
   align-items: center;
