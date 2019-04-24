@@ -35,4 +35,6 @@ rlottie_wrapper.cpp \
 ./rlottie/src/lottie/lottieloader.cpp \
 ./rlottie/src/lottie/lottieitem.cpp \
 ./rlottie/src/lottie/lottieparser.cpp \
+./rlottie/src/lottie/lottiekeypath.cpp \
+./rlottie/src/lottie/lottieproxymodel.cpp \
 -o rlottie-wasm.js
