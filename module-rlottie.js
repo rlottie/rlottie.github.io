@@ -82,13 +82,15 @@ var RLottieModule = (function () {
       var stringOnWasmHeap = _malloc(lengthBytes);
       stringToUTF8(jsString, stringOnWasmHeap, lengthBytes+1);
 
+      console.log("reload started");
       var len  = obj.Api.loadFromData(obj.lottieHandle, stringOnWasmHeap);
       obj.frameCount = obj.Api.frameCount(obj.lottieHandle);
       obj.curFrame = 0;
       // force a render in pause state
       sliderReset();
       obj.update();
-      _free(stringOnWasmHeap);
+      //_free(stringOnWasmHeap); sometime it crashes need to find out why ??
+      console.log("reload ended");
     }
 
     obj.update = function () {

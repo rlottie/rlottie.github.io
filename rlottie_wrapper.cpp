@@ -49,6 +49,9 @@ int lottie_load_from_data(LottieHandle *handle, char *data) {
 	sprintf(key, "i%d", i++); 
 	handle->player = rlottie::Animation::loadFromData(data, key);
     free(data);
+    if (!handle->player) {
+        return  0;
+    } 
 	return 	handle->player->totalFrame();
 }
 
@@ -59,6 +62,9 @@ uint8_t* lottie_buffer(LottieHandle *handle) {
 
 EMSCRIPTEN_KEEPALIVE
 int lottie_frame_count(LottieHandle *handle) {
+    if (!handle->player) {
+        return 0;
+    }
     return handle->player->totalFrame();
 }
 
@@ -74,6 +80,8 @@ void lottie_destroy(LottieHandle *handle) {
 
 EMSCRIPTEN_KEEPALIVE
 void lottie_render(LottieHandle *handle, int frameNo) {
+   if (!handle->player) return;
+
    handle->player->renderSync(frameNo, rlottie::Surface((uint32_t *)handle->buffer, handle->width, handle->height, handle->width * 4));
    int totalBytes = handle->width * handle->height * 4;
    for (int i = 0; i < totalBytes; i += 4) {
