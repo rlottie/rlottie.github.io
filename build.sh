@@ -1,4 +1,5 @@
-em++ -O3 -std=c++14 -s WASM=1 -s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap", "allocate" , "intArrayFromString"]' \
+em++ -Os -fno-exceptions -fno-unwind-tables -fno-asynchronous-unwind-tables -fno-rtti -std=c++14 -s WASM=1 \
+     -s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap", "allocate" , "intArrayFromString"]' \
 -I ./rlottie/src/lottie/ \
 -I ./rlottie/src/lottie/rapidjson/ \
 -I ./rlottie/src/vector/ \
