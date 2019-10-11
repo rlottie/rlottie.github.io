@@ -36,6 +36,7 @@ rlottie_wrapper.cpp \
 ./rlottie/src/lottie/lottiemodel.cpp \
 ./rlottie/src/lottie/lottieloader.cpp \
 ./rlottie/src/lottie/lottieitem.cpp \
+./rlottie/src/lottie/lottieitem_capi.cpp \
 ./rlottie/src/lottie/lottieparser.cpp \
 ./rlottie/src/lottie/lottiekeypath.cpp \
 ./rlottie/src/lottie/lottieproxymodel.cpp \
