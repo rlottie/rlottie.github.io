@@ -19,7 +19,6 @@ rlottie_wrapper.cpp \
 ./rlottie/src/vector/vmatrix.cpp \
 ./rlottie/src/vector/vraster.cpp \
 ./rlottie/src/vector/vpathmesure.cpp \
-./rlottie/src/vector/pixman/vregion.cpp \
 ./rlottie/src/vector/velapsedtimer.cpp \
 ./rlottie/src/vector/vpath.cpp \
 ./rlottie/src/vector/vdrawhelper.cpp \
