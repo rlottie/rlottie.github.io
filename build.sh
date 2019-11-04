@@ -31,6 +31,7 @@ rlottie_wrapper.cpp \
 ./rlottie/src/vector/vinterpolator.cpp \
 ./rlottie/src/vector/vbrush.cpp \
 ./rlottie/src/vector/vimageloader.cpp \
+./rlottie/src/vector/varenaalloc.cpp \
 ./rlottie/src/binding/c/lottieanimation_capi.cpp \
 ./rlottie/src/lottie/lottiemodel.cpp \
 ./rlottie/src/lottie/lottieloader.cpp \
