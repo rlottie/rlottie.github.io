@@ -35,13 +35,14 @@ var RLottieModule = (function () {
     // keep the api list
     function initApi() {
         obj.Api = {
-            init: Module.cwrap('lottie_init', '', []),
-            destroy: Module.cwrap('lottie_destroy', '', ['number']),
-            resize: Module.cwrap('lottie_resize', '', ['number', 'number', 'number']),
-            buffer: Module.cwrap('lottie_buffer', 'number', ['number']),
-            frameCount: Module.cwrap('lottie_frame_count', 'number', ['number']),
-            render: Module.cwrap('lottie_render', '', ['number', 'number']),
-            loadFromData: Module.cwrap('lottie_load_from_data', 'number', ['number', 'number']),
+            create: Module.cwrap('wasm_lottie_create', '', []),
+            destroy: Module.cwrap('wasm_lottie_destroy', '', ['number']),
+            resize: Module.cwrap('wasm_lottie_resize', '', ['number', 'number', 'number']),
+            buffer: Module.cwrap('wasm_lottie_buffer_get', 'number', ['number']),
+            bufferRelease: Module.cwrap('wasm_lottie_buffer_release', 'number', ['number']),
+            frameCount: Module.cwrap('wasm_lottie_frame_count_get', 'number', ['number']),
+            render: Module.cwrap('wasm_lottie_render', '', ['number', 'number']),
+            loadFromData: Module.cwrap('wasm_lottie_load_from_data', 'number', ['number', 'number']),
         };
     }
 
@@ -56,7 +57,7 @@ var RLottieModule = (function () {
         obj.canvas = document.getElementById("myCanvas");
         obj.context = obj.canvas.getContext('2d');
         
-        obj.lottieHandle = obj.Api.init();
+        obj.lottieHandle = obj.Api.create();
         obj.Api.resize(obj.lottieHandle, obj.canvas.width, obj.canvas.height);
         obj.frameCount = obj.Api.frameCount(obj.lottieHandle);
         // hook to the main loop
