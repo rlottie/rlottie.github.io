@@ -1,5 +1,5 @@
 em++ -Os -fno-exceptions -fno-unwind-tables -fno-asynchronous-unwind-tables -fno-rtti -std=c++14 -s WASM=1 \
-     -s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap", "allocate" , "intArrayFromString"]' -s ERROR_ON_UNDEFINED_SYMBOLS=0 \
+     -s ALLOW_MEMORY_GROWTH=1 -s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap", "allocate" , "intArrayFromString"]' -s ERROR_ON_UNDEFINED_SYMBOLS=0 \
 -I . \
 -I ./rlottie/src/lottie/ \
 -I ./rlottie/src/lottie/rapidjson/ \
