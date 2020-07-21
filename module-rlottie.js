@@ -4,7 +4,7 @@ function setup() {
     script.type = 'text/javascript';
     script.src = 'rlottie-wasm.js';
     head.appendChild(script);
-    
+
     script.onload = _ => {
       Module.onRuntimeInitialized = _ => {
         RLottieModule.init();
@@ -19,8 +19,6 @@ var RLottieModule = (function () {
     // create a object;
     var obj = {};
 
-    // object content.
-    obj.Api = {};
     obj.canvas = {};
     obj.context = {};
     obj.lottieHandle = 0;
@@ -32,20 +30,6 @@ var RLottieModule = (function () {
     obj.playing = true;
     obj.wasPlaying = false;
 
-    // keep the api list
-    function initApi() {
-        obj.Api = {
-            create: Module.cwrap('wasm_lottie_create', '', []),
-            destroy: Module.cwrap('wasm_lottie_destroy', '', ['number']),
-            resize: Module.cwrap('wasm_lottie_resize', '', ['number', 'number', 'number']),
-            buffer: Module.cwrap('wasm_lottie_buffer_get', 'number', ['number']),
-            bufferRelease: Module.cwrap('wasm_lottie_buffer_release', 'number', ['number']),
-            frameCount: Module.cwrap('wasm_lottie_frame_count_get', 'number', ['number']),
-            render: Module.cwrap('wasm_lottie_render', '', ['number', 'number']),
-            loadFromData: Module.cwrap('wasm_lottie_load_from_data', 'number', ['number', 'number']),
-        };
-    }
-
     obj.init = function () {
         var input = document.getElementById('fileSelector');
         input.addEventListener('change', fileSelectionChanged);
@@ -53,45 +37,34 @@ var RLottieModule = (function () {
         window.addEventListener('drop', handleFileSelect, false);
         window.addEventListener('resize',windowResize);
         relayoutCanvas();
-        initApi();
         obj.canvas = document.getElementById("myCanvas");
         obj.context = obj.canvas.getContext('2d');
-        
-        obj.lottieHandle = obj.Api.create();
-        obj.Api.resize(obj.lottieHandle, obj.canvas.width, obj.canvas.height);
-        obj.frameCount = obj.Api.frameCount(obj.lottieHandle);
+
+        obj.lottieHandle = new Module.RlottieWasm();
+        obj.frameCount = obj.lottieHandle.frames();
         // hook to the main loop
         mainLoop();
     }
 
     obj.render = function () {
         if (obj.canvas.width == 0  || obj.canvas.height == 0) return;
-        
-        obj.Api.resize(obj.lottieHandle, obj.canvas.width, obj.canvas.height);
-        obj.Api.render(obj.lottieHandle, obj.curFrame++);
-        var bufferPointer = obj.Api.buffer(obj.lottieHandle);
-        var result = new Uint8ClampedArray(Module.HEAP8.buffer, bufferPointer, obj.canvas.width * obj.canvas.height * 4);
+
+        var buffer = obj.lottieHandle.render(obj.curFrame++, obj.canvas.width, obj.canvas.height);
+        var result = Uint8ClampedArray.from(buffer);
         var imageData = new ImageData(result, obj.canvas.width, obj.canvas.height);
 
         obj.context.putImageData(imageData, 0, 0);
-        
+
         if (obj.curFrame >=  obj.frameCount) obj.curFrame = 0;
     }
 
     obj.reload = function (jsString) {
-      var lengthBytes = lengthBytesUTF8(jsString)+1;
-      var stringOnWasmHeap = _malloc(lengthBytes);
-      stringToUTF8(jsString, stringOnWasmHeap, lengthBytes+1);
-
-      console.log("reload started");
-      var len  = obj.Api.loadFromData(obj.lottieHandle, stringOnWasmHeap);
-      obj.frameCount = obj.Api.frameCount(obj.lottieHandle);
+      var len  = obj.lottieHandle.load(jsString);
+      obj.frameCount = obj.lottieHandle.frames();
       obj.curFrame = 0;
       // force a render in pause state
       sliderReset();
       obj.update();
-      //_free(stringOnWasmHeap); sometime it crashes need to find out why ??
-      console.log("reload ended");
     }
 
     obj.update = function () {
@@ -156,7 +129,7 @@ var RLottieModule = (function () {
           clearTimeout(obj.resizeId);
           obj.resizeId = setTimeout(windowResizeDone, 150);
      }
- 
+
     return obj;
 }());
 

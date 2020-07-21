@@ -35,7 +35,7 @@ var RLottieModule = (function () {
         relayoutCanvas();
         obj.canvas = document.getElementById("myCanvas");
         obj.context = obj.canvas.getContext('2d');
-        
+
         mainLoop();
     }
     obj.renderRequest = function () {
@@ -114,7 +114,7 @@ var RLottieModule = (function () {
           clearTimeout(obj.resizeId);
           obj.resizeId = setTimeout(windowResizeDone, 150);
      }
-      
+
     return obj;
 }());
 
@@ -183,20 +183,20 @@ function QueryableWorker(url, defaultListener, onError) {
     }
 
     this.addListener = function(name, listener) {
-      listeners[name] = listener; 
+      listeners[name] = listener;
     }
 
-    this.removeListener = function(name) { 
+    this.removeListener = function(name) {
       delete listeners[name];
     }
 
-    /* 
+    /*
       This functions takes at least one argument, the method name we want to query.
       Then we can pass in the arguments that the method needs.
     */
     this.sendQuery = function() {
       if (arguments.length < 1) {
-        throw new TypeError('QueryableWorker.sendQuery takes at least one argument'); 
+        throw new TypeError('QueryableWorker.sendQuery takes at least one argument');
         return;
       }
       worker.postMessage({
