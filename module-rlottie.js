@@ -30,6 +30,39 @@ var RLottieModule = (function () {
     obj.playing = true;
     obj.wasPlaying = false;
 
+
+
+    var frameList = {};
+    frameList.canvas = {};
+    frameList.context = {};
+    frameList.list={};
+
+//add custom by lee frameList
+    frameList.init=function(){
+
+
+	console.log(imageData)
+   	frameList.list=document.getElementById("frameList");
+
+	for(var i=0;i<obj.frameCount;i++){
+ 		
+		var canvas=document.createElement("canvas");
+		canvas.setAttribute("id", "frame"+i);
+		frameList.list.appendChild(canvas);
+
+		frameList.canvas = document.getElementById("frame"+i);
+   		frameList.context = frameList.canvas.getContext('2d');
+
+		var buffer = obj.lottieHandle.render(i, 100, 100);
+		var result = Uint8ClampedArray.from(buffer);
+		var imageData = new ImageData(result, 100,100);
+		
+	     	frameList.context.putImageData(imageData, 0, 0);
+
+	}
+   }
+
+
     obj.init = function () {
         var input = document.getElementById('fileSelector');
         input.addEventListener('change', fileSelectionChanged);
@@ -40,10 +73,15 @@ var RLottieModule = (function () {
         obj.canvas = document.getElementById("myCanvas");
         obj.context = obj.canvas.getContext('2d');
 
+
         obj.lottieHandle = new Module.RlottieWasm();
         obj.frameCount = obj.lottieHandle.frames();
+
+
+
         // hook to the main loop
         mainLoop();
+	frameList.init();
     }
 
     obj.render = function () {
@@ -52,9 +90,8 @@ var RLottieModule = (function () {
         var buffer = obj.lottieHandle.render(obj.curFrame++, obj.canvas.width, obj.canvas.height);
         var result = Uint8ClampedArray.from(buffer);
         var imageData = new ImageData(result, obj.canvas.width, obj.canvas.height);
-
         obj.context.putImageData(imageData, 0, 0);
-
+	
         if (obj.curFrame >=  obj.frameCount) obj.curFrame = 0;
     }
 
@@ -92,6 +129,7 @@ var RLottieModule = (function () {
 
      function mainLoop() {
         obj.rafId = window.requestAnimationFrame( mainLoop );
+	
         obj.render();
         document.getElementById("slider").max = obj.frameCount;
         document.getElementById("slider").value = obj.curFrame;
@@ -109,6 +147,7 @@ var RLottieModule = (function () {
 
       document.getElementById("myCanvas").width  = size;
       document.getElementById("myCanvas").height  = size;
+ 
     }
 
      function windowResizeDone() {
@@ -132,6 +171,7 @@ var RLottieModule = (function () {
 
     return obj;
 }());
+
 
 
 function buttonClicked() {
@@ -202,3 +242,5 @@ function onResizeSliderDrag(value) {
   document.getElementById("myCanvas").height  = size;
   RLottieModule.update();
 }
+
+
