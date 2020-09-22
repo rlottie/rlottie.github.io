@@ -1,7 +1,7 @@
 <template>
   <div class="bg-sidebar">
     <!-- preview -->
-    <div class="container my-3">
+    <div class="preview container py-3 bg-blue">
       <div class="row no-gutters">
         <img class="img-thumbnail preview-thumbnail" src="" alt="preview">
         <h3 class="my-auto ml-4">Filename</h3>
@@ -9,22 +9,28 @@
     </div>
 
     <!-- search bar -->
-    <div class="container my-3">
+    <div class="search-bar container py-3">
       <p class="title">Search layer</p>
       <div class="row no-gutters">
         <button class="btn col-2"><i class="text-white fas fa-search fa-lg"></i></button>
-        <input v-model="searchKeyword" type="text" class="searchInput rounded-pill col-10">
+        <input v-model="searchKeyword" type="text" class="searchInput rounded-pill col-10 px-3">
       </div>
     </div>
 
     <!-- layer list -->
-    <div class="container my-3">
-      <p class="title">Layers</p>
-      <div class="container" v-for="layer in layers" :key="layer">
-        <div class="row no-gutters my-4">
-          <img class="img-thumbnail layer-thumbnail" src="" :alt="layer">
-          <p class="layer-name my-auto ml-4">{{ layer }}</p>
-          <button class="btn ml-auto"><i class="text-white far fa-eye"></i></button>
+    <div class="layer-list container py-3 px-0">
+      <p class="title px-3">Layers</p>
+      <div v-for="layer in layers" :key="layer.name">
+        <div class="row no-gutters py-4 px-3 rounded" :class="{ 'bg-green': layer.selected }">
+          <div @click="layer.selected = !layer.selected" class="layer-info row no-gutters">
+            <img class="img-thumbnail layer-thumbnail" src="" :alt="layer.name">
+            <p class="layer-name my-auto ml-4">{{ layer.name }}</p>
+          </div>
+          <button @click="layer.visible = !layer.visible" class="eye-btn btn ml-auto">
+            <i v-if="layer.visible" class="text-white far fa-eye"></i>
+            <i v-else class="text-white far fa-eye-slash"></i>
+          </button>
+
         </div>
       </div>
     </div>
@@ -39,9 +45,21 @@ module.exports = {
     return {
       'searchKeyword': null,
       'layers': [
-        'layer1',
-        'layer2',
-        'layer3'
+        {
+          name: 'layer1',
+          visible: true,
+          selected: false
+        },
+        {
+          name: 'layer2',
+          visible: true,
+          selected: false
+        },
+        {
+          name: 'layer3',
+          visible: true,
+          selected: false
+        },
       ],
     }
   }
@@ -51,6 +69,18 @@ module.exports = {
 <style scoped>
   .title {
     font-size: 1.5rem;
+  }
+  
+  .eye-btn:focus {
+    box-shadow: none;
+  }
+
+  .searchInput:focus {
+    outline: none;
+  }
+
+  .layer-info:hover {
+    cursor: pointer;
   }
 
   .layer-name {
