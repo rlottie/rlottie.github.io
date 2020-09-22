@@ -50,10 +50,12 @@
     <!-- scale controller -->
     <div class="property">
       <p class="property-title">scale</p>
-      <div class="white d-flex">
-        <div class="white-box mr-3">
-          <p>x <span>%</span></p>
-        </div>
+      <div class="scale d-flex">
+         <v-text-field
+          solo
+          suffix="%"
+          v-model="scale"
+        ></v-text-field>
       </div>
     </div>
   </div>
@@ -68,6 +70,7 @@ module.exports = {
       color: 'pink',
       xPos: 250,
       yPos: 250,
+      scale: 100,
     }
   },
   computed: {
@@ -107,23 +110,8 @@ p {
   padding: 1.2rem;
 }
 
-.color {
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  background-color: #FFB6EE;
-  cursor: pointer;
+.v-text-field__prefix, .v-text-field__suffix {
+  color: rgba(15, 128, 170, 0.77);
 }
 
-.white-box {
-  background-color: white;
-  border-radius: 20px;
-  color: black;
-  width: 60px;
-  text-align: center;
-}
-
-.white-box p {
-  padding: 5px 10px;
-}
 </style>
