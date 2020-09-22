@@ -4,11 +4,6 @@
     <!-- color controller -->
     <div class="property">
       <p class="property-title">color</p>
-      <!-- <div class="d-flex">
-        <div class="color mr-3"></div>
-
-        <div class="color-code">#FFB6EE</div>
-      </div> -->
       <div class="text-left">
         <v-menu 
           offset-y 
@@ -32,21 +27,23 @@
         ></v-color-picker>
         </v-menu>
       </div>
-
     </div>
     
-    
-     <!-- <v-color-picker class="ma-2" show-swatches></v-color-picker> -->
     <!-- position controller -->
     <div class="property">
       <p class="property-title">position</p>
       <div class="position d-flex">
-        <div class="white-box mr-3">
-          <p>x <span>250</span></p>
-        </div>
-        <div class="white-box">
-          <p>y <span>20</span></p>
-        </div>
+        <v-text-field
+          solo
+          prefix="x"
+          v-model="xPos"
+          class="mr-3"
+        ></v-text-field>
+        <v-text-field
+          solo
+          prefix="y"
+          v-model="yPos"
+        ></v-text-field>
       </div>
     </div>
 
@@ -69,6 +66,8 @@ module.exports = {
   data: function () {
     return {
       color: 'pink',
+      xPos: 250,
+      yPos: 250,
     }
   },
   computed: {
