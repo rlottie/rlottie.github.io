@@ -136,10 +136,10 @@ var RLottieModule = (function () {
 
 function buttonClicked() {
     if (RLottieModule.isPlaying()) {
-        document.getElementById("playButton").innerText = "Play";
+        document.getElementById("playButton").innerHTML = '<i class="fas fa-play"></i>';
         RLottieModule.pause();
     } else {
-        document.getElementById("playButton").innerText = "Pause";
+        document.getElementById("playButton").innerHTML = '<i class="fas fa-pause"></i>';
         RLottieModule.play();
     }
 }
