@@ -31,6 +31,24 @@
     </div>
 
     <!-- Dimension controller -->
+    <div class="preference">
+      <p class="preference-title">Dimension</p>
+      <div class="position d-flex">
+        <v-text-field
+          solo
+          prefix="W"
+          v-model="width"
+          class="mr-3"
+          hide-details
+        ></v-text-field>
+        <v-text-field
+          solo
+          prefix="H"
+          v-model="height"
+          hide-details
+        ></v-text-field>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -40,6 +58,8 @@ module.exports = {
   data: function () {
     return {
       color: '#FFF7B0',
+      width: 250,
+      height: 250,
     }
   }
 }
@@ -65,5 +85,10 @@ p {
 .preference-title {
   margin-bottom: 10px;
 }
+
+.v-text-field__prefix, .v-text-field__suffix {
+  color: rgba(15, 128, 170, 0.77);
+}
+
 
 </style>
