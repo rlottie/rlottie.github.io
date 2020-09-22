@@ -1,6 +1,6 @@
 <template>
   <div class="bg-sidebar sidebar">
-    <p class="title">preference</p>
+    <p class="title">Preference</p>
     
     <!-- Background color controller -->
     <div class="preference">
