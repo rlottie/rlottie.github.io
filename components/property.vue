@@ -1,16 +1,14 @@
 <template>
-  <div class="bg-sidebar">
+  <div class="bg-sidebar sidebar">
     <p class="title">Property</p>
     <!-- color controller -->
     <div class="property">
       <p class="property-title">color</p>
-      <!-- <div class="d-flex">
-        <div class="color mr-3"></div>
-
-        <div class="color-code">#FFB6EE</div>
-      </div> -->
       <div class="text-left">
-        <v-menu offset-y>
+        <v-menu 
+          offset-y 
+          :close-on-content-click="false"
+          >
           <template v-slot:activator="{ on }">
             <v-btn
               :color="color"
@@ -19,43 +17,47 @@
               class="mr-2"
             >
             </v-btn>
-            <span>#7417BE</span>
+            <span>{{color.slice(0, 7)}}</span>
           </template>
           <v-color-picker
             value="#7417BE"
             v-model="color"
-            hide-canvas 
-            hide-inputs 
             show-swatches
             class="mx-auto"
         ></v-color-picker>
         </v-menu>
       </div>
-
     </div>
     
-    
-     <!-- <v-color-picker class="ma-2" show-swatches></v-color-picker> -->
     <!-- position controller -->
     <div class="property">
       <p class="property-title">position</p>
       <div class="position d-flex">
-        <div class="white-box mr-3">
-          <p>x <span>250</span></p>
-        </div>
-        <div class="white-box">
-          <p>y <span>20</span></p>
-        </div>
+        <v-text-field
+          solo
+          prefix="x"
+          v-model="xPos"
+          class="mr-3"
+          hide-details
+        ></v-text-field>
+        <v-text-field
+          solo
+          prefix="y"
+          v-model="yPos"
+          hide-details
+        ></v-text-field>
       </div>
     </div>
 
     <!-- scale controller -->
     <div class="property">
       <p class="property-title">scale</p>
-      <div class="white d-flex">
-        <div class="white-box mr-3">
-          <p>x <span>%</span></p>
-        </div>
+      <div class="scale">
+         <v-text-field
+          solo
+          suffix="%"
+          v-model="scale"
+        ></v-text-field>
       </div>
     </div>
   </div>
@@ -68,6 +70,9 @@ module.exports = {
   data: function () {
     return {
       color: 'pink',
+      xPos: 250,
+      yPos: 250,
+      scale: 100,
     }
   },
   computed: {
@@ -87,6 +92,10 @@ module.exports = {
 </script>
 
 <style scoped>
+.sidebar {
+  padding: 1.2rem;
+}
+
 p {
   margin: 0;
 }
@@ -96,30 +105,15 @@ p {
 }
 
 .property {
-  margin: 20px 0 20px 0;
+  margin: 20px 0 0 0;
 }
 
 .property-title {
   margin-bottom: 10px;
 }
 
-.color {
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  background-color: #FFB6EE;
-  cursor: pointer;
+.v-text-field__prefix, .v-text-field__suffix {
+  color: rgba(15, 128, 170, 0.77);
 }
 
-.white-box {
-  background-color: white;
-  border-radius: 20px;
-  color: black;
-  width: 60px;
-  text-align: center;
-}
-
-.white-box p {
-  padding: 5px 10px;
-}
 </style>
