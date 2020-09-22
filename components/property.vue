@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-sidebar">
+  <div class="bg-sidebar sidebar">
     <p class="title">Property</p>
     <!-- color controller -->
     <div class="property">
@@ -10,7 +10,10 @@
         <div class="color-code">#FFB6EE</div>
       </div> -->
       <div class="text-left">
-        <v-menu offset-y>
+        <v-menu 
+          offset-y 
+          :close-on-content-click="false"
+          >
           <template v-slot:activator="{ on }">
             <v-btn
               :color="color"
@@ -19,13 +22,11 @@
               class="mr-2"
             >
             </v-btn>
-            <span>#7417BE</span>
+            <span>{{color.slice(0, 7)}}</span>
           </template>
           <v-color-picker
             value="#7417BE"
             v-model="color"
-            hide-canvas 
-            hide-inputs 
             show-swatches
             class="mx-auto"
         ></v-color-picker>
@@ -101,6 +102,10 @@ p {
 
 .property-title {
   margin-bottom: 10px;
+}
+
+.sidebar {
+  padding: 1.2rem;
 }
 
 .color {
