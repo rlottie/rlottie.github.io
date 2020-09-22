@@ -1,0 +1,23 @@
+lottie-preview/*.DS_Store
+lottie-preview/node_modules
+lottie-preview//dist
+
+
+# local env files
+lottie-preview/*.env.local
+lottie-preview/*.env.*.local
+
+# Log files
+lottie-preview/npm-debug.log*
+lottie-preview/yarn-debug.log*
+lottie-preview/yarn-error.log*
+lottie-preview/pnpm-debug.log*
+
+# Editor directories and files
+lottie-preview/*.idea
+lottie-preview/*.vscode
+lottie-preview/*.suo
+lottie-preview/*.ntvs*
+lottie-preview/*.njsproj
+lottie-preview/*.sln
+lottie-preview/*.sw?
