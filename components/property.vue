@@ -38,11 +38,13 @@
           prefix="x"
           v-model="xPos"
           class="mr-3"
+          hide-details
         ></v-text-field>
         <v-text-field
           solo
           prefix="y"
           v-model="yPos"
+          hide-details
         ></v-text-field>
       </div>
     </div>
@@ -50,7 +52,7 @@
     <!-- scale controller -->
     <div class="property">
       <p class="property-title">scale</p>
-      <div class="scale d-flex">
+      <div class="scale">
          <v-text-field
           solo
           suffix="%"
@@ -90,6 +92,10 @@ module.exports = {
 </script>
 
 <style scoped>
+.sidebar {
+  padding: 1.2rem;
+}
+
 p {
   margin: 0;
 }
@@ -99,15 +105,11 @@ p {
 }
 
 .property {
-  margin: 20px 0 20px 0;
+  margin: 20px 0 0 0;
 }
 
 .property-title {
   margin-bottom: 10px;
-}
-
-.sidebar {
-  padding: 1.2rem;
 }
 
 .v-text-field__prefix, .v-text-field__suffix {
