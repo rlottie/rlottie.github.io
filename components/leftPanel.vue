@@ -12,8 +12,8 @@
     <div class="search-bar container py-3">
       <p class="title">Search layer</p>
       <div class="row no-gutters">
-        <button class="btn col-2"><i class="text-white fas fa-search fa-lg"></i></button>
-        <input v-model="searchKeyword" type="text" class="searchInput rounded-pill col-10 px-3">
+        <button @click="getSearchResult" class="btn col-2"><i class="text-white fas fa-search fa-lg"></i></button>
+        <input v-model="searchKeyword" @keypress.enter="getSearchResult" type="text" class="searchInput rounded-pill col-10 px-3">
       </div>
     </div>
 
@@ -21,7 +21,7 @@
     <div class="layer-list container py-3 px-0">
       <p class="title px-3">Layers</p>
       <div v-for="layer in layers" :key="layer.name">
-        <div class="row no-gutters py-4 px-3 rounded" :class="{ 'bg-green': layer.selected }">
+        <div class="row no-gutters py-3 px-3 rounded" :class="{ 'bg-green': layer.selected }">
           <div @click="layer.selected = !layer.selected" class="layer-info row no-gutters">
             <img class="img-thumbnail layer-thumbnail" src="" :alt="layer.name">
             <p class="layer-name my-auto ml-4">{{ layer.name }}</p>
@@ -62,7 +62,16 @@ module.exports = {
         },
       ],
     }
-  }
+  },
+
+  methods: {
+    getSearchResult() {
+      if (this.searchKeyword !== null) {
+        console.log(this.searchKeyword)
+        this.searchKeyword = null
+      }
+    },
+  },
 }
 </script>
 
