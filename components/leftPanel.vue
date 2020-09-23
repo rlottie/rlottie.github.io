@@ -43,6 +43,7 @@ module.exports = {
   data: function () {
     return {
       'searchKeyword': null,
+      'clickedLayer': null,
       'layers': [
         {
           name: 'layer1',
@@ -70,6 +71,14 @@ module.exports = {
       }
     },
     clickLayer(layer) {
+      if (this.clickedLayer) {
+        this.clickedLayer.selected = !this.clickedLayer.selected
+        if (this.clickedLayer === layer) {
+          this.clickedLayer = null
+          return false
+        }
+      }
+      this.clickedLayer = layer
       layer.selected = !layer.selected
       if (layer.selected === true) {
         this.$emit('layerSelected')
