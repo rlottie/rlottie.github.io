@@ -22,7 +22,7 @@
       <p class="title px-3">Layers</p>
       <div v-for="layer in layers" :key="layer.name">
         <div class="row no-gutters py-3 px-3 rounded" :class="{ 'bg-green': layer.selected }">
-          <div @click="layer.selected = !layer.selected" class="layer-info row no-gutters">
+          <div @click="clickLayer(layer)" class="layer-info row no-gutters">
             <img class="img-thumbnail layer-thumbnail" src="" :alt="layer.name">
             <p class="layer-name my-auto ml-4">{{ layer.name }}</p>
           </div>
@@ -40,7 +40,6 @@
 <script>
 module.exports = {
   name: 'leftpanel',
-
   data: function () {
     return {
       'searchKeyword': null,
@@ -63,7 +62,6 @@ module.exports = {
       ],
     }
   },
-
   methods: {
     getSearchResult() {
       if (this.searchKeyword !== null) {
@@ -71,6 +69,12 @@ module.exports = {
         this.searchKeyword = null
       }
     },
+    clickLayer(layer) {
+      layer.selected = !layer.selected
+      if (layer.selected === true) {
+        this.$emit('layerSelected')
+      }
+    }
   },
 }
 </script>
