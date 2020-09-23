@@ -1,7 +1,12 @@
 <template>
   <div class="player d-flex flex-column justify-content-between">
+    <p>{{ canvasStyling[canvasShape] }}</p>
     <div class="screen my-auto d-flex flex-column justify-content-center align-items-center" id="content">
-      <canvas v-show="isContent" id="myCanvas"></canvas>
+      <canvas
+       v-show="isContent" 
+       id="myCanvas" 
+       :style="canvasStyling" 
+      ></canvas>
       <div v-show="!isContent">
         <h5> Drag and Drop your Lottie JSON file to the window</h5>
       </div>
@@ -101,6 +106,11 @@
 module.exports = {
   name: 'player',
 
+  props: {
+    backgroundColor: String,
+    canvasShape: Number,
+  },
+
   data: function () {
     return {
       content: true,
@@ -121,6 +131,20 @@ module.exports = {
       } else {
         return false
       }
+    },
+
+    canvasStyling() {
+      if (this.canvasShape == 0) {
+        return {
+          'background-color': this.backgroundColor,
+          'border-radius': 0
+        }
+      } else {
+        return {
+          'background-color': this.backgroundColor,
+          'border-radius': '50%'
+        }
+      }
     }
   },
 
@@ -139,6 +163,10 @@ module.exports = {
 .screen {
   height: 70vh;
   background-color: none
+}
+
+#myCanvas {
+  /* border-radius: 50%; */
 }
 
 .toolbox {
