@@ -4,7 +4,7 @@
     <div class="preview container py-3 bg-blue">
       <div class="row no-gutters">
         <img class="img-thumbnail preview-thumbnail" src="" alt="preview">
-        <h3 class="my-auto ml-4">Filename</h3>
+        <h5 class="my-auto ml-4" id="contentName">FileName</h5>
       </div>
     </div>
 
