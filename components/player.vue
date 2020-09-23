@@ -45,13 +45,17 @@
                 onclick="document.getElementById('content').style.backgroundColor = 'blue'"> </button>
             </div>
           </div> -->
-          <div></div>
+          <div>
+
+          </div>
           <div class="d-flex flex-column justify-content-center align-items-center">
             <label class="mb-0" for="slider2">Canvas Resize</label>
             <input class="margin-left-10px" type="range" id="slider2" min="0" max="100" value="100"
               oninput="onResizeSliderDrag(this.value)">
           </div>
-          <div></div>
+          <div>
+            
+          </div>
         </div>
       </div>
       <div class="d-flex justify-content-around align-items-center toolbox-basic">

@@ -11,7 +11,7 @@
     <!-- button group -->
     <div class="d-flex">
       <!-- canvas shape -->
-      <v-btn-toggle v-model="toggle_exclusive">
+      <v-btn-toggle v-model="toggle_exclusive" class="mx-2">
         <v-btn>
           <v-icon class="fas fa-square-full text-dark"></v-icon>
         </v-btn>
@@ -23,7 +23,7 @@
       <button class="btn btn-light mx-2">Light Mode</button>
       <!-- import/export -->
       <div class="filebox mx-2">
-        <label for="fileSelector">New Lottie</label>
+        <label for="fileSelector"><span class="d-inline-block pt-1">New Lottie</span></label>
         <input class="upload-hidden" type="file" id="fileSelector" accept=".json" placeholder="New Lottie">
       </div>
       <button class="btn bg-green text-white mx-2" data-toggle="modal" data-target="#exportModal">Export <i class="fas fa-download ml-2"></i></button>
@@ -48,8 +48,6 @@
           </div>
         </div>
       </div>
-
-
 
     </div>
   </div>
@@ -107,6 +105,7 @@ module.exports = {
     border-bottom-color: #fdfdfd;
     border-radius: .25em;
     margin-bottom: 0;
+    height: 48px;
   }
 
   .bg-green {

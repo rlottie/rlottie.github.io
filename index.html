@@ -25,11 +25,11 @@
       <div class="row no-gutters">
         <navbar class="col-12"></navbar>
 
-        <leftpanel @layerSelected="layerSelected" class="col-3"></leftpanel>
+        <leftpanel @layer-selected="layerSelected" class="col-3"></leftpanel>
         
         <player class="col-6"></player>
         
-        <property v-if="isLayer" class="col-3"></property>
+        <property v-if="isLayer" :selected-layer="selectedLayer" class="col-3"></property>
 
         <preference v-else class="col-3"></preference>
 
@@ -65,14 +65,15 @@
           return {
             selection: '',
             isLayer: false,
-            test: "this is test"
+            selectedLayer: null,
           }
         },
         methods: {
-          layerSelected() {
-            console.log("getlayerselected")
-            this.isLayer = true
-            console.log(this.isLayer)
+          layerSelected(layer) {
+            this.isLayer = !!layer
+            if (layer) {
+              this.selectedLayer = layer
+            }
           }
         },
         beforeCreate: function() {
