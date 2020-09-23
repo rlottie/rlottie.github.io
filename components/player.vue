@@ -24,7 +24,7 @@
         </div>
       </div> -->
       <div class="collapse" id="collapseExtraTools">
-        <div class="extra-tools d-flex justify-content-between align-items-center">
+        <div class="extra-tools d-flex align-items-center">
           <!-- <div class="slider bg-grey-lighter border-grey-light rounded border">
             <button class="playButton cursor-pointer" type="button" id="playButton" onclick="buttonClicked()">Pause</button>
             <input class="margin-left-10px" type="range" id="slider" min="0" max="100" value="0" id="slider"
@@ -45,16 +45,22 @@
                 onclick="document.getElementById('content').style.backgroundColor = 'blue'"> </button>
             </div>
           </div> -->
-          <div>
-
+          <div class="d-flex flex-column justify-content-center align-items-center">
+            <label class="mb-0">Play Speed</label>
+            <input class="margin-left-10px" >
           </div>
+          <div class="d-flex flex-column justify-content-center align-items-center">
+            <label class="mb-0">Play Type</label>
+            <input class="margin-left-10px" >
+          </div>
+          <!-- <div class="d-flex flex-column justify-content-center align-items-center">
+            <label class="mb-0">Play Direction</label>
+            <input class="margin-left-10px" >
+          </div> -->
           <div class="d-flex flex-column justify-content-center align-items-center">
             <label class="mb-0" for="slider2">Canvas Resize</label>
             <input class="margin-left-10px" type="range" id="slider2" min="0" max="100" value="100"
               oninput="onResizeSliderDrag(this.value)">
-          </div>
-          <div>
-            
           </div>
         </div>
       </div>
@@ -93,11 +99,14 @@
 <script>
 module.exports = {
   name: 'player',
+
   data: function () {
     return {
-      content: true
+      content: true,
+      types: ['Autoplay', 'Hover', 'Click', 'Bounce'],
     }
   },
+
   computed: {
     isContent() {      
       if (this.content) {
