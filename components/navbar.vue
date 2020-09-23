@@ -10,7 +10,8 @@
 
 <script>
 module.exports = {
-  name: 'navBar',
+  name: 'navbar',
+
   data: function () {
     return {
     }
