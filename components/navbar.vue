@@ -11,7 +11,7 @@
     <!-- button group -->
     <div class="d-flex">
       <!-- canvas shape -->
-      <v-btn-toggle v-model="toggle_exclusive" class="mx-2">
+      <v-btn-toggle v-model="toggle_one" class="mx-2" mandatory>
         <v-btn>
           <v-icon class="fas fa-square-full text-dark"></v-icon>
         </v-btn>
@@ -59,9 +59,15 @@ module.exports = {
 
   data: function () {
     return {
-      toggle_exclusive: 2,
+      toggle_one: 0,
     }
-  }
+  },
+
+  watch: {
+    toggle_one() {
+      this.$emit('canvas-changed', this.toggle_one)
+    },
+  },
 }
 </script>
 

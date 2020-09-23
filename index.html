@@ -23,11 +23,11 @@
   <body>
     <v-app class="window" id="app">
       <div class="row no-gutters">
-        <navbar class="col-12"></navbar>
+        <navbar @canvas-changed="changeCanvas" class="col-12"></navbar>
 
         <leftpanel @layer-selected="layerSelected" class="col-3"></leftpanel>
         
-        <player :background-color="backgroundColor" class="col-6"></player>
+        <player :background-color="backgroundColor" :canvas-shape="canvasShape" class="col-6"></player>
         
         <property v-if="isLayer" :selected-layer="selectedLayer" class="col-3"></property>
 
@@ -67,6 +67,7 @@
             isLayer: false,
             selectedLayer: null,
             backgroundColor: null,
+            canvasShape: 0,
           }
         },
         methods: {
@@ -79,6 +80,10 @@
 
           changeBackgroundColor(color) {
             this.backgroundColor = color
+          },
+
+          changeCanvas(toggle_one) {
+            this.canvasShape = toggle_one
           },
         },
 
