@@ -57,10 +57,15 @@ module.exports = {
   name: 'preference',
   data: function () {
     return {
-      color: '#FFF7B0',
+      color: '#FFFFFF',
       width: 250,
       height: 250,
     }
+  },
+  watch: {
+    color() {
+      this.$emit('bg-color-changed', this.color)
+    },
   }
 }
 </script>

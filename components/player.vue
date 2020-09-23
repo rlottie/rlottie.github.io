@@ -1,6 +1,6 @@
 <template>
   <div class="player d-flex flex-column justify-content-between">
-    <div class="screen my-auto d-flex flex-column justify-content-center align-items-center" id="content">
+    <div class="screen my-auto d-flex flex-column justify-content-center align-items-center" id="content" :style="{ 'background-color': backgroundColor }">
       <canvas v-show="isContent" id="myCanvas"></canvas>
       <div v-show="!isContent">
         <h5> Drag and Drop your Lottie JSON file to the window</h5>
@@ -99,6 +99,10 @@
 <script>
 module.exports = {
   name: 'player',
+
+  props: {
+    backgroundColor: String,
+  },
 
   data: function () {
     return {
