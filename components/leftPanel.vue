@@ -13,7 +13,7 @@
       <p class="title">Search layer</p>
       <div class="row no-gutters">
         <button @click="getSearchResult" class="btn col-2"><i class="text-white fas fa-search fa-lg"></i></button>
-        <input v-model="searchKeyword" @keypress.enter="getSearchResult" type="text" class="searchInput rounded-pill col-10 px-3">
+        <input v-model="searchKeyword" @keypress.enter="getSearchResult" type="text" class="searchInput rounded-pill col-10 px-3 bg-white">
       </div>
     </div>
 
@@ -30,7 +30,6 @@
             <i v-if="layer.visible" class="text-white far fa-eye"></i>
             <i v-else class="text-white far fa-eye-slash"></i>
           </button>
-
         </div>
       </div>
     </div>
@@ -39,7 +38,7 @@
 
 <script>
 module.exports = {
-  name: 'leftpanel',
+  name: 'leftPanel',
   data: function () {
     return {
       'searchKeyword': null,
@@ -75,14 +74,15 @@ module.exports = {
         this.clickedLayer.selected = !this.clickedLayer.selected
         if (this.clickedLayer === layer) {
           this.clickedLayer = null
+          this.$emit('layer-selected', null)
           return false
         }
       }
       this.clickedLayer = layer
       layer.selected = !layer.selected
       if (layer.selected === true) {
-        this.$emit('layerSelected')
-      }
+        this.$emit('layer-selected', layer)
+      } 
     }
   },
 }

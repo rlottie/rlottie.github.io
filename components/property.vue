@@ -1,6 +1,7 @@
 <template>
   <div class="bg-sidebar sidebar">
     <p class="title">Property</p>
+    <p>{{ selectedLayer }}</p>
     <!-- color controller -->
     <div class="property">
       <p class="property-title">color</p>
@@ -74,6 +75,9 @@ module.exports = {
       yPos: 250,
       scale: 100,
     }
+  },
+  props: {
+    selectedLayer: Object,
   },
   computed: {
     swatchStyle() {
