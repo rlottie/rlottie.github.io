@@ -1,5 +1,5 @@
 <template>
-  <v-footer absolute color="#292c31" class="font-weight-medium">
+  <v-footer absolute color="#292c31" class="font-weight-medium" style="margin-=">
     <v-col class="text-center" cols="12">
       <button id="playButton" onclick="buttonClicked()">Pause</button>
       <input

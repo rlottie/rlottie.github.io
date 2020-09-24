@@ -92,7 +92,7 @@
 
         <v-tooltip right class="tooltip-btn">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn class="mt-5" text color="white" v-bind="attrs" v-on="on">
+            <v-btn class="mt-5" text color="white" @click="clickMenu(6)" v-bind="attrs" v-on="on">
               <v-icon>fas fa-image</v-icon>
             </v-btn>
           </template>
@@ -118,6 +118,11 @@
 <script>
 module.exports = {
   name:"left-bar",
+  methods:{
+    clickMenu(i){
+      this.$emit('menuclicked', i)
+    }
+  },
 }
 </script>
 

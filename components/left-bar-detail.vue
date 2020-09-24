@@ -16,6 +16,9 @@
 <script>
 module.exports = {
     name: "left-bar-detail",
+    props:{
+        selectedMenu: Number,
+    },
     data(){
         return {
             type: 'hex',
@@ -48,7 +51,11 @@ module.exports = {
         }, {}), null, 2)
       },
     },
-
+    watch:{
+        selectedMenu(){
+            console.log('hello', this.selectedMenu);
+        }
+    }
 
 }
 </script>
