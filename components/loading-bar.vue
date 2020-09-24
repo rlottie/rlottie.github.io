@@ -18,6 +18,7 @@
 
 <script>
 module.exports = {
+  name: "loading-bar",
   // props: ["user"],
   // data: function () {
   //   return {

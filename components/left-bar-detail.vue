@@ -1,9 +1,10 @@
 <template>
-    <div>left-bar-detail</div>
+    <div></div>
 </template>
 
 <script>
 module.exports = {
+    name: "left-bar-detail",
 }
 </script>
 
