@@ -13,7 +13,8 @@
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 
 </head>
 
@@ -21,18 +22,19 @@
   <div id="app">
     <v-app>
       <v-main class="main-window">
-      <left-bar style="width:4rem;"></left-bar>
+        <left-bar style="width:4rem;"></left-bar>
         <left-bar-detail></left-bar-detail>
         <right-bar></right-bar>
         <div class="header bg-grey-lighter border-grey-light rounded border or">
-          <span text-grey-darkest font-bold justify-center text-xs>  Drag and Drop your Lottie JSON file to the window </span>
-          <span text-grey-darkest font-bold justify-center text-xs>  Or </span>
+          <span text-grey-darkest font-bold justify-center text-xs> Drag and Drop your Lottie JSON file to the window
+          </span>
+          <span text-grey-darkest font-bold justify-center text-xs> Or </span>
           <input class="cursor-pointer" type="file" id="fileSelector" accept=".json">
         </div>
         <div class="content " id="content">
           <canvas class="" id="myCanvas" width="100" height="100" style="border:1px solid #dae1e7;"></canvas>
         </div>
-        <div class="footer">  
+        <div class="footer">
           <!-- <div class="slider bg-grey-lighter border-grey-light rounded border">
             <button class="playButton cursor-pointer" type="button" id="playButton" onclick="buttonClicked()">Pause</button>
             <input  class="margin-left-10px" type="range" id="slider" min="0" max="100" value="0" id="slider" oninput="onSliderDrag(this.value)">
@@ -40,12 +42,12 @@
           <div class="bg_color_container bg-grey-lighter border-grey-light rounded border">
             <div class="text-grey-darkest font-bold justify-center text-xs"> Background Color</div>
             <div class="margin-left-10px color_button_group">
-              <button class="color_button btn_white cursor-pointer" 
+              <button class="color_button btn_white cursor-pointer"
                 onclick="document.getElementById('content').style.backgroundColor = 'white'"> </button>
               <button class="color_button btn_black cursor-pointer"
                 onclick="document.getElementById('content').style.backgroundColor = 'black'"> </button>
               <button class="color_button btn_red cursor-pointer"
-                onclick="document.getElementById('content').style.backgroundColor = 'red'"> </button> 
+                onclick="document.getElementById('content').style.backgroundColor = 'red'"> </button>
               <button class="color_button btn_green cursor-pointer"
                 onclick="document.getElementById('content').style.backgroundColor = 'green'"> </button>
               <button class="color_button btn_blue cursor-pointer"
@@ -88,10 +90,11 @@
   </script>
 </body>
 <style>
-  .main-window{
+  .main-window {
     width: 100%;
     height: 100%;
     background-color: #171719;
   }
 </style>
+
 </html>
