@@ -55,7 +55,12 @@ var RLottieModule = (function () {
 
         obj.context.putImageData(imageData, 0, 0);
 
-        if (obj.curFrame >=  obj.frameCount) obj.curFrame = 0;
+        if (obj.curFrame == obj.frameCount) obj.curFrame = obj.frameCount;
+        if (obj.curFrame > obj.frameCount+1) obj.curFrame = 0;
+        var currentFrame = document.getElementById("currentFrame")
+        var frameCount = document.getElementById("frameCount")
+        currentFrame.innerText = String(obj.curFrame-1)
+        frameCount.innerText = String(obj.frameCount)
     }
 
     obj.reload = function (jsString) {
@@ -181,6 +186,8 @@ function handleDragOver(evt) {
 
 function fileSelectionChanged() {
     var input = document.getElementById('fileSelector');
+    var contentName = document.getElementById('contentName')
+    contentName.innerText = input.files[0].name.slice(0, -5)
     handleFiles(input.files);
 }
 

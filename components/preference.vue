@@ -30,6 +30,13 @@
       </div>
     </div>
 
+    <!-- Canvas Resize -->
+    <div class="d-flex flex-column justify-content-center align-items-start mt-5 mb-3">
+      <label class="mb-0" for="slider2">Canvas Resize</label>
+      <input class="canvasSlider" type="range" id="slider2" min="0" max="100" value="100"
+        oninput="onResizeSliderDrag(this.value)">
+    </div>
+    
     <!-- Dimension controller -->
     <div class="preference">
       <p class="preference-title">Dimension</p>
@@ -57,10 +64,15 @@ module.exports = {
   name: 'preference',
   data: function () {
     return {
-      color: '#FFF7B0',
+      color: '#FFFFFF',
       width: 250,
       height: 250,
     }
+  },
+  watch: {
+    color() {
+      this.$emit('bg-color-changed', this.color)
+    },
   }
 }
 </script>
@@ -90,5 +102,8 @@ p {
   color: rgba(15, 128, 170, 0.77);
 }
 
+.canvasSlider {
+  width: 100%;
+}
 
 </style>
