@@ -1,55 +1,109 @@
-
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width height=device-height">
     <meta name="description" content="rlottie viewer">
     <meta name="keywords" content="lottie, rlottie, lottie viewer, rlottie viewer">
     <meta name="author" content="Subhransu">
     <title>rlottie viewer</title>
     <link rel="stylesheet" href="style.css">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    
+    <!-- vuetify -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
   </head>
-<body>
 
-<div class="window">
-    <p>Experimental Multiple lottie view <a href="multiview.html">ClickToView</a> ?</p>
-    <div class="header bg-grey-lighter border-grey-light rounded border or">
-      <span text-grey-darkest font-bold justify-center text-xs>  Drag and Drop your Lottie JSON file to the window </span>
-      <span text-grey-darkest font-bold justify-center text-xs>  Or </span>
-      <input class="cursor-pointer" type="file" id="fileSelector" accept=".json">
-    </div>
-    <div class="content " id="content">
-      <canvas class="" id="myCanvas" width="100" height="100" style="border:1px solid #dae1e7;"></canvas>
-    </div>
-    <div class="footer">  
-      <div class="slider bg-grey-lighter border-grey-light rounded border">
-        <button class="playButton cursor-pointer" type="button" id="playButton" onclick="buttonClicked()">Pause</button>
-        <input  class="margin-left-10px" type="range" id="slider" min="0" max="100" value="0" id="slider" oninput="onSliderDrag(this.value)">
-      </div>
-      <div class="bg_color_container bg-grey-lighter border-grey-light rounded border">
-        <div class="text-grey-darkest font-bold justify-center text-xs"> Background Color</div>
-        <div class="margin-left-10px color_button_group">
-          <button class="color_button btn_white cursor-pointer" 
-            onclick="document.getElementById('content').style.backgroundColor = 'white'"> </button>
-          <button class="color_button btn_black cursor-pointer"
-            onclick="document.getElementById('content').style.backgroundColor = 'black'"> </button>
-          <button class="color_button btn_red cursor-pointer"
-            onclick="document.getElementById('content').style.backgroundColor = 'red'"> </button> 
-          <button class="color_button btn_green cursor-pointer"
-            onclick="document.getElementById('content').style.backgroundColor = 'green'"> </button>
-          <button class="color_button btn_blue cursor-pointer"
-            onclick="document.getElementById('content').style.backgroundColor = 'blue'"> </button>
-        </div>
-      </div>
-      <div class="speed bg-grey-lighter border-grey-light rounded border"> 
-        <div class="margin-left-10px text-grey-darkest font-bold justify-center text-xs">Canvas Resize </div>
-        <input  class="margin-left-10px" type="range" id="slider" min="0" max="100" value="100" id="slider" oninput="onResizeSliderDrag(this.value)">
-      </div>
-    </div>
-</div>
+  <body>
+    <v-app class="window" id="app">
+      <div class="row no-gutters">
+        <navbar @canvas-changed="changeCanvas" class="col-12"></navbar>
 
-<script src="main.js"></script>
-</body>
+        <leftpanel @layer-selected="layerSelected" class="col-3"></leftpanel>
+        
+        <player :background-color="backgroundColor" :canvas-shape="canvasShape" class="col-6"></player>
+        
+        <property v-if="isLayer" :selected-layer="selectedLayer" class="col-3"></property>
+
+        <preference v-else @bg-color-changed="changeBackgroundColor" class="col-3"></preference>
+
+      </div>
+    </v-app>
+
+    <script src="main.js"></script>
+    <!-- vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <!-- dependencies for bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- http-vue-loader -->
+    <script src="https://unpkg.com/http-vue-loader"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script>
+      // var eventBus = new Vue()s
+
+      new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+
+        components: {
+          'navbar': httpVueLoader('./components/navbar.vue'),
+          'leftpanel': httpVueLoader('./components/leftPanel.vue'),
+          'player': httpVueLoader('./components/player.vue'),
+          'property': httpVueLoader('./components/property.vue'),
+          'preference': httpVueLoader('./components/preference.vue')
+        },
+
+        data() {
+          return {
+            selection: '',
+            isLayer: false,
+            selectedLayer: null,
+            backgroundColor: null,
+            canvasShape: 0,
+          }
+        },
+        methods: {
+          layerSelected(layer) {
+            this.isLayer = !!layer
+            if (layer) {
+              this.selectedLayer = layer
+            }
+          },
+
+          changeBackgroundColor(color) {
+            this.backgroundColor = color
+          },
+
+          changeCanvas(toggle_one) {
+            this.canvasShape = toggle_one
+          },
+        },
+
+        beforeCreate: function() {
+          console.log("beforeCreate");
+        },
+
+        created: function() {
+          console.log("created");
+        },
+
+        mounted: function() {
+          console.log("mounted");
+        },
+
+        updated: function() {
+          console.log("updated");
+        }
+      });
+    </script>
+  </body>
+
 </html>
-
