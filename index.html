@@ -1,61 +1,189 @@
-
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width height=device-height">
-    <meta name="description" content="rlottie viewer">
-    <meta name="keywords" content="lottie, rlottie, lottie viewer, rlottie viewer">
-    <meta name="author" content="Subhransu">
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width height=device-height" />
+    <meta name="description" content="rlottie viewer" />
+    <meta
+      name="keywords"
+      content="lottie, rlottie, lottie viewer, rlottie viewer"
+    />
+    <meta name="author" content="Subhransu" />
+
     <title>rlottie viewer</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
   </head>
-<body>
+  <body>
+    <div id="app">
+      <v-app>
+        <v-container>
+          <h1 class="text-center">rlottie_team2</h1>
+          <div class="window">
+            <p>
+              Experimental Multiple lottie view?
+              <v-btn @click="multiview" color="primary">click to View</v-btn>
+            </p>
+            <v-card class="pa-5">
+              <h4>Drag and Drop your Lottie JSON file to the window</h4>
+              <v-file-input
+                accept=".json"
+                label="Upload lottie JSON"
+                type="file"
+                id="fileSelector"
+              ></v-file-input>
+              <div
+                class="content"
+                id="content"
+                v-bind:style="{ backgroundImage: 'url(' + imgUrl + ')' }"
+                style="background-position: center center"
+              >
+                <canvas
+                  class=""
+                  id="myCanvas"
+                  width="500px"
+                  height="500px"
+                ></canvas>
+              </div>
+              <input
+                ref="imageInput"
+                accept="image/*"
+                type="file"
+                hidden
+                @change="onChangeImages"
+              />
+              <v-btn type="button" @click="onClickImageUpload"
+                >이미지 업로드</v-btn
+              >
+            </v-card>
 
-<div class="window">
-    <p>Experimental Multiple lottie view <a href="multiview.html">ClickToView</a> ?</p>
-    <div class="header bg-grey-lighter border-grey-light rounded border or">
-      <span text-grey-darkest font-bold justify-center text-xs>  Drag and Drop your Lottie JSON file to the window </span>
-      <span text-grey-darkest font-bold justify-center text-xs>  Or </span>
-      <input class="cursor-pointer" type="file" id="fileSelector" accept=".json">
+            <div class="footer">
+              <div
+                class="slider bg-grey-lighter border-grey-light rounded border"
+              >
+                <button
+                  class="playButton cursor-pointer"
+                  type="button"
+                  id="playButton"
+                  onclick="buttonClicked()"
+                >
+                  Pause
+                </button>
+                <input
+                  class="margin-left-10px"
+                  type="range"
+                  id="slider"
+                  min="0"
+                  max="100"
+                  value="0"
+                  id="slider"
+                  oninput="onSliderDrag(this.value)"
+                />
+              </div>
+              <div
+                class="bg_color_container bg-grey-lighter border-grey-light rounded border"
+              >
+                <div class="text-grey-darkest font-bold justify-center text-xs">
+                  Background Color
+                </div>
+                <div class="margin-left-10px color_button_group">
+                  <button
+                    class="color_button btn_white cursor-pointer"
+                    onclick="document.getElementById('content').style.backgroundColor = 'white'"
+                  ></button>
+                  <button
+                    class="color_button btn_black cursor-pointer"
+                    onclick="document.getElementById('content').style.backgroundColor = 'black'"
+                  ></button>
+                  <button
+                    class="color_button btn_red cursor-pointer"
+                    onclick="document.getElementById('content').style.backgroundColor = 'red'"
+                  ></button>
+                  <button
+                    class="color_button btn_green cursor-pointer"
+                    onclick="document.getElementById('content').style.backgroundColor = 'green'"
+                  ></button>
+                  <button
+                    class="color_button btn_blue cursor-pointer"
+                    onclick="document.getElementById('content').style.backgroundColor = 'blue'"
+                  ></button>
+                </div>
+              </div>
+              <div
+                class="speed bg-grey-lighter border-grey-light rounded border"
+              >
+                <div
+                  class="margin-left-10px text-grey-darkest font-bold justify-center text-xs"
+                >
+                  Canvas Resize
+                </div>
+                <input
+                  class="margin-left-10px"
+                  type="range"
+                  id="slider"
+                  min="0"
+                  max="100"
+                  value="100"
+                  id="slider"
+                  oninput="onResizeSliderDrag(this.value)"
+                />
+              </div>
+            </div>
+          </div>
+        </v-container>
+      </v-app>
     </div>
-    <div class="content " id="content">
-      <canvas class="" id="myCanvas" width="100" height="100" style="border:1px solid #dae1e7;"></canvas>
-    </div>
-    <div class="footer">  
-      <div class="slider bg-grey-lighter border-grey-light rounded border">
-        <button class="playButton cursor-pointer" type="button" id="playButton" onclick="buttonClicked()">Pause</button>
-        <input  class="margin-left-10px" type="range" id="slider" min="0" max="100" value="0" id="slider" oninput="onSliderDrag(this.value)">
-      </div>
-      <div class="bg_color_container bg-grey-lighter border-grey-light rounded border">
-        <div class="text-grey-darkest font-bold justify-center text-xs"> Background Color</div>
-        <div class="margin-left-10px color_button_group">
-          <button class="color_button btn_white cursor-pointer" 
-            onclick="document.getElementById('content').style.backgroundColor = 'white'"> </button>
-          <button class="color_button btn_black cursor-pointer"
-            onclick="document.getElementById('content').style.backgroundColor = 'black'"> </button>
-          <button class="color_button btn_red cursor-pointer"
-            onclick="document.getElementById('content').style.backgroundColor = 'red'"> </button> 
-          <button class="color_button btn_green cursor-pointer"
-            onclick="document.getElementById('content').style.backgroundColor = 'green'"> </button>
-          <button class="color_button btn_blue cursor-pointer"
-            onclick="document.getElementById('content').style.backgroundColor = 'blue'"> </button>
-        </div>
-      </div>
-      <div class="speed bg-grey-lighter border-grey-light rounded border"> 
-        <div class="margin-left-10px text-grey-darkest font-bold justify-center text-xs">Canvas Resize </div>
-        <input  class="margin-left-10px" type="range" id="slider" min="0" max="100" value="100" id="slider" oninput="onResizeSliderDrag(this.value)">
-      </div>
-	<!-- Horizontal Scroll frameList -->
 
-		<div style="white-space:nowrap; overflow:auto;  width:500px; height:150px;" id="frameList">
-		</div>
+    <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 
-
-    </div>
-</div>
-
-<script src="main.js"></script>
-</body>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        vuetify: new Vuetify(),
+        data: {
+          message: "hello vue",
+          foo: "",
+          imgUrl: "",
+        },
+        methods: {
+          multiview() {
+            open("multiview.html");
+          },
+          onClickImageUpload() {
+            this.$refs.imageInput.click();
+          },
+          onChangeImages(e) {
+            console.log(e.target.files);
+            const file = e.target.files[0];
+            this.imgUrl = URL.createObjectURL(file);
+          },
+          setBackground() {
+            console.log(files);
+            // const back_img = e.target.files[0];
+            // this.imgUrl =
+            // console.log(file)
+            // var reader = new FileReader();
+            // console.log("pss")
+            // reader.onload = function (event) {
+            //   console.log("asdf");
+            //   this.imgUrl = event.tatget.result;
+            // };
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
-
