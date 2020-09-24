@@ -1,1 +1,1 @@
-emrun --browser chrome  index.html
+emrun --no_browser index.html
