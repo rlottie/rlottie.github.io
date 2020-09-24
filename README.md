@@ -5,7 +5,7 @@
 
 # Build
    - cd rlottie
-   - ./wasm_build {emscripten_sdk_path}
+   - ./wasm_build.sh {emscripten_sdk_path}
    - cp builddir_wasm/src/rlottie-wasm.* ../
    - NOTE : to get a callstack modify build.sh file by passing the build flag -s assertions=1
 
