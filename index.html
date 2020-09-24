@@ -13,16 +13,20 @@
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
 </head>
 
 <body>
   <div id="app">
     <v-app>
       <v-main>
-        <loading-bar></loading-bar>
-        <left-bar></left-bar>
-        <left-bar-detail></left-bar-detail>
-        <right-bar></right-bar>
+        <div class="main-window">
+          <left-bar style="width:4rem;"></left-bar>
+          <loading-bar></loading-bar>
+          <left-bar-detail></left-bar-detail>
+          <right-bar></right-bar>
+        </div>
       </v-main>
     </v-app>
   </div>
@@ -45,5 +49,11 @@
     })
   </script>
 </body>
-
+<style>
+  .main-window{
+    width: 100%;
+    height: 100%;
+    background-color: #171719;
+  }
+</style>
 </html>
