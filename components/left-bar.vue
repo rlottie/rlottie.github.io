@@ -92,7 +92,7 @@
 
         <v-tooltip right class="tooltip-btn">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn class="mt-5" text color="grey" v-bind="attrs" v-on="on">
+            <v-btn class="mt-5" text color="white" v-bind="attrs" v-on="on">
               <v-icon>fas fa-image</v-icon>
             </v-btn>
           </template>
@@ -126,7 +126,8 @@ module.exports = {
   height: 100%;
   width: 4rem;
   background-color: #292c31;
-  position: relative;
+  float:left
+
 }
 #uploadBtn{
   width: 4rem;

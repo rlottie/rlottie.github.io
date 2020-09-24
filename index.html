@@ -22,7 +22,7 @@
   <div id="app">
     <v-app>
       <v-main class="main-window">
-        <left-bar style="width:4rem;"></left-bar>
+        <left-bar></left-bar>
         <left-bar-detail></left-bar-detail>
         <right-bar></right-bar>
         <div class="header bg-grey-lighter border-grey-light rounded border or">
@@ -32,28 +32,13 @@
           <input class="cursor-pointer" type="file" id="fileSelector" accept=".json">
         </div>
         <div class="content " id="content">
-          <canvas class="" id="myCanvas" width="100" height="100" style="border:1px solid #dae1e7;"></canvas>
+          <canvas class="" id="myCanvas" width="100" height="100" style="border:1px solid #dae1e7; background-color: white;"></canvas>
         </div>
         <div class="footer">
           <!-- <div class="slider bg-grey-lighter border-grey-light rounded border">
             <button class="playButton cursor-pointer" type="button" id="playButton" onclick="buttonClicked()">Pause</button>
             <input  class="margin-left-10px" type="range" id="slider" min="0" max="100" value="0" id="slider" oninput="onSliderDrag(this.value)">
           </div> -->
-          <div class="bg_color_container bg-grey-lighter border-grey-light rounded border">
-            <div class="text-grey-darkest font-bold justify-center text-xs"> Background Color</div>
-            <div class="margin-left-10px color_button_group">
-              <button class="color_button btn_white cursor-pointer"
-                onclick="document.getElementById('content').style.backgroundColor = 'white'"> </button>
-              <button class="color_button btn_black cursor-pointer"
-                onclick="document.getElementById('content').style.backgroundColor = 'black'"> </button>
-              <button class="color_button btn_red cursor-pointer"
-                onclick="document.getElementById('content').style.backgroundColor = 'red'"> </button>
-              <button class="color_button btn_green cursor-pointer"
-                onclick="document.getElementById('content').style.backgroundColor = 'green'"> </button>
-              <button class="color_button btn_blue cursor-pointer"
-                onclick="document.getElementById('content').style.backgroundColor = 'blue'"> </button>
-            </div>
-          </div>
           <!-- <div class="speed bg-grey-lighter border-grey-light rounded border"> 
             <div class="margin-left-10px text-grey-darkest font-bold justify-center text-xs">Canvas Resize </div>
             <input  class="margin-left-10px" type="range" id="slider" min="0" max="100" value="100" id="slider" oninput="onResizeSliderDrag(this.value)">
