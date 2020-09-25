@@ -48,7 +48,6 @@ var RLottieModule = (function () {
 
     obj.render = function () {
         if (obj.canvas.width == 0  || obj.canvas.height == 0) return;
-
         var buffer = obj.lottieHandle.render(obj.curFrame++, obj.canvas.width, obj.canvas.height);
         var result = Uint8ClampedArray.from(buffer);
         var imageData = new ImageData(result, obj.canvas.width, obj.canvas.height);
@@ -167,6 +166,7 @@ function handleFiles(files) {
         read.readAsText(f);
         read.onloadend = function(){
             RLottieModule.reload(read.result);
+            parseJson(read.result);
         }
         break;
       }
@@ -202,3 +202,76 @@ function onResizeSliderDrag(value) {
   document.getElementById("myCanvas").height  = size;
   RLottieModule.update();
 }
+
+function parseObject(json_data){  
+  var new_data = {
+    name: json_data.nm,
+    type: json_data.ty,
+    ddd: json_data.ddd,
+    children: []
+  }
+
+  for(let i in json_data.assets) {
+    for(let j in json_data.assets[j].layers[j])
+      new_data.children.push(this.parseObject(json_data.assets[i].layers[j]));
+  }
+
+  for(let i in json_data.layers) {
+    new_data.children.push(this.parseObject(json_data.layers[i]));    
+  }
+
+  for(let i in json_data.it) {
+    new_data.children.push(this.parseObject(json_data.it[i]));    
+  }
+
+  for(let i in json_data.shapes) {
+    new_data.children.push(this.parseObject(json_data.shapes[i]));    
+  }
+
+  for(let i in json_data.masksProperties) {
+    new_data.children.push(this.parseObject(json_data.masksProperties[i]));    
+  }
+  
+  for(let i in json_data.ef) {
+    new_data.children.push(this.parseObject(json_data.ef[i]));    
+  }
+
+  for(let i in json_data.d) {
+    new_data.children.push(this.parseObject(json_data.d[i]));    
+  }
+
+  if(json_data.tr) {
+    new_data.children.push(this.parseObject(json_data.tr));    
+  }
+
+  // var white_list = ['assets', 'layers', 'shapes', 'it','c','ks','o','p','r','s','a','tr','w','ml2','sk','sa','so','eo','pt','or','os','e','masksProperties','x','g','h','ef','v','ir','is','tm','sy','d','t']  
+  // for(let i in json_data) {
+  //   if(typeof(json_data[i]) == 'object' && white_list.indexOf(i) == -1){
+  //     console.log('******************', i, json_data, '*******************')
+  //   }
+  // }
+
+  return new_data;
+}
+
+function parseJson(json_string) {
+  var json_data = JSON.parse(json_string);
+  // console.dir(json_data);
+
+  var new_data = {
+    name: 'keypath',
+    children: []
+  }
+
+  for(let i in json_data.assets) {
+    for(let j in json_data.assets[i].layers)
+      new_data.children.push(this.parseObject(json_data.assets[i].layers[j]));
+  }
+
+  for(let i in json_data.layers) {
+    new_data.children.push(this.parseObject(json_data.layers[i]));    
+  }
+  console.dir(new_data) 
+  return new_data
+}
+
