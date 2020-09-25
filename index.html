@@ -13,71 +13,87 @@
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
 </head>
 
 <body>
   <div id="app">
     <v-app>
-      <v-main>
-        <div class="window">
-          <p>Experimental Multiple lottie view <a href="multiview.html">ClickToView</a> ?</p>
-          <div class="header bg-grey-lighter border-grey-light rounded border or">
-            <span text-grey-darkest font-bold justify-center text-xs> Drag and Drop your Lottie JSON file to
-              the window </span>
-            <span text-grey-darkest font-bold justify-center text-xs> Or </span>
-            <input class="cursor-pointer" type="file" id="fileSelector" accept=".json">
-          </div>
-          <div class="content " id="content">
-            <canvas class="" id="myCanvas" width="100" height="100" style="border:1px solid #dae1e7;"></canvas>
-          </div>
-          <div class="footer">
-            <div class="slider bg-grey-lighter border-grey-light rounded border">
-              <button class="playButton cursor-pointer" type="button" id="playButton"
-                onclick="buttonClicked()">Pause</button>
-              <input class="margin-left-10px" type="range" id="slider" min="0" max="100" value="0" id="slider"
-                oninput="onSliderDrag(this.value)">
-            </div>
-            <div class="bg_color_container bg-grey-lighter border-grey-light rounded border">
-              <div class="text-grey-darkest font-bold justify-center text-xs"> Background Color</div>
-              <div class="margin-left-10px color_button_group">
-                <button class="color_button btn_white cursor-pointer"
-                  onclick="document.getElementById('content').style.backgroundColor = 'white'">
-                </button>
-                <button class="color_button btn_black cursor-pointer"
-                  onclick="document.getElementById('content').style.backgroundColor = 'black'">
-                </button>
-                <button class="color_button btn_red cursor-pointer"
-                  onclick="document.getElementById('content').style.backgroundColor = 'red'">
-                </button>
-                <button class="color_button btn_green cursor-pointer"
-                  onclick="document.getElementById('content').style.backgroundColor = 'green'">
-                </button>
-                <button class="color_button btn_blue cursor-pointer"
-                  onclick="document.getElementById('content').style.backgroundColor = 'blue'">
-                </button>
-              </div>
-            </div>
-            <div class="speed bg-grey-lighter border-grey-light rounded border">
-              <div class="margin-left-10px text-grey-darkest font-bold justify-center text-xs">Canvas
-                Resize </div>
-              <input class="margin-left-10px" type="range" id="slider" min="0" max="100" value="100" id="slider"
-                oninput="onResizeSliderDrag(this.value)">
-            </div>
-          </div>
+      <v-main class="main-window">
+        <left-bar @menuclicked="ChangeMenu"></left-bar>
+        <left-bar-detail :selectedMenu="selectedMenu" v-if="activeDetailBar"></left-bar-detail>
+        <right-bar></right-bar>
+        <div class="header bg-grey-lighter border-grey-light rounded border or">
+          <span text-grey-darkest font-bold justify-center text-xs> Drag and Drop your Lottie JSON file to the window
+          </span>
+          <span text-grey-darkest font-bold justify-center text-xs> Or </span>
+          <input class="cursor-pointer" type="file" id="fileSelector" accept=".json">
         </div>
+        <div class="content " id="content">
+          <canvas class="" id="myCanvas" width="100" height="100" style="border:1px solid #dae1e7; background-color: white;"></canvas>
+        </div>
+        <!-- <div class="footer"> -->
+        <!-- <div class="slider bg-grey-lighter border-grey-light rounded border">
+            <button class="playButton cursor-pointer" type="button" id="playButton" onclick="buttonClicked()">Pause</button>
+            <input  class="margin-left-10px" type="range" id="slider" min="0" max="100" value="0" id="slider" oninput="onSliderDrag(this.value)">
+          </div> -->
+          <!-- <div class="speed bg-grey-lighter border-grey-light rounded border"> 
+            <div class="margin-left-10px text-grey-darkest font-bold justify-center text-xs">Canvas Resize </div>
+            <input  class="margin-left-10px" type="range" id="slider" min="0" max="100" value="100" id="slider" oninput="onResizeSliderDrag(this.value)">
+          </div> -->
+
+        <!-- </div> -->
+
+
       </v-main>
+      <loading-bar :user="user"></loading-bar>
     </v-app>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://unpkg.com/http-vue-loader"></script>
   <script src="main.js"></script>
   <script>
+    Vue.use(httpVueLoader);
     new Vue({
       el: '#app',
       vuetify: new Vuetify(),
+      components: {
+        'loading-bar': 'url:./components/loading-bar.vue',
+        'left-bar': 'url:./components/left-bar.vue',
+        'left-bar-detail': 'url:./components/left-bar-detail.vue',
+        'right-bar': 'url:./components/right-bar.vue'
+      },
+      data() {
+        return {
+          user: "This is a test string",
+          activeDetailBar: false,
+          selectedMenu: 0,
+        }
+      },
+      methods:{
+        ChangeMenu(i){
+          if (this.selectedMenu == i){
+            this.activeDetailBar = false;
+            this.selectedMenu = 0
+          }else{
+            this.activeDetailBar = true;
+            this.selectedMenu = i
+          }
+        }
+      }
     })
   </script>
 </body>
+<style>
+  .main-window {
+    width: 100%;
+    height: 100%;
+    background-color: #171719;
+  }
+</style>
 
 </html>
