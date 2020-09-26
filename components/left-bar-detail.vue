@@ -9,7 +9,7 @@
 module.exports = {
     name: "left-bar-detail",
     components:{
-        'change-bg-color': 'url:./detailMenus/ChangeBgcolor.vue',
+        'change-bg-color': 'url:./detailMenus/ChangeBgColor.vue',
         'resize-canvas': 'url:./detailMenus/ResizeCanvas.vue'
     },
     props:{
