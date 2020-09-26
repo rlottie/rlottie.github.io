@@ -1,10 +1,10 @@
 <template>
-  <v-footer absolute color="#292c31" class="font-weight-medium" style="margin-=">
-    <v-row>
-      <v-col cols="4">
-        <button id="playButton" onclick="buttonClicked()">Pause</button>
-      </v-col>
-      <v-col cols="4" class="text-center">
+  <v-footer absolute color="#292c31" class="font-weight-medium" style="min-width:745px;">
+    <div 
+      class="content-width-100 px-16">
+      <v-row
+        class="ma-0 pa-0"
+        style="width:100%">
         <v-slider
           class="v-slider--active v-slider--focused"
           v-model="curFrame"
@@ -12,14 +12,74 @@
           ref="slider"
           :max="allFrame"
           :thumb-size="24"
-          thumb-label="always"
           @Click="gotoFrame"
-        ></v-slider>
-      </v-col>
-      <v-col cols="4">
-        test
-      </v-col>
-    </v-row>
+          hide-details="false"
+        />
+      </v-row>
+    </div>
+    <div
+      class="content-width-100 px-14">
+      <v-row
+        class="ma-0 pa-0"
+        align="center">
+        <v-col
+          class="py-0 px-2"
+          cols="1"
+        >
+          <v-btn
+            color="rgba(0, 0, 0, 0)"
+            :outlined="false"
+            :depressed="true"
+            fab x-small
+            @click="playAndPause"
+          >
+            <v-icon
+              color="#ffffff"
+              v-if="playing"
+            >
+              mdi-pause
+            </v-icon>
+            <v-icon
+              color="#ffffff"
+              v-else>
+              mdi-play
+            </v-icon>
+          </v-btn>
+        </v-col>
+        <v-col
+          class="pa-0"
+          cols="2"
+          style="min-width:100px;">
+          <v-row
+            class="ma-0 pa-0"
+            align="center"
+            justify="end">
+            <v-col
+              class="pa-0">
+              <v-switch
+                color="#ffffff"
+                v-model="frameRateFlag"
+                :label="frameRateFlag ? `Reverse` : `Play`"
+                >
+              </v-switch>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col
+          class="pa-0"
+          offset="7"
+          cols="2">
+          <v-row
+            class="px-7"
+            justify="end">
+            <v-icon
+              color="#ffffff">
+              mdi-cog
+            </v-icon>
+          </v-row>
+        </v-col>
+      </v-row>
+    </div>
   </v-footer>
 </template>
 
@@ -29,9 +89,17 @@ module.exports = {
   // props: ["user"],
   data() {
     return {
-      allFrame: 137,
+      allFrame: 0,
       curFrame: 0,
+      playing: true,
+      frameRateFlag: false,
+      frameRate: 1,
     };
+  },
+  watch: {
+    frameRateFlag: function(frame){
+      RLottieModule.frameRate = this.frameRateFlag ? -this.frameRate : this.frameRate
+    }
   },
   mounted() {
     var setFrame = this.setFrame;
@@ -52,23 +120,30 @@ module.exports = {
     },
     gotoFrame(value){
       onSliderDrag(this.curFrame);
+    },
+    playAndPause(){
+      buttonClicked();
+      this.playing = RLottieModule.playing;
     }
   },
 };
 </script>
 
 <style scoped>
-button {
-  border-radius: 2px;
-  background-color: #9e9e9e;
-  color: black;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-}
+
 .v-slider__thumb-container, .v-slider__track-background, .v-slider__track-fill {
   transition: none;
+}
+
+.content-width-100{
+  width:100%;
+}
+
+.play-puase-icon{
+  color: #ffffff;
+}
+
+.v-label.theme--light{
+  color:#ffffff;
 }
 </style>

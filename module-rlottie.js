@@ -24,130 +24,139 @@ var RLottieModule = (function () {
   obj.lottieHandle = 0;
   obj.frameCount = 0;
   obj.curFrame = 0;
-  obj.frameRate = 0;
+  obj.frameRate = 1;
   obj.rafId = {};
   obj.resizeId = {};
   obj.playing = true;
   obj.wasPlaying = false;
 
-    obj.init = function () {
-        var input = document.getElementById('fileSelector');
-        input.addEventListener('change', fileSelectionChanged);
-        window.addEventListener('dragover', handleDragOver, false);
-        window.addEventListener('drop', handleFileSelect, false);
-        window.addEventListener('resize',windowResize);
-        relayoutCanvas();
-        obj.canvas = document.getElementById("myCanvas");
-        obj.context = obj.canvas.getContext('2d');
+  obj.init = function () {
+      var input = document.getElementById('fileSelector');
+      input.addEventListener('change', fileSelectionChanged);
+      window.addEventListener('dragover', handleDragOver, false);
+      window.addEventListener('drop', handleFileSelect, false);
+      window.addEventListener('resize',windowResize);
+      relayoutCanvas();
+      obj.canvas = document.getElementById("myCanvas");
+      obj.context = obj.canvas.getContext('2d');
 
-        obj.lottieHandle = new Module.RlottieWasm();
-        obj.frameCount = obj.lottieHandle.frames();
-        // hook to the main loop
-        mainLoop();
-    }
+      obj.lottieHandle = new Module.RlottieWasm();
+      obj.frameCount = obj.lottieHandle.frames();
+      // hook to the main loop
+      mainLoop();
+  }
 
-    obj.render = function () {
+  obj.render = function () {
       if (obj.canvas.width == 0  || obj.canvas.height == 0) return;
-      obj.curFrame = obj.curFrame + obj.frameRate + 1;
+      
+      obj.curFrame = obj.curFrame + obj.frameRate;
       if (obj.curFrame > obj.frameCount) obj.curFrame = 0;
       if (obj.curFrame < 0) obj.curFrame = obj.frameCount;
+
       var buffer = obj.lottieHandle.render(obj.curFrame, obj.canvas.width, obj.canvas.height);
       var result = Uint8ClampedArray.from(buffer);
       var imageData = new ImageData(result, obj.canvas.width, obj.canvas.height);
+
       obj.context.putImageData(imageData, 0, 0);
-      
+
       var getCurFrameEvent = new CustomEvent("CurrentFrameEvent", {
         detail:{
           frame: obj.curFrame
         }
       });
       window.dispatchEvent(getCurFrameEvent);
-    }
-    obj.reload = function (jsString) {
-      var len  = obj.lottieHandle.load(jsString);
-      obj.frameCount = obj.lottieHandle.frames();
-      obj.curFrame = obj.frameRate > 0 ? 0 : obj.frameCount;
 
-      // force a render in pause state
-      obj.update();
-    }
+      var getAllFrameEvent = new CustomEvent("AllFrameEvent", {
+        detail:{
+          frame: obj.frameCount
+        }
+      });
+      window.dispatchEvent(getAllFrameEvent);
+  }
 
-    obj.update = function () {
-      if (!obj.playing)
-        window.requestAnimationFrame( obj.render);
-    }
+  obj.reload = function (jsString) {
+    var len  = obj.lottieHandle.load(jsString);
+    obj.frameCount = obj.lottieHandle.frames();
+    obj.curFrame = 0;
+    // force a render in pause state
+    obj.update();
+  }
 
-    obj.pause = function () {
-      window.cancelAnimationFrame( obj.rafId);
+  obj.update = function () {
+    if (!obj.playing)
+      window.requestAnimationFrame(obj.render);
+  }
+
+   obj.pause = function () {
+      window.cancelAnimationFrame(obj.rafId);
       obj.playing = false;
-    } 
+   }
 
-    obj.play = function () {
+  obj.play = function () {
       obj.playing = true;
       mainLoop();
-    }
+  }
+  obj.isPlaying = function ()  {
+       return obj.playing;
+  }
 
-    obj.isPlaying = function ()  {
-        return obj.playing;
-    }
+  obj.fillColors = function (keypath, r, g, b, opacity) {
+    obj.lottieHandle.set_fill_color(keypath, r, g, b);
+    obj.lottieHandle.set_fill_opacity(keypath, opacity);
+  }
 
-    obj.seek = function (value) {
+  obj.strokeColors = function (keypath, r, g, b, opacity) {
+    obj.lottieHandle.set_stroke_color(keypath, r, g, b);
+    obj.lottieHandle.set_stroke_opacity(keypath, opacity);
+  }
+
+  obj.strokeWidth = function (keypath, width) {
+    obj.lottieHandle.set_stroke_width(keypath, width);
+  }
+
+  obj.trAnchor = function (keypath, x, y) {
+    obj.lottieHandle.set_tr_anchor(keypath, x, y);
+  }
+
+  obj.trPosition = function (keypath, x, y) {
+    obj.lottieHandle.set_tr_position(keypath, x, y);
+  }
+
+  obj.trScale = function (keypath, w, h) {
+    obj.lottieHandle.set_tr_scale(keypath, w, h);
+  }
+
+  obj.trRotation = function (keypath, degree) {
+    obj.lottieHandle.set_tr_rotation(keypath, degree);
+  }
+
+  obj.trOpacity = function (keypath, opacity) {
+    obj.lottieHandle.set_tr_opacity(keypath, opacity);
+  }
+
+   obj.seek = function (value) {
       obj.curFrame = value;
-      window.requestAnimationFrame(obj.render);
-    }
+      window.requestAnimationFrame( obj.render);
+   }
 
-    obj.fillColors = function (keypath, r, g, b, opacity) {
-      obj.lottieHandle.set_fill_color(keypath, r, g, b);
-      obj.lottieHandle.set_fill_opacity(keypath, opacity);
-    }
+   function mainLoop() {
+      obj.rafId = window.requestAnimationFrame( mainLoop );
+      obj.render();
+   }
 
-    obj.strokeColors = function (keypath, r, g, b, opacity) {
-      obj.lottieHandle.set_stroke_color(keypath, r, g, b);
-      obj.lottieHandle.set_stroke_opacity(keypath, opacity);
-    }
+  function relayoutCanvas() {
+    var width = document.getElementById("content").clientWidth;
+    var height = document.getElementById("content").clientHeight;
+    var size = width;
+    if (width < height)
+      size = width;
+    else
+      size = height;
+    size = size-8;
 
-    obj.strokeWidth = function (keypath, width) {
-      obj.lottieHandle.set_stroke_width(keypath, width);
-    }
-
-    obj.trAnchor = function (keypath, x, y) {
-      obj.lottieHandle.set_tr_anchor(keypath, x, y);
-    }
-
-    obj.trPosition = function (keypath, x, y) {
-      obj.lottieHandle.set_tr_position(keypath, x, y);
-    }
-
-    obj.trScale = function (keypath, w, h) {
-      obj.lottieHandle.set_tr_scale(keypath, w, h);
-    }
-
-    obj.trRotation = function (keypath, degree) {
-      obj.lottieHandle.set_tr_rotation(keypath, degree);
-    }
-
-    obj.trOpacity = function (keypath, opacity) {
-      obj.lottieHandle.set_tr_opacity(keypath, opacity);
-    }
-
-    function mainLoop() {
-        obj.rafId = window.requestAnimationFrame( mainLoop );
-        obj.render();
-    }
-
-    function relayoutCanvas() {
-      var width = document.getElementById("content").clientWidth;
-      var height = document.getElementById("content").clientHeight;
-      var size = width;
-      if (width < height)
-        size = width;
-      else
-        size = height;
-      size = size-8;
-
-      document.getElementById("myCanvas").width  = size;
-      document.getElementById("myCanvas").height  = size;
-    }
+    document.getElementById("myCanvas").width  = size;
+    document.getElementById("myCanvas").height  = size;
+  }
 
    function windowResizeDone() {
       relayoutCanvas();
@@ -157,19 +166,18 @@ var RLottieModule = (function () {
       } else {
         obj.update();
       }
-    }
+   }
 
-
-    function windowResize() {
+   function windowResize() {
         if (obj.isPlaying()) {
           obj.wasPlaying = true;
           obj.pause();
         }
         clearTimeout(obj.resizeId);
         obj.resizeId = setTimeout(windowResizeDone, 150);
-    }
+   }
 
-    function setChangingSlow(type, keypath, start, end){
+   function setChangingSlow(type, keypath, start, end){
     var startData = {
       r: 0,
       g: 0,
@@ -240,17 +248,19 @@ var RLottieModule = (function () {
         obj.trOpacity(keypath, curOpacity);
         break;
     }
+    
   }
-    return obj;
+
+  return obj;
 }());
 
 
 function buttonClicked() {
   if (RLottieModule.isPlaying()) {
-      document.getElementById("playButton").innerText = "Play";
+      RLottieModule.playing = false;
       RLottieModule.pause();
   } else {
-      document.getElementById("playButton").innerText = "Pause";
+    RLottieModule.playing = true;
       RLottieModule.play();
   }
 }
@@ -280,9 +290,9 @@ function handleFiles(files) {
 }
 
 function handleDragOver(evt) {
-  evt.stopPropagation();
-  evt.preventDefault();
-  evt.dataTransfer.dropEffect = 'copy';
+evt.stopPropagation();
+evt.preventDefault();
+evt.dataTransfer.dropEffect = 'copy';
 }
 
 function fileSelectionChanged() {
@@ -291,20 +301,20 @@ function fileSelectionChanged() {
 }
 
 function onResizeSliderDrag(value) {
-  var width = document.getElementById("content").clientWidth;
-  var height = document.getElementById("content").clientHeight;
-  var size = width;
-  if (width < height)
-    size = width;
-  else
-    size = height;
-  size = size-8;
-  size = size * (value / 100);
+var width = document.getElementById("content").clientWidth;
+var height = document.getElementById("content").clientHeight;
+var size = width;
+if (width < height)
+  size = width;
+else
+  size = height;
+size = size-8;
+size = size * (value / 100);
 
-  if (size < 10 )
-    size = 10;
-  size = size | 0;
-  document.getElementById("myCanvas").width  = size;
-  document.getElementById("myCanvas").height  = size;
-  RLottieModule.update();
+if (size < 10 )
+  size = 10;
+size = size | 0;
+document.getElementById("myCanvas").width  = size;
+document.getElementById("myCanvas").height  = size;
+RLottieModule.update();
 }
