@@ -1,8 +1,8 @@
 <template>
-  <div class="text-center">   
-    <h1 class="mt-4" style="color: white">Palette</h1>
+  <div class="text-center mt-5">   
+    <h2 class="mt-4" style="color: white">Change Background Color</h2>
       <v-row>
-        <v-col class="d-flex justify-center">
+        <v-col class="d-flex justify-center mt-5">
             <v-color-picker hide-mode-switch v-model="color">
             </v-color-picker>
         </v-col>
