@@ -27,7 +27,7 @@
           cols="1"
         >
           <v-btn
-            color="rgba(0, 0, 0, 0)"
+            color="rgba(0, 153, 204, 1)"
             :outlined="false"
             :depressed="true"
             fab x-small
@@ -57,7 +57,7 @@
             <v-col
               class="pa-0">
               <v-switch
-                color="#ffffff"
+                color="rgba(255, 255, 255, 1)"
                 v-model="frameRateFlag"
                 :label="frameRateFlag ? `Reverse` : `Play`"
                 >
@@ -70,12 +70,75 @@
           offset="7"
           cols="2">
           <v-row
-            class="px-7"
-            justify="end">
-            <v-icon
-              color="#ffffff">
-              mdi-cog
-            </v-icon>
+            class="px-5">
+            <v-col
+              align="end"
+              class="pa-0">
+              <v-menu top :offset-y="true" :offset-x="true" :left="true">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="rgba(0, 153, 204, 1)"
+                    :outlined="false"
+                    :depressed="true"
+                    fab x-small
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                  <v-icon
+                    color="#ffffff"
+                  >
+                  mdi-cog
+                  </v-icon>
+                </template>
+
+                <v-list
+                style="width:200px; background-color:rgba(33, 33, 33, 0.9)">
+                  <v-list-item
+                    v-for="(item, index) in rates"
+                    :key="index"
+                    @click="rateSelected = index; setFrameRate(item.rate);"
+                  >
+                    <v-list-item-title>
+                      <v-icon
+                        v-if="index === rateSelected"
+                        color="rgba(255,255,255,1)">
+                          mdi-check
+                      </v-icon>
+                      <v-icon v-else color="rgba(33, 33, 33, 0)">
+                          mdi-check
+                      </v-icon>
+                      <span
+                        style="color:rgba(255,255,255,1);">
+                        {{`&nbsp&nbsp` + item.rate}}
+                      </span>
+                    </v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+              <!-- <v-tooltip v-model="show" top style="z-index: 1000;">
+                <template v-slot:activator="{ }">
+                  <v-btn
+                    color="rgba(0, 0, 0, 0)"
+                    :outlined="false"
+                    :depressed="true"
+                    fab x-small
+                    @click="show = !show"
+                  >
+                  <v-icon
+                    color="#ffffff"
+                  >
+                  mdi-cog
+                  </v-icon>
+                </template>
+                <v-list-item
+                  v-for="(item, index) in rates"
+                  :key="index"
+                >
+                <v-btn/>
+                  {{item}} {{index}}
+                </v-list-item>
+              </v-tooltip> -->
+            </v-col>
           </v-row>
         </v-col>
       </v-row>
@@ -94,6 +157,34 @@ module.exports = {
       playing: true,
       frameRateFlag: false,
       frameRate: 1,
+      show: false,
+      rateSelected: 3,
+      rates:[
+        {
+          rate: 0.25
+        },
+        {
+          rate: 0.5
+        },
+        {
+          rate: 0.75
+        },
+        {
+          rate: 1
+        },
+        {
+          rate: 1.25
+        },
+        {
+          rate: 1.50
+        },
+        {
+          rate: 1.75
+        },
+        {
+          rate: 2
+        }
+      ]
     };
   },
   watch: {
@@ -124,6 +215,10 @@ module.exports = {
     playAndPause(){
       buttonClicked();
       this.playing = RLottieModule.playing;
+    },
+    setFrameRate(value){
+      this.frameRate = value;
+      setFrameRate(value);
     }
   },
 };

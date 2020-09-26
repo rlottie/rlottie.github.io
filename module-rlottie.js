@@ -265,6 +265,12 @@ function buttonClicked() {
   }
 }
 
+function setFrameRate(value){
+  if(value < 0 && value > 2) value = 1;
+
+  RLottieModule.frameRate = value;
+}
+
 function onSliderDrag(value) {
   RLottieModule.seek(value);
 }
