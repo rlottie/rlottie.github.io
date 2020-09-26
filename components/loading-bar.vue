@@ -60,7 +60,7 @@ module.exports = {
 <style scoped>
 button {
   border-radius: 2px;
-  background-color: #9e9e9e; 
+  background-color: #9e9e9e;
   color: black;
   padding: 10px 20px;
   text-align: center;
@@ -68,7 +68,6 @@ button {
   display: inline-block;
   font-size: 16px;
 }
-
 .v-slider__thumb-container, .v-slider__track-background, .v-slider__track-fill {
   transition: none;
 }
