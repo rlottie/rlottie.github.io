@@ -13,7 +13,7 @@ module.exports = {
         'resize-canvas': 'url:./detailMenus/ResizeCanvas.vue'
     },
     props:{
-        selectedMenu: Number,
+        selectedmenu: Number,
     },
 }
 </script>
