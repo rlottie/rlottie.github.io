@@ -55,5 +55,26 @@ module.exports = {
 </script>
 
 <style>
+input[type="range"] {
+  -webkit-appearance: none;
+  overflow: hidden;
+  height: 10px;
+  background: transparent;
+  cursor: pointer;
+  background: #92140C;
+  border-radius: 3px; /* iOS */
+}
+input[type="range"]:focus {
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  background: #92140C;
+  box-shadow: -100vw 0 0 100vw #edb230;
+  cursor: pointer;
+  border-radius: 1px; /* iOS */
 
+}
 </style>
