@@ -8,6 +8,11 @@
         </v-col>
       </v-row>
     <v-btn @click="changeBgColor">Change</v-btn>
+    <div class="d-flex flex-column justify-content-center align-items-start mt-5 mb-3">
+      <h2 class="mt-9" style="color: white">Resize Canvas</h2>
+      <input type="range" min="0" max="100" value="100"
+        oninput="onResizeSliderDrag(this.value)">
+    </div>
   </div>
 </template>
 
