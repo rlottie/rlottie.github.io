@@ -77,13 +77,47 @@ var RLottieModule = (function () {
         obj.playing = false;
      }
 
-     obj.play = function () {
+    obj.play = function () {
         obj.playing = true;
         mainLoop();
-     }
-     obj.isPlaying = function ()  {
+    }
+    obj.isPlaying = function ()  {
          return obj.playing;
-     }
+    }
+
+    obj.fillColors = function (keypath, r, g, b, opacity) {
+      obj.lottieHandle.set_fill_color(keypath, r, g, b);
+      obj.lottieHandle.set_fill_opacity(keypath, opacity);
+    }
+
+    obj.strokeColors = function (keypath, r, g, b, opacity) {
+      obj.lottieHandle.set_stroke_color(keypath, r, g, b);
+      obj.lottieHandle.set_stroke_opacity(keypath, opacity);
+    }
+
+    obj.strokeWidth = function (keypath, width) {
+      obj.lottieHandle.set_stroke_width(keypath, width);
+    }
+
+    obj.trAnchor = function (keypath, x, y) {
+      obj.lottieHandle.set_tr_anchor(keypath, x, y);
+    }
+
+    obj.trPosition = function (keypath, x, y) {
+      obj.lottieHandle.set_tr_position(keypath, x, y);
+    }
+
+    obj.trScale = function (keypath, w, h) {
+      obj.lottieHandle.set_tr_scale(keypath, w, h);
+    }
+
+    obj.trRotation = function (keypath, degree) {
+      obj.lottieHandle.set_tr_rotation(keypath, degree);
+    }
+
+    obj.trOpacity = function (keypath, opacity) {
+      obj.lottieHandle.set_tr_opacity(keypath, opacity);
+    }
 
      obj.seek = function (value) {
         obj.curFrame = value;
