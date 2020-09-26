@@ -164,6 +164,80 @@ var RLottieModule = (function () {
           obj.resizeId = setTimeout(windowResizeDone, 150);
      }
 
+     function setChangingSlow(type, keypath, start, end){
+      var startData = {
+        r: 0,
+        g: 0,
+        b: 0,
+        opacity: 0,
+        width: 0,
+        x: 0,
+        y: 0,
+        w: 0,
+        h: 0,
+      }
+      var endData = {
+        r: 0,
+        g: 0,
+        b: 0,
+        opacity: 0,
+        width: 0,
+        x: 0,
+        y: 0,
+        w: 0,
+        h: 0,
+      }
+      for(var n in start){
+        startData[n] = start[n];
+      }
+      for(var n in end){
+        endData[n] = end[n];
+      }
+      console.log(startData, endData);
+      //will be change obj.frameRate
+      var frameRate = 1
+      var unit = frameRate/obj.frameCount
+
+      var curR = startData.r+(endData.r - startData.r)*unit*obj.curFrame;
+      var curG = startData.g+(endData.g - startData.g)*unit*obj.curFrame;
+      var curB = startData.b+(endData.b - startData.b)*unit*obj.curFrame;
+      var curOpacity = startData.opacity+(endData.opacity-startData.opacity)*unit*obj.curFrame;
+      var curWidth = startData.width+(endData.width-startData.width)*unit*obj.curFrame;
+      var curX = startData.x+(endData.x - startData.x)*unit*obj.curFrame;
+      var curY = startData.y+(endData.y - startData.y)*unit*obj.curFrame;
+      var curW = startData.w+(endData.w - startData.w)*unit*obj.curFrame; 
+      var curH = startData.h+(endData.h - startData.h)*unit*obj.curFrame;
+      var curDegree = startData.degree+(endData.degree - startData.degree)*unit*obj.curFrame;
+
+      switch(type){
+        case 0:
+          obj.fillColors(keypath, curR, curG, curB, curOpacity);
+          break;
+        case 1:
+          obj.strokeColors(keypath, curR, curG, curB, curOpacity);
+          break;
+        case 2:
+          obj.strokeWidth(keypath, curWidth);
+          break;
+        case 3:
+          obj.trAnchor(keypath, curX, curY);
+          break;
+        case 4:
+          obj.trPosition(keypath, curX, curY);
+          break;
+        case 5:
+          obj.trScale(keypath, curW, curH);
+          break;
+        case 6:
+          obj.trRotation(keypath, curDegree);
+          break;
+        case 7:
+          obj.trOpacity(keypath, curOpacity);
+          break;
+      }
+      
+    }
+
     return obj;
 }());
 
