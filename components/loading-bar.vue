@@ -1,5 +1,5 @@
 <template>
-  <v-footer absolute color="#292c31" class="font-weight-medium" style="min-width:745px;">
+  <v-footer absolute color="#292c31" class="font-weight-medium" style="min-width:745px;" ref="footer">
     <div 
       class="content-width-100 px-16">
       <v-row
@@ -109,7 +109,7 @@
                       </v-icon>
                       <span
                         style="color:rgba(255,255,255,1);">
-                        {{`&nbsp&nbsp` + item.rate}}
+                        &nbsp;&nbsp;{{item.rate}}
                       </span>
                     </v-list-item-title>
                   </v-list-item>
@@ -201,6 +201,9 @@ module.exports = {
     window.addEventListener("CurrentFrameEvent", function(e){
       setCurFrame(e.detail.frame);
     })
+
+    console.dir();
+    console.dir(window.innerHeight-this.$refs.footer.$el.clientHeight)
   },
   methods: {
     setFrame(value){
