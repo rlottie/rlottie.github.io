@@ -1,10 +1,12 @@
 <template>
   <v-footer absolute color="#292c31" class="font-weight-medium" style="min-width:745px;">
     <div 
-      class="content-width-100 px-16">
+      class="content-width-100 px-16"
+    >
       <v-row
         class="ma-0 pa-0"
-        style="width:100%">
+        style="width:100%"
+      >
         <v-slider
           class="v-slider--active v-slider--focused"
           v-model="curFrame"
@@ -18,10 +20,12 @@
       </v-row>
     </div>
     <div
-      class="content-width-100 px-14">
+      class="content-width-100 px-14"
+    >
       <v-row
         class="ma-0 pa-0"
-        align="center">
+        align="center"
+      >
         <v-col
           class="py-0 px-2"
           cols="1"
@@ -67,13 +71,45 @@
         </v-col>
         <v-col
           class="pa-0"
-          offset="7"
-          cols="2">
+          cols="9">
           <v-row
             class="px-5">
             <v-col
               align="end"
-              class="pa-0">
+              class="pa-0"
+            >
+              <v-tooltip top open-on-hover close-delay="100">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    icon
+                    large
+                    style="margin-right:10px;"
+                    :color="isPrev ? 'white' : 'transparent'"
+                    :style="{'cursor': isPrev ? 'pointer' : 'default'}"
+                    @click="movePrev"
+                  ><v-icon :color="isPrev ? '#BFC0C2':'#54565A'" large>mdi-undo</v-icon></v-btn>
+                </template>
+                <span>Undo</span>
+              </v-tooltip>
+              <v-tooltip top open-on-hover close-delay="100">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    icon
+                    large
+                    style="margin-right:30px;"
+                    :color="isNext ? 'white' : 'transparent'"
+                    :style="{'cursor': isNext ? 'pointer' : 'default'}"
+                    @click="moveNext"
+                  ><v-icon :color="isNext ? '#BFC0C2':'#54565A'" large>mdi-redo</v-icon></v-btn>
+                </template>
+                <span>Redo</span>
+              </v-tooltip>
               <v-menu top :offset-y="true" :offset-x="true" :left="true">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -109,7 +145,7 @@
                       </v-icon>
                       <span
                         style="color:rgba(255,255,255,1);">
-                        {{`&nbsp&nbsp` + item.rate}}
+                        &nbsp;&nbsp; {{item.rate}}
                       </span>
                     </v-list-item-title>
                   </v-list-item>
@@ -161,7 +197,10 @@ module.exports = {
         {
           rate: 2
         }
-      ]
+      ],
+
+      isPrev: false,
+      isNext: false,
     };
   },
   watch: {
@@ -172,12 +211,29 @@ module.exports = {
   mounted() {
     var setFrame = this.setFrame;
     var setCurFrame = this.setCurFrame;
+    var setHistoryState = this.setHistoryState;
+
     window.addEventListener("AllFrameEvent", function(e){
       setFrame(e.detail.frame);
     })
     window.addEventListener("CurrentFrameEvent", function(e){
       setCurFrame(e.detail.frame);
     })
+
+    window.addEventListener('setHistoryState', function(e) {
+      setHistoryState(e.detail);
+    })
+
+    // setTimeout(function() {
+    //   RLottieModule.fillColors("**",1,0,0,100);
+    //   RLottieModule.history.insert("**","FillColor",[1,0,0,50])
+
+    //   RLottieModule.strokeColors("**",1,0,0,100);
+    //   RLottieModule.history.insert("**","StrokeColor",[1,0,0,100])
+
+    //   RLottieModule.fillColors("**",0,0,1,100);
+    //   RLottieModule.history.insert("**","FillColor",[0,0,1,100])
+    // }, 1000);    
   },
   methods: {
     setFrame(value){
@@ -196,6 +252,16 @@ module.exports = {
     setFrameRate(value){
       this.frameRate = value;
       setFrameRate(value);
+    },
+    setHistoryState(e) {
+      this.isPrev = e.isPrev;
+      this.isNext = e.isNext;
+    },
+    movePrev() {
+      RLottieModule.history.movePrev();
+    },
+    moveNext() {
+      RLottieModule.history.moveNext();
     }
   },
 };
