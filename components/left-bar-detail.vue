@@ -1,7 +1,7 @@
 <template>
     <div id="left-detail-bar" class="d-flex ml-1 align-start justify-center">
         <shape-property v-show="selectedmenu==1" @call-close-menu-parent="closeSideBarFromChild"></shape-property>
-        <transform-property v-show="selectedmenu==3"></transform-property>
+        <transform-property v-show="selectedmenu==3" @call-close-menu-parent="closeSideBarFromChild"></transform-property>
         <resize-canvas v-show="selectedmenu==5"></resize-canvas>
         <change-bg-color v-show="selectedmenu==6"></change-bg-color>
     </div>
