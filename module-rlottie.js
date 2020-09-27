@@ -248,8 +248,7 @@ function setup() {
         case 7:
           obj.trOpacity(keypath, curOpacity);
           break;
-      }
-      
+      }      
     }
   
     return obj;
@@ -289,8 +288,10 @@ function setup() {
         var read = new FileReader();
         read.readAsText(f);
         read.onloadend = function(){
-            RLottieModule.reload(read.result);            
-            obj.history = initHistory(jsString);
+            var jsString = read.result;
+            RLottieModule.reload(jsString);            
+            RLottieModule.history = initHistory(jsString);
+            console.dir('zz')
         }
         break;
       }
@@ -434,7 +435,7 @@ function initHistory(jsString) {
     obj.cur++;
     obj.reload();
   }
-
+  obj.setHistoryState();
   return obj;
 } 
 
