@@ -8,11 +8,24 @@
         </v-col>
       </v-row>
     <v-btn @click="changeCanvasColor">Canvas</v-btn>
-    <v-btn @click="changeBgColor">Background</v-btn>
+    <v-btn class="ml-5" @click="changeBgColor">Background</v-btn>
+    <v-row class="justify-center">
+      <v-col>
+        <v-btn @click="changeCanvasBorderColor" v-show="this.borderOn"> Hide Canvas BorderLine </v-btn>
+        <v-btn @click="changeCanvasBorderColor" v-show="!this.borderOn">Reveal Canvas BorderLine</v-btn>
+      </v-col>
+    </v-row>
     <div class="d-flex flex-column justify-content-center align-items-start mt-5 mb-3">
       <h2 class="mt-9" style="color: white">Resize Canvas</h2>
-      <input type="range" min="0" max="100" value="100"
-        oninput="onResizeSliderDrag(this.value)">
+      <v-row class="justify-center">
+        <v-col cols="5" class="pb-0">
+          <v-text-field cols="5" v-model="inputHeight" dark label="Height" single-line outlined></v-text-field>
+        </v-col>
+        <v-col cols="5" class="pb-0">
+          <v-text-field cols="5" v-model="inputWidth" dark label="Width" single-line outlined></v-text-field>
+        </v-col>
+        <v-btn @click="resizeCanvas">Resize Canvas</v-btn>
+      </v-row>
     </div>
   </div>
 </template>
@@ -22,12 +35,15 @@ module.exports = {
   name: "change-bg-color",
   data(){
     return {
-        type: 'hex',
+        type: 'hexa',
         hex: '#FF00FF',
         hexa: '#FF00FFFF',
         rgba: { r: 255, g: 0, b: 255, a: 1 },
         hsla: { h: 300, s: 1, l: 0.5, a: 1 },
         hsva: { h: 300, s: 1, v: 1, a: 1 },
+        inputHeight: undefined,
+        inputWidth: undefined,
+        borderOn: true
     }
   },
   methods:{
@@ -36,6 +52,22 @@ module.exports = {
     },
     changeBgColor(){
         document.getElementById('content').style.backgroundColor = this.color;
+    },
+    changeCanvasBorderColor(){
+      console.log(document.getElementById('myCanvas').style.borderStyle);
+      if (this.borderOn){
+        document.getElementById('canvasBox').style.borderStyle="none";
+        this.borderOn = false;
+      }else{
+        document.getElementById('canvasBox').style.border="1px solid black";
+        this.borderOn = true;
+      }
+    },
+    resizeCanvas(){
+      document.getElementById('canvasBox').style.width = String(this.inputWidth).concat("px");
+      document.getElementById('canvasBox').style.height = String(this.inputHeight).concat("px");
+      this.inputHeight = undefined;
+      this.inputWidth = undefined;
     }
   },
   computed: {
