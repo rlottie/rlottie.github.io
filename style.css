@@ -142,22 +142,48 @@ html, body {
   margin-left: 10px;
 }
 
-/*  */
-.bg-navbar {
-  background-color: #1D3557;
-  color: white;
+.scroll-sect-dark::-webkit-scrollbar {
+  width: 8px; 
+  height: 8px;
 }
 
-.bg-sidebar {
-  background-color: #0B2545;
-  color: white;
-  height: 92vh;
+.scroll-sect-dark::-webkit-scrollbar-track {
+  background: #37474F;
+  /* border-radius: 15px; */
 }
 
-.bg-green {
-  background-color: rgba(10, 142, 144, 0.74);
+.scroll-sect-dark::-webkit-scrollbar-corner {
+  background: #37474F; 
 }
 
-.bg-blue {
-  background-color: rgba(15, 128, 170, 0.77);
+.scroll-sect-dark::-webkit-scrollbar-thumb {
+  background: #0b6687;
+}
+
+.scroll-sect-dark::-webkit-scrollbar-button {
+  background-color: red;
+  height: 0;
+}
+
+.scroll-sect-light::-webkit-scrollbar {
+  width: 8px; 
+  height: 8px;
+}
+
+.scroll-sect-light::-webkit-scrollbar-track {
+  background: #ECEFF1;
+  /* border-radius: 15px; */
+}
+
+.scroll-sect-light::-webkit-scrollbar-corner {
+  background: #ECEFF1; 
+}
+
+.scroll-sect-light::-webkit-scrollbar-thumb {
+  background: #56a6c2;
+}
+
+.scroll-sect-light::-webkit-scrollbar-button {
+  background-color: red;
+  height: 0;
 }

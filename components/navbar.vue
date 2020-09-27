@@ -1,17 +1,15 @@
 <template>
-  <div class="bg-navbar navbar d-flex justify-content-between">
+  <div class="navbar d-flex justify-content-between">
     <!-- logo -->
-    <div>
-      <a href="/" class="d-flex align-items-center text-decoration-none">
+    <div class="d-flex align-items-center">
         <img class="logo" src="../static/logo.png" alt="logo">
-        <h2 class="ml-3 text-white">PrettyView</h2>
-      </a>
+        <h2 class="ml-3">PrettyView</h2>
     </div>
 
     <!-- button group -->
     <div class="d-flex">
       <!-- canvas shape -->
-      <v-btn-toggle v-model="toggle_one" class="mx-2" mandatory>
+      <v-btn-toggle light v-model="toggle_one" class="mx-2" mandatory>
         <v-btn>
           <v-icon class="fas fa-square-full text-dark"></v-icon>
         </v-btn>
@@ -19,14 +17,24 @@
           <v-icon class="fas fa-circle text-dark"></v-icon>
         </v-btn>
       </v-btn-toggle>
+
+
       <!-- light/dark mode -->
-      <button class="btn btn-light mx-2">Light Mode</button>
+      <button class="btn mx-2 mode" @click="changeMode" :class="{ 'text-white': !$vuetify.theme.dark }">{{ mode }}</button>
+      <!-- <v-select
+        dark
+        color="white"
+        :items="modes"
+        outlined
+      ></v-select> -->
+
       <!-- import/export -->
       <div class="filebox mx-2">
         <label for="fileSelector"><span class="d-inline-block pt-1">New Lottie</span></label>
-        <input class="upload-hidden" type="file" id="fileSelector" accept=".json" placeholder="New Lottie">
+        <input class="upload-hidden" @change="changeFile" type="file" id="fileSelector" accept=".json" placeholder="New Lottie">
       </div>
-      <button class="btn bg-green text-white mx-2" data-toggle="modal" data-target="#exportModal">Export <i class="fas fa-download ml-2"></i></button>
+      <button class="btn accent mx-2" :class="{ 'text-white': $vuetify.theme.dark }" data-toggle="modal" data-target="#exportModal">Export <i class="fas fa-download ml-2"></i></button>
+
 
       <!-- Modal -->
       <div class="modal fade text-dark" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
@@ -43,7 +51,8 @@
             </div>
             <div class="modal-footer border-top-0">
               <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-              <button type="button" class="btn bg-green text-white">Export</button>
+              <button type="button" class="btn accent text-white" :class="{ 'text-white': $vuetify.theme.dark }">Export</button>
+
             </div>
           </div>
         </div>
@@ -60,9 +69,25 @@ module.exports = {
   data: function () {
     return {
       toggle_one: 0,
+      mode: 'Light Mode',
     }
   },
 
+  methods: {
+    changeFile() {
+      this.$emit('file-changed')
+    },
+
+    changeMode() {
+      if (this.mode == 'Light Mode') {
+        this.mode = 'Dark Mode'
+        this.$vuetify.theme.dark = false
+      } else {
+        this.mode = 'Light Mode'
+        this.$vuetify.theme.dark = true
+      }
+    },
+  },
   watch: {
     toggle_one() {
       this.$emit('canvas-changed', this.toggle_one)
