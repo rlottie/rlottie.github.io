@@ -22,16 +22,16 @@
   <div id="app">
     <v-app>
       <v-main class="main-window">
-        <left-bar @menuclicked="ChangeMenu"></left-bar>
-        <left-bar-detail :selectedMenu="selectedMenu" v-if="activeDetailBar"></left-bar-detail>
+        <left-bar :selectedmenu="selectedMenu" @menuclicked="ChangeMenu"></left-bar>
+        <left-bar-detail :selectedmenu="selectedMenu" v-if="activeDetailBar"></left-bar-detail>
         <right-bar></right-bar>
-        <div class="header bg-grey-lighter border-grey-light rounded border or">
+        <!-- <div class="header bg-grey-lighter border-grey-light rounded border or">
           <span text-grey-darkest font-bold justify-center text-xs> Drag and Drop your Lottie JSON file to the window
           </span>
           <span text-grey-darkest font-bold justify-center text-xs> Or </span>
           <input class="cursor-pointer" type="file" id="fileSelector" accept=".json">
-        </div>
-        <div class="content " id="content">
+        </div> -->
+        <div class="content mt-15" id="content">
           <canvas class="" id="myCanvas" width="100" height="100" style="border:1px solid #dae1e7; background-color: white;"></canvas>
         </div>
         <!-- <div class="footer"> -->
@@ -46,16 +46,15 @@
 
         <!-- </div> -->
 
-
+        <loading-bar :user="user"></loading-bar>
       </v-main>
-      <loading-bar :user="user"></loading-bar>
     </v-app>
   </div>
 
+  <script src="main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
   <script src="https://unpkg.com/http-vue-loader"></script>
-  <script src="main.js"></script>
   <script>
     Vue.use(httpVueLoader);
     new Vue({
