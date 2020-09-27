@@ -11,7 +11,7 @@
           </v-btn>
         </template> 
         <span>
-          upload New Json File
+          upload New JSON File
         </span>
       </v-tooltip>
     </div>
@@ -158,11 +158,11 @@ module.exports = {
   },
   methods:{
     clickMenu(i){
+      console.log(this.selectedmenu)
       this.$emit('menuclicked', i)
     },
     isActivate: function(i) {
       if (this.selectedmenu === i){
-        console.log('hi');
         return true
       }else{
         return false
