@@ -57,7 +57,7 @@ function setup() {
         var buffer = obj.lottieHandle.render(obj.curFrame, obj.canvas.width, obj.canvas.height);
         var result = Uint8ClampedArray.from(buffer);
         var imageData = new ImageData(result, obj.canvas.width, obj.canvas.height);
-  
+
         obj.context.putImageData(imageData, 0, 0);
   
         var getCurFrameEvent = new CustomEvent("CurrentFrameEvent", {
@@ -134,7 +134,66 @@ function setup() {
     obj.trOpacity = function (keypath, opacity) {
       obj.lottieHandle.set_tr_opacity(keypath, opacity);
     }
-  
+
+    obj.fillColorsSlow = function (keypath, sr, sg, sb, sa, er, eg, eb, ea) {
+      var unit = obj.frameRate/obj.frameCount;
+      var unitR = (er - sr)*unit;
+      var unitG = (eg - sg)*unit;
+      var unitB = (eb - sb)*unit;
+      var unitA = (ea - sa)*unit;
+      obj.lottieHandle.set_fill_color_slow(keypath, sr, sg, sb, unitR, unitG, unitB);
+      obj.lottieHandle.set_fill_opacity_slow(keypath, sa, unitA);
+    }
+
+    obj.strokeColorsSlow = function (keypath, sr, sg, sb, sa, er, eg, eb, ea) {
+      var unit = obj.frameRate/obj.frameCount;
+      var unitR = (er - sr)*unit;
+      var unitG = (eg - sg)*unit;
+      var unitB = (eb - sb)*unit;
+      var unitA = (ea - sa)*unit;
+      obj.lottieHandle.set_stroke_color_slow(keypath, sr, sg, sb, unitR, unitG, unitB);
+      obj.lottieHandle.set_stroke_opacity_slow(keypath, sa, unitA);
+    }
+
+    obj.strokeWidthSlow = function (keypath, sWidth, eWidth) {
+      var unit = obj.frameRate/obj.frameCount;
+      var unitWidth = (eWidth - sWidth)*unit;
+      obj.lottieHandle.set_stroke_width_slow(keypath, sWidth, unitWidth);
+    }
+    
+    obj.trAnchorSlow = function (keypath, sx, sy, ex, ey){
+      var unit = obj.frameRate/obj.frameCount;
+      var unitX = (ex - sx)*unit;
+      var unitY = (ey - sy)*unit;
+      obj.lottieHandle.set_tr_anchor_slow(keypath, sx, sy, unitX, unitY);
+    }
+
+    obj.trPositionSlow = function (keypath, sx, sy, ex, ey){
+      var unit = obj.frameRate/obj.frameCount;
+      var unitX = (ex - sx)*unit;
+      var unitY = (ey - sy)*unit;
+      obj.lottieHandle.set_tr_position_slow(keypath, sx, sy, unitX, unitY);
+    }
+
+    obj.trScaleSlow = function (keypath, sw, sh, ew, eh){
+      var unit = obj.frameRate/obj.frameCount;
+      var unitW = (ew - sw)*unit;
+      var unitH = (eh - sh)*unit;
+      obj.lottieHandle.set_tr_scale_slow(keypath, sw, sh, unitW, unitH);
+    }
+
+    obj.trRotationSlow = function (keypath, sDegree, eDegree) {
+      var unit = obj.frameRate/obj.frameCount;
+      var unitDegree = (eDegree - sDegree)*unit;
+      obj.lottieHandle.set_tr_rotation_slow(keypath, sDegree, unitDegree);
+    }
+
+    obj.trOpacitySlow = function (keypath, sOpacity, eOpacity) {
+      var unit = obj.frameRate/obj.frameCount;
+      var unitOpacity = (eOpacity - sOpacity)*unit;
+      obj.lottieHandle.set_tr_opacity_slow(keypath, sOpacity, unitOpacity);
+    }
+
      obj.seek = function (value) {
         obj.curFrame = value;
         window.requestAnimationFrame( obj.render);
@@ -177,79 +236,6 @@ function setup() {
           clearTimeout(obj.resizeId);
           obj.resizeId = setTimeout(windowResizeDone, 150);
      }
-  
-     function setChangingSlow(type, keypath, start, end){
-      var startData = {
-        r: 0,
-        g: 0,
-        b: 0,
-        opacity: 0,
-        width: 0,
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
-      }
-      var endData = {
-        r: 0,
-        g: 0,
-        b: 0,
-        opacity: 0,
-        width: 0,
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
-      }
-      for(var n in start){
-        startData[n] = start[n];
-      }
-      for(var n in end){
-        endData[n] = end[n];
-      }
-      console.log(startData, endData);
-      //will be change obj.frameRate
-      var frameRate = 1
-      var unit = frameRate/obj.frameCount
-  
-      var curR = startData.r+(endData.r - startData.r)*unit*obj.curFrame;
-      var curG = startData.g+(endData.g - startData.g)*unit*obj.curFrame;
-      var curB = startData.b+(endData.b - startData.b)*unit*obj.curFrame;
-      var curOpacity = startData.opacity+(endData.opacity-startData.opacity)*unit*obj.curFrame;
-      var curWidth = startData.width+(endData.width-startData.width)*unit*obj.curFrame;
-      var curX = startData.x+(endData.x - startData.x)*unit*obj.curFrame;
-      var curY = startData.y+(endData.y - startData.y)*unit*obj.curFrame;
-      var curW = startData.w+(endData.w - startData.w)*unit*obj.curFrame; 
-      var curH = startData.h+(endData.h - startData.h)*unit*obj.curFrame;
-      var curDegree = startData.degree+(endData.degree - startData.degree)*unit*obj.curFrame;
-  
-      switch(type){
-        case 0:
-          obj.fillColors(keypath, curR, curG, curB, curOpacity);
-          break;
-        case 1:
-          obj.strokeColors(keypath, curR, curG, curB, curOpacity);
-          break;
-        case 2:
-          obj.strokeWidth(keypath, curWidth);
-          break;
-        case 3:
-          obj.trAnchor(keypath, curX, curY);
-          break;
-        case 4:
-          obj.trPosition(keypath, curX, curY);
-          break;
-        case 5:
-          obj.trScale(keypath, curW, curH);
-          break;
-        case 6:
-          obj.trRotation(keypath, curDegree);
-          break;
-        case 7:
-          obj.trOpacity(keypath, curOpacity);
-          break;
-      }      
-    }
   
     return obj;
   }());
