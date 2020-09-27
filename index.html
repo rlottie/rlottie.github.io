@@ -23,7 +23,7 @@
     <v-app>
       <v-main class="main-window">
         <left-bar :selectedmenu="selectedMenu" @menuclicked="ChangeMenu"></left-bar>
-        <left-bar-detail :selectedmenu="selectedMenu" v-if="activeDetailBar"></left-bar-detail>
+        <left-bar-detail :selectedmenu="selectedMenu" v-if="activeDetailBar" @close-sidebar="CloseMenuBar"></left-bar-detail>
         <right-bar></right-bar>
         <!-- <div class="header bg-grey-lighter border-grey-light rounded border or">
           <span text-grey-darkest font-bold justify-center text-xs> Drag and Drop your Lottie JSON file to the window
@@ -82,6 +82,10 @@
             this.activeDetailBar = true;
             this.selectedMenu = i
           }
+        },
+        CloseMenuBar(){
+          this.activeDetailBar = false;
+          this.selectedMenu = 0
         }
       }
     })
