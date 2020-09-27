@@ -151,29 +151,6 @@
                   </v-list-item>
                 </v-list>
               </v-menu>
-              <!-- <v-tooltip v-model="show" top style="z-index: 1000;">
-                <template v-slot:activator="{ }">
-                  <v-btn
-                    color="rgba(0, 0, 0, 0)"
-                    :outlined="false"
-                    :depressed="true"
-                    fab x-small
-                    @click="show = !show"
-                  >
-                  <v-icon
-                    color="#ffffff"
-                  >
-                  mdi-cog
-                  </v-icon>
-                </template>
-                <v-list-item
-                  v-for="(item, index) in rates"
-                  :key="index"
-                >
-                <v-btn/>
-                  {{item}} {{index}}
-                </v-list-item>
-              </v-tooltip> -->
             </v-col>
           </v-row>
         </v-col>
