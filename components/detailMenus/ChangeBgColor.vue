@@ -7,7 +7,8 @@
             </v-color-picker>
         </v-col>
       </v-row>
-    <v-btn @click="changeBgColor">Change</v-btn>
+    <v-btn @click="changeCanvasColor">Canvas</v-btn>
+    <v-btn @click="changeBgColor">Background</v-btn>
     <div class="d-flex flex-column justify-content-center align-items-start mt-5 mb-3">
       <h2 class="mt-9" style="color: white">Resize Canvas</h2>
       <input type="range" min="0" max="100" value="100"
@@ -30,9 +31,12 @@ module.exports = {
     }
   },
   methods:{
-    changeBgColor(){
+    changeCanvasColor(){
         document.getElementById('myCanvas').style.backgroundColor = this.color;
     },
+    changeBgColor(){
+        document.getElementById('content').style.backgroundColor = this.color;
+    }
   },
   computed: {
     color: {

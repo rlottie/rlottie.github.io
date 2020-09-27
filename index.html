@@ -9,6 +9,7 @@
   <meta name="author" content="Subhransu">
   <title>rlottie viewer</title>
   <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="dragresize.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
@@ -16,36 +17,42 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 
+<!-- Drag and Resize -->
+<script type="text/javascript">
+  var canvas = document.getElementById('content');
+  // const clientRect = canvas.getBoundingClientRect();
+
+  var dragresize = new DragResize('dragresize',
+ { minWidth: 10, minHeight: 10, minLeft: 500, minTop: 65, maxLeft: 1900, maxTop: 900 });
+  dragresize.isElement = function(elm)
+  {
+  if (elm.className && elm.className.indexOf('drsElement') > -1) return true;
+  };
+  dragresize.isHandle = function(elm)
+  {
+  if (elm.className && elm.className.indexOf('drsMoveHandle') > -1) return true;
+};
+  dragresize.apply(document);
+</script>
+
 </head>
 
 <body>
   <div id="app">
     <v-app>
       <v-main class="main-window">
-        <left-bar :selectedmenu="selectedMenu" @menuclicked="ChangeMenu"></left-bar>
+        <left-bar @menuclicked="ChangeMenu"></left-bar>
         <left-bar-detail :selectedmenu="selectedMenu" v-if="activeDetailBar"></left-bar-detail>
         <right-bar></right-bar>
-        <!-- <div class="header bg-grey-lighter border-grey-light rounded border or">
-          <span text-grey-darkest font-bold justify-center text-xs> Drag and Drop your Lottie JSON file to the window
-          </span>
-          <span text-grey-darkest font-bold justify-center text-xs> Or </span>
-          <input class="cursor-pointer" type="file" id="fileSelector" accept=".json">
-        </div> -->
-        <div class="content mt-15" id="content">
-          <canvas class="" id="myCanvas" width="100" height="100" style="border:1px solid #dae1e7; background-color: white;"></canvas>
+        <div id="content" class="content mt-15"  style="background-color: white;">
+          <!-- cnavas에 직접 drsElement와 drsMoveHandle을 주면 크기조절이 불가능해서 div로 감싸줘서 이걸 움직이도록 -->
+          <div class="drsElement drsMoveHandle" style="left: 37.3%; top: 7%; width: 400px; height: 400px; background: white;">
+            <canvas id="myCanvas" 
+            style="left: 37.3%; top: 7%; width: 100%; height: 100%; background: white;">
+            </canvas>
+          </div>
         </div>
-        <!-- <div class="footer"> -->
-        <!-- <div class="slider bg-grey-lighter border-grey-light rounded border">
-            <button class="playButton cursor-pointer" type="button" id="playButton" onclick="buttonClicked()">Pause</button>
-            <input  class="margin-left-10px" type="range" id="slider" min="0" max="100" value="0" id="slider" oninput="onSliderDrag(this.value)">
-          </div> -->
-          <!-- <div class="speed bg-grey-lighter border-grey-light rounded border"> 
-            <div class="margin-left-10px text-grey-darkest font-bold justify-center text-xs">Canvas Resize </div>
-            <input  class="margin-left-10px" type="range" id="slider" min="0" max="100" value="100" id="slider" oninput="onResizeSliderDrag(this.value)">
-          </div> -->
-
-        <!-- </div> -->
-
+        <v-spacer></v-spacer>
         <loading-bar :user="user"></loading-bar>
       </v-main>
     </v-app>
