@@ -11,7 +11,7 @@
           </v-btn>
         </template> 
         <span>
-          upload New Json File
+          upload New JSON File
         </span>
       </v-tooltip>
     </div>
@@ -75,7 +75,7 @@
           <span>
             <v-card class="m-0" max-width="400">
               <v-img class="white--text align-end" height="200px" 
-              src="./../assets/ChangeTR.png">
+                src="./../assets/ChangeTR.png">
                 <v-card-title>Change Transform</v-card-title>
               </v-img>
               <v-card-subtitle class="pb-0">Change 5 properties</v-card-subtitle>
@@ -138,8 +138,8 @@
           <span>                  
             <v-card class="m-0 p-0" max-width="400">
               <v-img class="white--text align-end" height="200px" 
-              src="./../assets/ChangeBG.png">
-                <v-card-title>Change Background Color or Resize</v-card-title>
+              src="./assets/ChangeBG.png">
+                <v-card-title>Top 10 Australian beaches</v-card-title>
               </v-img>
               <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
               <v-card-text class="text--primary">
@@ -158,7 +158,7 @@
 module.exports = {
   name:"left-bar",
   props:{
-    selectedmenu: Number
+    selectedmenu: Number,
   },
   methods:{
     clickMenu(i){
