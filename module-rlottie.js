@@ -220,7 +220,6 @@ var RLottieModule = (function () {
     for(var n in end){
       endData[n] = end[n];
     }
-    console.log(startData, endData);
     //will be change obj.frameRate
     var frameRate = 1
     var unit = frameRate/obj.frameCount
