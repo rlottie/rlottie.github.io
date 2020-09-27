@@ -44,6 +44,10 @@
         <left-bar-detail :selectedmenu="selectedMenu" v-if="activeDetailBar"></left-bar-detail>
         <right-bar></right-bar>
         <div id="content" class="content mt-15"  style="background-color: white;">
+          <!-- 배경담는 div -->
+          <div id="img-background">
+          </div>
+            
           <!-- cnavas에 직접 drsElement와 drsMoveHandle을 주면 크기조절이 불가능해서 div로 감싸줘서 이걸 움직이도록 -->
           <div id="canvasBox" class="drsElement drsMoveHandle" style="left: 37.3%; top: 7%; width: 400px; height: 400px; background: white;">
             <canvas id="myCanvas" 
@@ -52,7 +56,7 @@
           </div>
         </div>
         <v-spacer></v-spacer>
-        <loading-bar :user="user"></loading-bar>
+        <loading-bar></loading-bar>
       </v-main>
     </v-app>
   </div>
@@ -74,7 +78,6 @@
       },
       data() {
         return {
-          user: "This is a test string",
           activeDetailBar: false,
           selectedMenu: 0,
         }
