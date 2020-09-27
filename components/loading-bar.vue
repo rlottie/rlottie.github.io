@@ -249,7 +249,7 @@ module.exports = {
 
     // setTimeout(function() {
     //   RLottieModule.fillColors("**",1,0,0,100);
-    //   RLottieModule.history.insert("**","FillColor",[1,0,0,100])
+    //   RLottieModule.history.insert("**","FillColor",[1,0,0,50])
 
     //   RLottieModule.strokeColors("**",1,0,0,100);
     //   RLottieModule.history.insert("**","StrokeColor",[1,0,0,100])
