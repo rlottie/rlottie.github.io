@@ -158,7 +158,6 @@ module.exports = {
   },
   methods:{
     clickMenu(i){
-      console.log(this.selectedmenu)
       this.$emit('menuclicked', i)
     },
     isActivate: function(i) {
