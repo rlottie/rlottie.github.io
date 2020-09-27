@@ -252,8 +252,7 @@ function setup() {
   }
   
   function setFrameRate(value){
-    if(value < 0 && value > 2) value = 1;
-  
+    value = RLottieModule.frameRate < 0 ? -value : value;
     RLottieModule.frameRate = value;
   }
   
