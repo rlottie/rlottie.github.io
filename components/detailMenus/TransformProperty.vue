@@ -97,11 +97,11 @@
                     <div class="text-left" style="color:white;">Scale</div>
                     <v-row class="pd-0 pt-2"> 
                         <v-col cols="8" class="text-left py-0">
-                            <div style="color:white;">v</div>
+                            <div style="color:white;">w</div>
                         </v-col>
                         <v-col cols="4" class="py-0">
                             <v-text-field
-                                v-model="scale.v"
+                                v-model="scale.w"
                                 solo
                                 dense
                                 dark
@@ -199,7 +199,7 @@ module.exports = {
         y: 0,
       },
       scale : {
-        v: 0,
+        w: 0,
         h: 0,
       },
       degree: 0,
@@ -222,7 +222,7 @@ module.exports = {
     scale: {
         deep: true,
         handler(){
-            RLottieModule.trScale("**",Number(this.scale.v),Number(this.scale.h))
+            RLottieModule.trScale("**",Number(this.scale.w),Number(this.scale.h))
         }
     },
     degree: function (val) {
