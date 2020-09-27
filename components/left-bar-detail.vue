@@ -3,6 +3,7 @@
         <shape-property v-show="selectedmenu==1" @call-close-menu-parent="closeSideBarFromChild"></shape-property>
         <stroke-property v-show="selectedmenu==2" @call-close-menu-parent="closeSideBarFromChild"></stroke-property>
         <transform-property v-show="selectedmenu==3" @call-close-menu-parent="closeSideBarFromChild"></transform-property>
+        <change-bg-img v-show="selectedmenu==4"></change-bg-img>
         <resize-canvas v-show="selectedmenu==5"></resize-canvas>
         <change-bg-color v-show="selectedmenu==6"></change-bg-color>
     </div>
@@ -17,6 +18,8 @@ module.exports = {
         'transform-property': 'url:./detailMenus/TransformProperty.vue',
         'resize-canvas': 'url:./detailMenus/ResizeCanvas.vue',
         'change-bg-color': 'url:./detailMenus/ChangeBgColor.vue',
+        'resize-canvas': 'url:./detailMenus/ResizeCanvas.vue',
+        'change-bg-img': 'url:./detailMenus/ChangeBgImg.vue',
     },
     props:{
         selectedmenu: Number,
