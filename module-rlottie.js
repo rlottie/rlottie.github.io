@@ -73,7 +73,6 @@ var RLottieModule = (function () {
       });
       window.dispatchEvent(getAllFrameEvent);
   }
-
   obj.reload = function (jsString) {
     var len  = obj.lottieHandle.load(jsString);
     obj.frameCount = obj.lottieHandle.frames();
@@ -283,16 +282,19 @@ function handleFileSelect(evt) {
 }
 
 function handleFiles(files) {
-  for (var i = 0, f; f = files[i]; i++) {
-    if (f.type.includes('json')) {
-      var read = new FileReader();
-      read.readAsText(f);
-      read.onloadend = function(){
-          RLottieModule.reload(read.result);
+    for (var i = 0, f; f = files[i]; i++) {
+      if (f.type.includes('json')) {
+        var read = new FileReader();
+        read.readAsText(f);
+        read.onloadend = function(){
+            RLottieModule.reload(read.result);
+            parseJson(read.result);
+        }
+        break;
+
       }
       break;
-    }
-  }
+    }  
 }
 
 function handleDragOver(evt) {
@@ -307,20 +309,92 @@ function fileSelectionChanged() {
 }
 
 function onResizeSliderDrag(value) {
-var width = document.getElementById("content").clientWidth;
-var height = document.getElementById("content").clientHeight;
-var size = width;
-if (width < height)
-  size = width;
-else
-  size = height;
-size = size-8;
-size = size * (value / 100);
+  var width = document.getElementById("content").clientWidth;
+  var height = document.getElementById("content").clientHeight;
+  var size = width;
+  if (width < height)
+    size = width;
+  else
+    size = height;
+  size = size-8;
+  size = size * (value / 100);
 
-if (size < 10 )
-  size = 10;
-size = size | 0;
-document.getElementById("myCanvas").width  = size;
-document.getElementById("myCanvas").height  = size;
-RLottieModule.update();
+  if (size < 10 )
+    size = 10;
+  size = size | 0;
+  document.getElementById("myCanvas").width  = size;
+  document.getElementById("myCanvas").height  = size;
+  RLottieModule.update();
+}
+
+function parseObject(json_data){  
+  var new_data = {
+    name: json_data.nm,
+    type: json_data.ty,
+    ddd: json_data.ddd,
+    children: []
+  }
+
+  for(let i in json_data.assets) {
+    for(let j in json_data.assets[j].layers[j])
+      new_data.children.push(this.parseObject(json_data.assets[i].layers[j]));
+  }
+
+  for(let i in json_data.layers) {
+    new_data.children.push(this.parseObject(json_data.layers[i]));    
+  }
+
+  for(let i in json_data.it) {
+    new_data.children.push(this.parseObject(json_data.it[i]));    
+  }
+
+  for(let i in json_data.shapes) {
+    new_data.children.push(this.parseObject(json_data.shapes[i]));    
+  }
+
+  for(let i in json_data.masksProperties) {
+    new_data.children.push(this.parseObject(json_data.masksProperties[i]));    
+  }
+  
+  for(let i in json_data.ef) {
+    new_data.children.push(this.parseObject(json_data.ef[i]));    
+  }
+
+  for(let i in json_data.d) {
+    new_data.children.push(this.parseObject(json_data.d[i]));    
+  }
+
+  if(json_data.tr) {
+    new_data.children.push(this.parseObject(json_data.tr));    
+  }
+
+  // var white_list = ['assets', 'layers', 'shapes', 'it','c','ks','o','p','r','s','a','tr','w','ml2','sk','sa','so','eo','pt','or','os','e','masksProperties','x','g','h','ef','v','ir','is','tm','sy','d','t']  
+  // for(let i in json_data) {
+  //   if(typeof(json_data[i]) == 'object' && white_list.indexOf(i) == -1){
+  //     console.log('******************', i, json_data, '*******************')
+  //   }
+  // }
+
+  return new_data;
+}
+
+function parseJson(json_string) {
+  var json_data = JSON.parse(json_string);
+  // console.dir(json_data);
+
+  var new_data = {
+    name: 'keypath',
+    children: []
+  }
+
+  for(let i in json_data.assets) {
+    for(let j in json_data.assets[i].layers)
+      new_data.children.push(this.parseObject(json_data.assets[i].layers[j]));
+  }
+
+  for(let i in json_data.layers) {
+    new_data.children.push(this.parseObject(json_data.layers[i]));    
+  }
+  console.dir(new_data) 
+  return new_data
 }
