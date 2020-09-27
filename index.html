@@ -40,7 +40,7 @@
   <div id="app">
     <v-app>
       <v-main class="main-window">
-        <left-bar @menuclicked="ChangeMenu"></left-bar>
+        <left-bar :selectedmenu="selectedMenu" @menuclicked="ChangeMenu"></left-bar>
         <left-bar-detail :selectedmenu="selectedMenu" v-if="activeDetailBar"></left-bar-detail>
         <right-bar></right-bar>
         <div id="content" class="content mt-15"  style="background-color: white;">

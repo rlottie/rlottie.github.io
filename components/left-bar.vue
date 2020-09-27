@@ -154,7 +154,7 @@
 module.exports = {
   name:"left-bar",
   props:{
-    selectedmenu: Number
+    selectedmenu: Number,
   },
   methods:{
     clickMenu(i){
