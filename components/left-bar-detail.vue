@@ -1,5 +1,6 @@
 <template>
     <div id="left-detail-bar" class="d-flex ml-1 align-start justify-center">
+        <change-bg-img v-show="selectedmenu==4"></change-bg-img>
         <resize-canvas v-show="selectedmenu==5"></resize-canvas>
         <change-bg-color v-show="selectedmenu==6"></change-bg-color>
     </div>
@@ -10,7 +11,8 @@ module.exports = {
     name: "left-bar-detail",
     components:{
         'change-bg-color': 'url:./detailMenus/ChangeBgColor.vue',
-        'resize-canvas': 'url:./detailMenus/ResizeCanvas.vue'
+        'resize-canvas': 'url:./detailMenus/ResizeCanvas.vue',
+        'change-bg-img': 'url:./detailMenus/ChangeBgImg.vue',
     },
     props:{
         selectedmenu: Number,

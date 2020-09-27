@@ -26,16 +26,6 @@
         <v-btn @click="resizeCanvas">Resize Canvas</v-btn>
       </v-row>
     </div>
-    <div>
-      <h2 class="mt-4" style="color: white">Insert Image</h2>
-      <input
-        type="file"
-        id="backgroundImg"
-        accept="image/*"
-        @change="setBackgroundImg"
-      />
-      <v-btn @click="backgroundReset">Background Reset</v-btn>
-    </div>
   </div>
 </template>
 
@@ -53,7 +43,6 @@ module.exports = {
         inputHeight: undefined,
         inputWidth: undefined,
         borderOn: true,
-        backgroundImg: false,
     }
   },
   methods: {
@@ -62,35 +51,6 @@ module.exports = {
     },
     changeBgColor() {
       document.getElementById("content").style.backgroundColor = this.color;
-    },
-    backgroundReset() {
-      if (this.backgroundImg){
-        var parentDiv = document.querySelector("#img-background")        
-        var childImg = document.querySelector("#background")
-        parentDiv.removeChild(childImg)
-      }
-      this.backgroundImg = false
-    },
-    setBackgroundImg(event) {
-      if (this.backgroundImg) {
-        var parentDiv = document.querySelector("#img-background")        
-        var childImg = document.querySelector("#background")
-        parentDiv.removeChild(childImg)
-      }
-      var file = event.target.files;
-      var img = document.createElement("img");
-      img.id = "background"
-      var reader = new FileReader();
-      reader.onload = (function (aImg) {
-        return function (e) {
-          aImg.src = e.target.result;
-        };
-      })(img);
-      if (file) {
-        reader.readAsDataURL(file[0]);
-      }
-      document.querySelector("#img-background").appendChild(img);
-      this.backgroundImg = true
     },
     changeCanvasBorderColor(){
       console.log(document.getElementById('myCanvas').style.borderStyle);
