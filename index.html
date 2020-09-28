@@ -65,21 +65,32 @@
               <v-btn type="button" @click="onClickImageUpload"
                 >이미지 업로드</v-btn
               >
-              
             </v-card>
+            프레임 리스트
+            <v-text-field
+              outlined
+              placeholder="쪼갤 단위 입력(기본값 3)"
+              v-model="frameSplit"
+            ></v-text-field>
+            <v-btn @click="changeFrameSplit">변경</v-btn>
             <div
-            style="
-              white-space: nowrap;
-              overflow: auto;
-              width: 100%;
-              height: 150px;
-            "
-            id="frameList"
-          ></div>
+              style="
+                white-space: nowrap;
+                overflow: auto;
+                width: 100%;
+                height: 150px;
+              "
+              id="frameList"
+            ></div>
             <div class="footer">
               <div
                 class="slider bg-grey-lighter border-grey-light rounded border"
               >
+                <button
+                id="playReverse"
+                onclick="playReverse()">
+                  역방향
+                </button>
                 <button
                   class="playButton cursor-pointer"
                   type="button"
@@ -91,7 +102,6 @@
                 <input
                   class="margin-left-10px"
                   type="range"
-                  id="slider"
                   min="0"
                   max="100"
                   value="0"
@@ -139,16 +149,12 @@
                 <input
                   class="margin-left-10px"
                   type="range"
-                  id="slider"
                   min="0"
                   max="100"
                   value="100"
-                  id="slider"
                   oninput="onResizeSliderDrag(this.value)"
                 />
               </div>
-
-              
             </div>
           </div>
         </v-container>
@@ -167,8 +173,13 @@
           message: "hello vue",
           foo: "",
           imgUrl: "",
+          frameSplit: 3,
         },
         methods: {
+          changeFrameSplit() {
+            console.log(RLottieModule)
+            RLottieModule.frameList.init()
+          },
           multiview() {
             open("multiview.html");
           },
