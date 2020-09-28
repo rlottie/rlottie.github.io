@@ -17,6 +17,12 @@
   <body>
       <header>
           <h4>Rlottie web player</h4>
+          <div style="margin-left:auto;margin-right:4px">
+            <input type="text" id="urlInput"/>
+            <button id="getByUrl" onclick="getByUrl()">url 입력</button>
+          </div>
+
+        
           <button id="modalOpenBtn">Lottie JSON upload</button>
           <div class="modal-bg">
             <div class="upload-modal">
@@ -50,8 +56,11 @@
         <section class="manipulate">
         </section>
       </div>
+
       <script src="main.js"></script>
       <script src="draganddrop.js"></script>
       <script src="uploadmodal.js"></script>
-  </body>
+      <script src="https://unpkg.com/axios/dist/axios.min.js" crossorigin="anonymous"></script>
+    </body> 
+
 </html>
