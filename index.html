@@ -36,9 +36,9 @@
   <div id="app">
     <v-app>
       <v-main class="main-window">
-        <left-bar :selectedmenu="selectedMenu" @menuclicked="ChangeMenu"></left-bar>
-        <left-bar-detail :selectedmenu="selectedMenu" v-if="activeDetailBar" @close-sidebar="CloseMenuBar"></left-bar-detail>
-        <right-bar></right-bar>
+        <left-bar @child-event="setHeight" :selectedmenu="selectedMenu" @menuclicked="ChangeMenu"></left-bar>
+        <left-bar-detail class="setScroll" :selectedmenu="selectedMenu" v-if="activeDetailBar" @close-sidebar="CloseMenuBar" :height="leftHeight" ></left-bar-detail>
+        <right-bar :height="leftHeight"></right-bar>
         <div id="content" class="content mt-15" style="background-color: white; border-style: 10px solid red;">
           <!-- 배경담는 div -->
           <div id="img-background">
@@ -76,6 +76,7 @@
         return {
           activeDetailBar: false,
           selectedMenu: 0,
+          leftHeight: 0
         }
       },
       methods: {
@@ -91,7 +92,13 @@
         CloseMenuBar(){
           this.activeDetailBar = false;
           this.selectedMenu = 0
+        },
+        setHeight(val){
+          this.leftHeight = val-104;
         }
+      },
+      mounted(){
+
       }
     })
   </script>
@@ -101,7 +108,29 @@
     width: 100%;
     height: 100%;
     background-color: #171719;
-  }  
+  }
+  ::-webkit-scrollbar{
+    width: 8px;
+    height: 8px;
+    border: 3px solid #fff;
+  }
+  ::-webkit-scrollbar-button:start:decrement, ::-webkit-scrollbar-button:end:increment{
+    display: block;
+    height: 10px;
+    background: #efefef
+  }
+  ::-webkit-scrollbar-track{
+    background: #efefef;
+    -webkit-border-radius: 10px;
+    border-radius:10px;
+  }
+  ::-webkit-scrollbar-thumb{
+    height: 50px;
+    width: 50px;
+    background: rgb(41, 44, 49, 0.3);
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+  }
 </style>
 
 </html>

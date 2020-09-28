@@ -1,5 +1,5 @@
 <template>
-    <div id="left-detail-bar" class="d-flex ml-1 align-start justify-center">
+    <div id="left-detail-bar" class="d-flex ml-1 align-start justify-center" :style="{'overflow-x': 'hidden','overflow-y': 'auto', 'height': height+'px'}">
         <shape-property v-show="selectedmenu==1" @call-close-menu-parent="closeSideBarFromChild"></shape-property>
         <stroke-property v-show="selectedmenu==2" @call-close-menu-parent="closeSideBarFromChild"></stroke-property>
         <transform-property v-show="selectedmenu==3" @call-close-menu-parent="closeSideBarFromChild"></transform-property>
@@ -23,6 +23,7 @@ module.exports = {
     },
     props:{
         selectedmenu: Number,
+        height: Number,
     },
     data() {
         return {
@@ -33,6 +34,8 @@ module.exports = {
             this.$emit('close-sidebar');
         }
     },
+    mounted(){
+    }
 }
 </script>
 

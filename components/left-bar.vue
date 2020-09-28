@@ -1,5 +1,5 @@
 <template>
-  <div id="l-bar">
+  <div id="l-bar" ref="leftBar">
     <div class="uploadBTN" style="align-center">
       <v-tooltip right class="tooltip-btn">
         <template v-slot:activator="{ on, attrs }">
@@ -21,7 +21,7 @@
         <v-tooltip right class="tooltip-btn">
           <template v-slot:activator="{ on, attrs }">
             <v-btn tile class="mt-5" text :color="activateBtn2(1)" v-bind:class="{ activateBtn: isActivate(1) }" @click="clickMenu(1)" v-bind="attrs" v-on="on">
-              <v-icon class="Acitvate">fas fa-heart</v-icon>
+              <v-icon class="Acitvate">fas fa-shapes</v-icon>
             </v-btn>
           </template>
 
@@ -29,12 +29,12 @@
             <v-card class="m-0" max-width="400">
               <v-img class="white--text align-end" height="200px" 
               src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
-                <v-card-title>Top 10 Australian beaches</v-card-title>
+                <v-card-title>Change Fill</v-card-title>
               </v-img>
-              <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
+              <v-card-subtitle class="pb-0">Change 2 properties</v-card-subtitle>
               <v-card-text class="text--primary">
-                <div>Whitehaven Beach</div>
-                <div>Whitsunday Island, Whitsunday Islands</div>
+                <div>Color, Opacity</div>
+                <div></div>
               </v-card-text>
             </v-card>
           </span>
@@ -43,7 +43,7 @@
         <v-tooltip right class="tooltip-btn">
           <template v-slot:activator="{ on, attrs }">
             <v-btn tile class="mt-5" text :color="activateBtn2(2)" v-bind:class="{ activateBtn: isActivate(2) }" @click="clickMenu(2)" v-bind="attrs" v-on="on">
-              <v-icon>fas fa-cut</v-icon>
+              <v-icon>mdi-triangle-wave</v-icon>
             </v-btn>
           </template>
 
@@ -51,12 +51,12 @@
             <v-card class="m-0" max-width="400">
               <v-img class="white--text align-end" height="200px" 
               src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
-                <v-card-title>Top 10 Australian beaches</v-card-title>
+                <v-card-title>Change Stroke</v-card-title>
               </v-img>
-              <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
+              <v-card-subtitle class="pb-0">Change 3 properties</v-card-subtitle>
               <v-card-text class="text--primary">
-                <div>Whitehaven Beach</div>
-                <div>Whitsunday Island, Whitsunday Islands</div>
+                <div>Color, Opacity, Width</div>
+                <div></div>
               </v-card-text>
             </v-card>
           </span>
@@ -183,6 +183,16 @@ module.exports = {
         }
       }
     }
+  },
+  mounted() {
+    var self = this;
+    self.$emit('child-event', this.$refs.leftBar.clientHeight);
+    window.addEventListener("resize", function(e) {
+      self.$emit('child-event', e.target.innerHeight);
+    });
+  },
+  beforeDestroy() {
+    // window.removeEventListener("resize");
   }
 }
 </script>

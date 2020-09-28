@@ -20,7 +20,7 @@
             absolute
             color="#292c31"
             width="350"
-            height="859"
+            :height="height"
         >
             <v-switch          
                 v-model="isSelectAll"      
@@ -69,6 +69,7 @@
 <script>
 module.exports = {
     name:"right-bar",
+    props:['height'],
     data() {
         return {
             isSelectAll: false,
