@@ -5,6 +5,13 @@ function setup() {
   script.src = "rlottie-wasm.js";
   head.appendChild(script);
 
+  // >>> Import Inho module, don't remove it before MR >>>
+  script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src = "inho_module.js";
+  head.appendChild(script);
+  //  <<<< end of Inho module, will be deleted with MR <<<
+
   script.onload = (_) => {
     Module.onRuntimeInitialized = (_) => {
       RLottieModule.init();
@@ -71,9 +78,9 @@ var RLottieModule = (function () {
 
   obj.reload = function (jsString) {
     var len = obj.lottieHandle.load(jsString);
-    obj.layerList = JSON.parse(jsString).layers
-    document.getElementById("layerlist").innerHTML = ""
-    getAllLayers(obj.layerList, document.getElementById("layerlist"))
+    obj.layerList = JSON.parse(jsString).layers;
+    document.getElementById("layerlist").innerHTML = "";
+    getAllLayers(obj.layerList, document.getElementById("layerlist"));
     obj.frameCount = obj.lottieHandle.frames();
     obj.curFrame = 0;
     obj.frameRate = 0;
@@ -138,7 +145,6 @@ var RLottieModule = (function () {
     window.requestAnimationFrame(obj.render);
   };
 
-
   obj.setFillColor = function (keyPath, r, g, b) {
     obj.lottieHandle.setFillColor(keyPath, r, g, b);
   };
@@ -186,7 +192,6 @@ var RLottieModule = (function () {
     document.getElementById("slider").value = obj.curFrame;
   }
 
-
   // resize canvas
   function relayoutCanvas() {
     var width = document.getElementById("content").clientWidth;
@@ -222,17 +227,17 @@ var RLottieModule = (function () {
   function getAllLayers(list, par) {
     for (var i in list) {
       if (list[i].nm != null) {
-        var layer = document.createElement("li")
-        layer.innerHTML = list[i].nm
+        var layer = document.createElement("li");
+        layer.innerHTML = list[i].nm;
       }
       for (var j in list[i]) {
         if (Array.isArray(list[i][j])) {
-          var sublayer = document.createElement("ul")
-          getAllLayers(list[i][j], sublayer)
-          layer.appendChild(sublayer)
+          var sublayer = document.createElement("ul");
+          getAllLayers(list[i][j], sublayer);
+          layer.appendChild(sublayer);
         }
       }
-      par.appendChild(layer)
+      par.appendChild(layer);
     }
   }
   return obj;
@@ -322,20 +327,22 @@ function playReverse() {
 }
 
 //get rlottie by url -write by lee
-function getByUrl(){
-  var url=document.getElementById("urlInput").value;
-  if(url===""){
-    alert("url을 입력해주세요")
+function getByUrl() {
+  var url = document.getElementById("urlInput").value;
+  if (url === "") {
+    alert("url을 입력해주세요");
     return;
   }
-  axios.get(url).then((res) => {
-    var read=res.data;
-    console.log(read);
-    RLottieModule.reload(JSON.stringify(read));
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+  axios
+    .get(url)
+    .then((res) => {
+      var read = res.data;
+      console.log(read);
+      RLottieModule.reload(JSON.stringify(read));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
   console.log(url);
 }
