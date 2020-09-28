@@ -396,4 +396,3 @@ function getKeyPathTree(obj, depth = 0) {
   }
   return node;
 }
-}
