@@ -324,7 +324,7 @@ function playReverse() {
     var status = "정방향";
   }
   document.getElementById("playReverse").innerText = status;
-  
+}
 
 //get rlottie by url -write by lee
 function getByUrl(){
