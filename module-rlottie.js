@@ -441,7 +441,7 @@ function initHistory(jsString) {
   obj.movePrev = function() {
     if(!obj.hasPrev()) {
       return false;
-    }
+    }    
     obj.cur--;    
     obj.reload();
   }

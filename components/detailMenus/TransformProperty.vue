@@ -351,25 +351,30 @@ module.exports = {
         deep: true,
         handler(){
             RLottieModule.trAnchor(RLottieModule.keypath,Number(this.anchor.x),Number(this.anchor.y))
+            RLottieModule.history.insert(RLottieModule.keypath, "TrAnchor", [Number(this.anchor.x),Number(this.anchor.y)])  
         }
     },
     position: {
         deep: true,
         handler(){
             RLottieModule.trPosition(RLottieModule.keypath,Number(this.position.x),Number(this.position.y))
+            RLottieModule.history.insert(RLottieModule.keypath, "TrPosition", [Number(this.position.x),Number(this.position.y)])  
         }
     },
     scale: {
         deep: true,
         handler(){
             RLottieModule.trScale(RLottieModule.keypath,Number(this.scale.w),Number(this.scale.h))
+            RLottieModule.history.insert(RLottieModule.keypath, "TrScale", [Number(this.scale.w),Number(this.scale.h)])  
         }
     },
     degree: function (val) {
         RLottieModule.trRotation(RLottieModule.keypath,Number(this.degree))
+        RLottieModule.history.insert(RLottieModule.keypath, "TrRotation", [Number(this.degree)])  
     },
     opacity: function (val) {
         RLottieModule.trOpacity(RLottieModule.keypath,Number(this.opacity))
+        RLottieModule.history.insert(RLottieModule.keypath, "TrOpacity", [Number(this.opacity)])
     },
   },
   computed: {

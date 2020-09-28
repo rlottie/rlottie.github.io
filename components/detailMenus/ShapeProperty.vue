@@ -52,17 +52,33 @@ module.exports = {
     data() {
       return {
         picker: null,
-        setFlag: false
+        setFlag: false,
+
+        setHistory: true,
+        interval: '',        
       }
+    },
+    mounted(){   
+      var self = this
+      this.interval = setInterval(() => {
+          self.setHistory = true;
+      }, 500);      
+    },
+    beforeDestroy(){
+      clearInterval(this.interval);
     },
     watch: {
       picker(){
         if(this.setFlag){
-          const r = this.picker.rgba.r;
-          const g = this.picker.rgba.g;
-          const b = this.picker.rgba.b;
-          const a = this.picker.rgba.a;
-          RLottieModule.fillColors(RLottieModule.keypath, r / 255.0, g / 255.0, b / 255.0, a * 100);
+          const r = this.picker.rgba.r / 255;
+          const g = this.picker.rgba.g / 255;
+          const b = this.picker.rgba.b / 255;
+          const a = this.picker.rgba.a * 100;          
+          RLottieModule.fillColors(RLottieModule.keypath, r, g, b, a);         
+          if(this.setHistory) {         
+            this.setHistory = false;
+            RLottieModule.history.insert(RLottieModule.keypath, "FillColor", [r,g,b,a])  
+          }
         }else{
           this.setFlag = true;
         }
@@ -71,7 +87,7 @@ module.exports = {
     methods: {
       closeSidebar(){
         this.$emit("call-close-menu-parent");
-      }
+      },
     },
 }
 </script>

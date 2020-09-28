@@ -1,11 +1,11 @@
 <template>
     <div id="left-detail-bar" class="d-flex ml-1 align-start justify-center" :style="{'overflow-x': 'hidden','overflow-y': 'auto', 'height': height+'px'}">
-        <shape-property v-show="selectedmenu==1" @call-close-menu-parent="closeSideBarFromChild"></shape-property>
-        <stroke-property v-show="selectedmenu==2" @call-close-menu-parent="closeSideBarFromChild"></stroke-property>
-        <transform-property v-show="selectedmenu==3" @call-close-menu-parent="closeSideBarFromChild"></transform-property>
-        <change-bg-img v-show="selectedmenu==4"></change-bg-img>
-        <resize-canvas v-show="selectedmenu==5"></resize-canvas>
-        <change-bg-color v-show="selectedmenu==6"></change-bg-color>
+        <shape-property v-if="selectedmenu==1" @call-close-menu-parent="closeSideBarFromChild"></shape-property>
+        <stroke-property v-if="selectedmenu==2" @call-close-menu-parent="closeSideBarFromChild"></stroke-property>
+        <transform-property v-if="selectedmenu==3" @call-close-menu-parent="closeSideBarFromChild"></transform-property>
+        <change-bg-img v-if="selectedmenu==4"></change-bg-img>
+        <resize-canvas v-if="selectedmenu==5"></resize-canvas>
+        <change-bg-color v-if="selectedmenu==6"></change-bg-color>
     </div>
 </template>
 
