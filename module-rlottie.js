@@ -11,10 +11,9 @@ function setup() {
     };
   };
 }
-
 setup();
 
-// Create a LottieView Module responsible of rendering a lotti file
+// Create a LottieView Module responsible of rendering a lottie file
 var RLottieModule = (function () {
   // create a object;
   var obj = {};
@@ -29,6 +28,8 @@ var RLottieModule = (function () {
   obj.resizeId = {};
   obj.playing = true;
   obj.wasPlaying = false;
+  obj.reverse = false;
+
   obj.keyPathTree = {};
 
   obj.init = function () {
@@ -45,22 +46,27 @@ var RLottieModule = (function () {
     obj.frameCount = obj.lottieHandle.frames();
     // hook to the main loop
     mainLoop();
+    frameList.init();
   };
 
+  // animation logic
   obj.render = function () {
     if (obj.canvas.width == 0 || obj.canvas.height == 0) return;
-
     var buffer = obj.lottieHandle.render(
-      obj.curFrame++,
+      // obj.curFrame++,
+      (obj.curFrame += obj.reverse ? -1 : 1),
+      // obj.curFrame--,
       obj.canvas.width,
       obj.canvas.height
     );
     var result = Uint8ClampedArray.from(buffer);
     var imageData = new ImageData(result, obj.canvas.width, obj.canvas.height);
-
     obj.context.putImageData(imageData, 0, 0);
-
-    if (obj.curFrame >= obj.frameCount) obj.curFrame = 0;
+    if (obj.reverse) {
+      if (obj.curFrame <= 0) obj.curFrame = obj.frameCount;
+    } else {
+      if (obj.curFrame >= obj.frameCount) obj.curFrame = 0;
+    }
   };
 
   obj.reload = function (jsString) {
@@ -131,6 +137,7 @@ var RLottieModule = (function () {
     window.requestAnimationFrame(obj.render);
   };
 
+
   obj.setFillColor = function (keyPath, r, g, b) {
     obj.lottieHandle.setFillColor(keyPath, r, g, b);
   };
@@ -178,6 +185,8 @@ var RLottieModule = (function () {
     document.getElementById("slider").value = obj.curFrame;
   }
 
+
+  // resize canvas
   function relayoutCanvas() {
     var width = document.getElementById("content").clientWidth;
     var height = document.getElementById("content").clientHeight;
@@ -234,6 +243,7 @@ var RLottieModule = (function () {
   return obj;
 })();
 
+// play, pause lottie
 function buttonClicked() {
   if (RLottieModule.isPlaying()) {
     document.getElementById("playButton").innerText = "Play";
@@ -260,6 +270,7 @@ function handleFileSelect(evt) {
   handleFiles(evt.dataTransfer.files);
 }
 
+// upload JSON file
 function handleFiles(files) {
   for (var i = 0, f; (f = files[i]); i++) {
     if (f.type.includes("json")) {
@@ -271,6 +282,8 @@ function handleFiles(files) {
         RLottieModule.reload(read.result);
       };
       break;
+    } else {
+      alert("please upload JSON file :)");
     }
   }
 }
@@ -281,6 +294,7 @@ function handleDragOver(evt) {
   evt.dataTransfer.dropEffect = "copy";
 }
 
+// JSON file change
 function fileSelectionChanged() {
   var input = document.getElementById("fileSelector");
   handleFiles(input.files);
@@ -302,7 +316,15 @@ function onResizeSliderDrag(value) {
   RLottieModule.update();
 }
 
-
+// play reverse
+function playReverse() {
+  RLottieModule.reverse = !RLottieModule.reverse;
+  var status = "역방향";
+  if (RLottieModule.reverse) {
+    var status = "정방향";
+  }
+  document.getElementById("playReverse").innerText = status;
+  
 
 //get rlottie by url -write by lee
 function getByUrl(){
@@ -322,7 +344,6 @@ function getByUrl(){
 
   console.log(url);
 }
-
 
 function setFillColor(keyPath, r, g, b) {
   RLottieModule.setFillColor(keyPath, r, g, b);
