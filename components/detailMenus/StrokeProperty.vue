@@ -51,7 +51,7 @@
         <v-col cols="4" class="py-0">   
           <v-text-field
             v-model="width"
-            class="mt-0 pt-0"
+            class="input mt-0 pt-0"
             hide-details
             type="number"
             solo
@@ -117,7 +117,7 @@ input{
   border: 1px solid white !important;
   color: white;
 }
-#input-73{
+.input input{
   border: 0px solid white !important;
 }
 span{
