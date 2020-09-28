@@ -5,18 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>rlottieWebPlayer</title>
     <link rel="stylesheet" href="webplayerstyle.css" />
+    <link
+    href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+    rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
       <header>
           <h4>Rlottie web player</h4>
+          <button id="modalOpenBtn">Lottie JSON upload</button>
+          <div class="modal-bg">
+            <div class="upload-modal">
+              <div style="margin-left:auto;cursor:pointer;" id="modalCloseBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="30px" height="30px"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+              </div>
+              <h1>Lottie JSON upload</h1>
+              <p>Drag and drop your Lottie File(JSON) here</p>
+              <div class="drop-zone">
+                <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                <input type="file" name="myFile" class="drop-zone__input" id="fileSelector" accept=".json">
+              </div>
+            </div>
+          </div>
       </header>
       <div class="sections">
         <section class="layers">
         </section>
         <section class="display">
+            <div
+            class="content"
+            id="content"
+            style="background-position:center;height: 100%;"
+          >
+            <canvas
+              class=""
+              id="myCanvas"
+            ></canvas>
+          </div>
         </section>
         <section class="manipulate">
         </section>
       </div>
+      <script src="main.js"></script>
+      <script src="draganddrop.js"></script>
+      <script src="uploadmodal.js"></script>
   </body>
 </html>
