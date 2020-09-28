@@ -210,26 +210,26 @@ module.exports = {
     anchor:{
         deep: true,
         handler(){
-            RLottieModule.trAnchor("**",Number(this.anchor.x),Number(this.anchor.y))
+            RLottieModule.trAnchor(RLottieModule.keypath,Number(this.anchor.x),Number(this.anchor.y))
         }
     },
     position: {
         deep: true,
         handler(){
-            RLottieModule.trPosition("**",Number(this.position.x),Number(this.position.y))
+            RLottieModule.trPosition(RLottieModule.keypath,Number(this.position.x),Number(this.position.y))
         }
     },
     scale: {
         deep: true,
         handler(){
-            RLottieModule.trScale("**",Number(this.scale.w),Number(this.scale.h))
+            RLottieModule.trScale(RLottieModule.keypath,Number(this.scale.w),Number(this.scale.h))
         }
     },
     degree: function (val) {
-        RLottieModule.trRotation("**",Number(this.degree))
+        RLottieModule.trRotation(RLottieModule.keypath,Number(this.degree))
     },
     opacity: function (val) {
-        RLottieModule.trOpacity("**",Number(this.opacity))
+        RLottieModule.trOpacity(RLottieModule.keypath,Number(this.opacity))
     },
   },
   computed: {

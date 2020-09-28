@@ -94,13 +94,13 @@ module.exports = {
           const g = this.picker.rgba.g;
           const b = this.picker.rgba.b;
           const a = this.picker.rgba.a;
-          RLottieModule.strokeColors('**', r / 255.0, g / 255.0, b / 255.0, a * 100);
+          RLottieModule.strokeColors(RLottieModule.keypath, r / 255.0, g / 255.0, b / 255.0, a * 100);
         }else{
           this.setFlag = true;
         }
       },
       width: function(width){
-        RLottieModule.strokeWidth("**", Number(this.width));
+        RLottieModule.strokeWidth(RLottieModule.keypath, Number(this.width));
       }
     },
     methods: {

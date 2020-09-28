@@ -62,7 +62,7 @@ module.exports = {
           const g = this.picker.rgba.g;
           const b = this.picker.rgba.b;
           const a = this.picker.rgba.a;
-          RLottieModule.fillColors('**', r / 255.0, g / 255.0, b / 255.0, a * 100);
+          RLottieModule.fillColors(RLottieModule.keypath, r / 255.0, g / 255.0, b / 255.0, a * 100);
         }else{
           this.setFlag = true;
         }
