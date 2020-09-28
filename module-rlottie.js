@@ -364,9 +364,6 @@ function setTrOpacity(keyPath, opacity) {
   RLottieModule.setTrOpacity(keyPath, opacity);
 }
 
-<<<<<<< HEAD
-
-=======
 function getKeyPathTree(obj, depth = 0) {
   const node = {
     depth: depth,
@@ -383,4 +380,3 @@ function getKeyPathTree(obj, depth = 0) {
   }
   return node;
 }
->>>>>>> e8893b1188186cb249531057dc4d17bb0668660d
