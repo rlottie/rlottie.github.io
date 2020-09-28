@@ -305,6 +305,28 @@ function onResizeSliderDrag(value) {
   RLottieModule.update();
 }
 
+
+
+//get rlottie by url -write by lee
+function getByUrl(){
+  var url=document.getElementById("urlInput").value;
+  if(url===""){
+    alert("url을 입력해주세요")
+    return;
+  }
+  axios.get(url).then((res) => {
+    var read=res.data;
+    console.log(read);
+    RLottieModule.reload(JSON.stringify(read));
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+  console.log(url);
+}
+
+
 function setFillColor(keyPath, r, g, b) {
   RLottieModule.setFillColor(keyPath, r, g, b);
 }
@@ -344,3 +366,5 @@ function setTrRotation(keyPath, degree) {
 function setTrOpacity(keyPath, opacity) {
   RLottieModule.setTrOpacity(keyPath, opacity);
 }
+
+
