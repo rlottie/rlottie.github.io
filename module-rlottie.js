@@ -65,7 +65,8 @@ var RLottieModule = (function () {
   obj.reload = function (jsString) {
     var len = obj.lottieHandle.load(jsString);
     obj.layerList = JSON.parse(jsString).layers
-    getAllLayers()
+    document.getElementById("layerlist").innerHTML = ""
+    getAllLayers(obj.layerList, document.getElementById("layerlist"))
     obj.frameCount = obj.lottieHandle.frames();
     obj.curFrame = 0;
     obj.frameRate = 0;
@@ -214,26 +215,20 @@ var RLottieModule = (function () {
     obj.resizeId = setTimeout(windowResizeDone, 150);
   }     
 
-  function getAllLayers() {
-    var layerlist = document.getElementById("layerlist")
-    for (var i in obj.layerList) {
-      var layer = document.createElement("li")
-      var sublayer = document.createElement("ul")
-      layer.innerHTML = obj.layerList[i].nm
-      for (var j in obj.layerList[i].shapes) {
-        var sub = document.createElement("li")
-        sub.innerHTML = obj.layerList[i].shapes[j].nm
-        sublayer.appendChild(sub)
-        var subsublayer = document.createElement("ul")
-        for (var k in obj.layerList[i].shapes[j].it) {
-          var subsub = document.createElement("li")
-          subsub.innerHTML = obj.layerList[i].shapes[j].it[k].nm
-          subsublayer.appendChild(subsub)
-        }
-        sublayer.appendChild(subsublayer)
+  function getAllLayers(list, par) {
+    for (var i in list) {
+      if (list[i].nm != null) {
+        var layer = document.createElement("li")
+        layer.innerHTML = list[i].nm
       }
-      layer.appendChild(sublayer)
-      layerlist.appendChild(layer)
+      for (var j in list[i]) {
+        if (Array.isArray(list[i][j])) {
+          var sublayer = document.createElement("ul")
+          getAllLayers(list[i][j], sublayer)
+          layer.appendChild(sublayer)
+        }
+      }
+      par.appendChild(layer)
     }
   }
   return obj;
