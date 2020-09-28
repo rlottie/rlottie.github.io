@@ -68,7 +68,6 @@ var RLottieModule = (function () {
 
     obj.lottieHandle = new Module.RlottieWasm();
     obj.frameCount = obj.lottieHandle.frames();
-
     // hook to the main loop
     mainLoop();
     frameList.init();
@@ -96,8 +95,40 @@ var RLottieModule = (function () {
 
   obj.reload = function (jsString) {
     var len = obj.lottieHandle.load(jsString);
+    obj.layerList = JSON.parse(jsString).layers
+    getAllLayers()
     obj.frameCount = obj.lottieHandle.frames();
     obj.curFrame = 0;
+    // force a render in pause state
+    sliderReset();
+    obj.update();
+  };
+
+  obj.update = function () {
+    if (!obj.playing) window.requestAnimationFrame(obj.render);
+  };
+
+  obj.pause = function () {
+    window.cancelAnimationFrame(obj.rafId);
+    obj.playing = false;
+  };
+
+
+		frameList.canvas = document.getElementById("frame"+i);
+   		frameList.context = frameList.canvas.getContext('2d');
+
+		var buffer = obj.lottieHandle.render(i, 100, 100);
+		var result = Uint8ClampedArray.from(buffer);
+		var imageData = new ImageData(result, 100,100);
+		
+	     	frameList.context.putImageData(imageData, 0, 0);
+
+	}
+   }
+
+   //layer list by yoon
+   obj.layerList = []
+
     // force a render in pause state
     sliderReset();
     obj.update();
@@ -125,12 +156,54 @@ var RLottieModule = (function () {
     window.requestAnimationFrame(obj.render);
   };
 
+
+  obj.setFillColor = function (keyPath, r, g, b) {
+    obj.lottieHandle.setFillColor(keyPath, r, g, b);
+  };
+
+  obj.setFillOpacity = function (keyPath, opacity) {
+    obj.lottieHandle.setFillOpacity(keyPath, opacity);
+  };
+
+  obj.setStrokeColor = function (keyPath, r, g, b) {
+    obj.lottieHandle.setStrokeColor(keyPath, r, g, b);
+  };
+
+  obj.setStrokeOpacity = function (keyPath, opacity) {
+    obj.lottieHandle.setStrokeOpacity(keyPath, opacity);
+  };
+
+  obj.setStrokeWidth = function (keyPath, width) {
+    obj.lottieHandle.setStrokeWidth(keyPath, width);
+  };
+
+  obj.setTrAnchor = function (keyPath, x, y) {
+    obj.lottieHandle.setTrAnchor(keyPath, x, y);
+  };
+
+  obj.setTrPosition = function (keyPath, x, y) {
+    obj.lottieHandle.setTrPosition(keyPath, x, y);
+  };
+
+  obj.setTrScale = function (keyPath, w, h) {
+    obj.lottieHandle.setTrScale(keyPath, w, h);
+  };
+
+  obj.setTrRotation = function (keyPath, degree) {
+    obj.lottieHandle.setTrRotation(keyPath, degree);
+  };
+
+  obj.setTrOpacity = function (keyPath, opacity) {
+    obj.lottieHandle.setTrOpacity(keyPath, opacity);
+  };
+
   function mainLoop() {
     obj.rafId = window.requestAnimationFrame(mainLoop);
     obj.render();
     document.getElementById("slider").max = obj.frameCount;
     document.getElementById("slider").value = obj.curFrame;
   }
+
 
   // resize canvas
   function relayoutCanvas() {
@@ -162,8 +235,30 @@ var RLottieModule = (function () {
     }
     clearTimeout(obj.resizeId);
     obj.resizeId = setTimeout(windowResizeDone, 150);
-  }
+  }     
 
+  function getAllLayers() {
+    var layerlist = document.getElementById("layerlist")
+    for (var i in obj.layerList) {
+      var layer = document.createElement("li")
+      var sublayer = document.createElement("ul")
+      layer.innerHTML = obj.layerList[i].nm
+      for (var j in obj.layerList[i].shapes) {
+        var sub = document.createElement("li")
+        sub.innerHTML = obj.layerList[i].shapes[j].nm
+        sublayer.appendChild(sub)
+        var subsublayer = document.createElement("ul")
+        for (var k in obj.layerList[i].shapes[j].it) {
+          var subsub = document.createElement("li")
+          subsub.innerHTML = obj.layerList[i].shapes[j].it[k].nm
+          subsublayer.appendChild(subsub)
+        }
+        sublayer.appendChild(subsublayer)
+      }
+      layer.appendChild(sublayer)
+      layerlist.appendChild(layer)
+    }
+  }
   return obj;
 })();
 
@@ -246,4 +341,43 @@ function playReverse() {
     var status = "정방향";
   }
   document.getElementById("playReverse").innerText = status;
+  
+function setFillColor(keyPath, r, g, b) {
+  RLottieModule.setFillColor(keyPath, r, g, b);
+}
+
+function setFillOpacity(keyPath, opacity) {
+  RLottieModule.setFillOpacity(keyPath, opacity);
+}
+
+function setStrokeColor(keyPath, r, g, b) {
+  RLottieModule.setStrokeColor(keyPath, r, g, b);
+}
+
+function setStrokeOpacity(keyPath, opacity) {
+  RLottieModule.setStrokeOpacity(keyPath, opacity);
+}
+
+function setStrokeWidth(keyPath, width) {
+  RLottieModule.setStrokeWidth(keyPath, width);
+}
+
+function setTrAnchor(keyPath, x, y) {
+  RLottieModule.setTrAnchor(keyPath, x, y);
+}
+
+function setTrPosition(keyPath, x, y) {
+  RLottieModule.setTrPosition(keyPath, x, y);
+}
+
+function setTrScale(keyPath, w, h) {
+  RLottieModule.setTrScale(keyPath, w, h);
+}
+
+function setTrRotation(keyPath, degree) {
+  RLottieModule.setTrRotation(keyPath, degree);
+}
+
+function setTrOpacity(keyPath, opacity) {
+  RLottieModule.setTrOpacity(keyPath, opacity);
 }
