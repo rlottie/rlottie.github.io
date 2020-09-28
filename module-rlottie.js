@@ -170,7 +170,6 @@ var RLottieModule = (function () {
     clearTimeout(obj.resizeId);
     obj.resizeId = setTimeout(windowResizeDone, 150);
   }
-
   return obj;
 })();
 

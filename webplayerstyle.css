@@ -1,0 +1,61 @@
+:root {
+  /* color */
+  --color-head: rgb(41,42,45);
+  --color-black: #202020;
+  --color-white: #ffffff;
+  --color-blue: #3b88c3;
+  --color-yellow: #fbbe28;
+  --color-pink: #fd7f84;
+  --color-light-grey: hsl(0, 0%, 87%);
+}
+
+* {
+  box-sizing: border-box;
+  color: white;
+}
+
+body {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  background: var(--color-black);
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: var(--color-head);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 50px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header h4 {
+  margin: 0;
+  font-weight: 900;
+}
+.sections {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
+.sections section {
+  height: 100%;
+}
+.sections .layers {
+  width: 450px;
+}
+.sections .display {
+  background: white;
+  width: 100%; 
+}
+.sections .manipulate {
+  width: 450px;
+}
