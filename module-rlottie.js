@@ -62,6 +62,9 @@ var RLottieModule = (function () {
 	}
    }
 
+   //layer list by yoon
+   obj.layerList = []
+
 
     obj.init = function () {
         var input = document.getElementById('fileSelector');
@@ -96,6 +99,10 @@ var RLottieModule = (function () {
     }
 
     obj.reload = function (jsString) {
+      // get all layer lists
+      obj.layerList = JSON.parse(jsString).layers
+      getAllLayers()
+
       var len  = obj.lottieHandle.load(jsString);
       obj.frameCount = obj.lottieHandle.frames();
       obj.curFrame = 0;
@@ -167,6 +174,29 @@ var RLottieModule = (function () {
           }
           clearTimeout(obj.resizeId);
           obj.resizeId = setTimeout(windowResizeDone, 150);
+     }
+
+     function getAllLayers() {
+       var layerlist = document.getElementById("layerlist")
+       for (var i in obj.layerList) {
+         var layer = document.createElement("li")
+         var sublayer = document.createElement("ul")
+         layer.innerHTML = obj.layerList[i].nm
+         for (var j in obj.layerList[i].shapes) {
+           var sub = document.createElement("li")
+           sub.innerHTML = obj.layerList[i].shapes[j].nm
+           sublayer.appendChild(sub)
+           var subsublayer = document.createElement("ul")
+           for (var k in obj.layerList[i].shapes[j].it) {
+             var subsub = document.createElement("li")
+             subsub.innerHTML = obj.layerList[i].shapes[j].it[k].nm
+             subsublayer.appendChild(subsub)
+           }
+           sublayer.appendChild(subsublayer)
+         }
+         layer.appendChild(sublayer)
+         layerlist.appendChild(layer)
+       }
      }
 
     return obj;
