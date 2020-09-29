@@ -65,11 +65,7 @@
         <v-tooltip right class="tooltip-btn">
           <template v-slot:activator="{ on, attrs }">
             <v-btn tile class="mt-5" text :color="activateBtn2(3)" v-bind:class="{ activateBtn: isActivate(3) }" @click="clickMenu(3)" v-bind="attrs" v-on="on">
-              <!-- <v-icon large>mdi-camera-control</v-icon> -->
-              <!-- <v-icon large>mdi-rotate-3d-variant</v-icon> -->
-              <!-- <v-icon large>mdi-crop</v-icon> -->
               <v-icon>fas fa-crop</v-icon>
-              <!-- <v-icon>fas fa-retweet</v-icon> -->
             </v-btn>
           </template>
           <span>
@@ -89,49 +85,7 @@
 
         <v-tooltip right class="tooltip-btn">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn tile class="mt-5" text :color="activateBtn2(4)" v-bind:class="{ activateBtn: isActivate(4) }" @click="clickMenu(4)" v-bind="attrs" v-on="on">
-              <v-icon>fas fa-image</v-icon>
-            </v-btn>
-          </template>
-          <span>
-            <v-card class="m-0" max-width="400">
-              <v-img class="white--text align-end" height="200px" 
-              src="./assets/ChangeTR.png">
-                <v-card-title>Top 10 Australian beaches</v-card-title>
-              </v-img>
-              <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
-              <v-card-text class="text--primary">
-                <div>Whitehaven Beach</div>
-                <div>Whitsunday Island, Whitsunday Islands</div>
-              </v-card-text>
-            </v-card>
-          </span>
-        </v-tooltip>
-
-        <v-tooltip right class="tooltip-btn">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn tile class="mt-5" text :color="activateBtn2(5)" v-bind:class="{ activateBtn: isActivate(5) }" @click="clickMenu(5)" v-bind="attrs" v-on="on">
-              <v-icon>fas fa-arrows-alt</v-icon>
-            </v-btn>
-          </template>
-          <span>
-            <v-card class="m-0" max-width="400">
-              <v-img class="white--text align-end" height="200px" 
-              src="./assets/ChangeTR.png">
-                <v-card-title>Top 10 Australian beaches</v-card-title>
-              </v-img>
-              <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
-              <v-card-text class="text--primary">
-                <div>Whitehaven Beach</div>
-                <div>Whitsunday Island, Whitsunday Islands</div>
-              </v-card-text>
-            </v-card>
-          </span>
-        </v-tooltip>
-
-        <v-tooltip right class="tooltip-btn">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn tile class="mt-5" v-bind:class="{ activateBtn: isActivate(6) }" text :color="activateBtn2(6)" @click="clickMenu(6)" v-bind="attrs" v-on="on">
+            <v-btn tile class="mt-5" v-bind:class="{ activateBtn: isActivate(4) }" text :color="activateBtn2(4)" @click="clickMenu(4)" v-bind="attrs" v-on="on">
               <v-icon>fas fa-palette</v-icon>
             </v-btn>
           </template>
