@@ -3,6 +3,9 @@ html, body {
   width: 100%;
   margin: 0;
 }
+aside {
+  border: black solid 3px;
+}
 
 .window {
   display: flex;
@@ -10,6 +13,10 @@ html, body {
   height: 100%;
   flex-direction: column;
   justify-content: center;
+}
+
+.to-flex {
+  display: flex;
 }
 
 .header {
