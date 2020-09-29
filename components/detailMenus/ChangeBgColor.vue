@@ -106,7 +106,7 @@ module.exports = {
   data() {
     return {
       type: "rgba",
-      rgba: { r: 255, g: 255, b: 255, a: 1 },
+      rgba: { r: 255, g: 255, b: 255 },
       canvasSizeInput: this.canvasSize,
       backgroundImg: false
     };
@@ -179,10 +179,9 @@ module.exports = {
       const r = this.rgba.r;
       const g = this.rgba.g;
       const b = this.rgba.b;
-      const a = this.rgba.a;
       document.getElementById(
         "content"
-      ).style.backgroundColor = `rgba(${r},${g},${b},${a})`;
+      ).style.backgroundColor = `rgba(${r},${g},${b})`;
     },
     canvasSizeInput: {
       deep: true,
