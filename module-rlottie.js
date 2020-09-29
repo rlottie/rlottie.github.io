@@ -60,12 +60,15 @@ var RLottieModule = (function () {
 
   //add custom by lee frameList
   var frameList = {};
-  frameList.canvas = {};
-  frameList.context = {};
-  frameList.list = {};
 
   frameList.init = function () {
+    frameList.canvas = {};
+    frameList.context = {};
     frameList.list = document.getElementById("frameList");
+
+    while (frameList.list.hasChildNodes()) {
+      frameList.list.removeChild(frameList.list.firstChild);
+    }
 
     for (var i = 0; i < obj.frameCount; i++) {
       var canvas = document.createElement("canvas");
@@ -121,6 +124,7 @@ var RLottieModule = (function () {
 
     // force a render in pause state
     sliderReset();
+    frameList.init();
     obj.update();
   };
 
