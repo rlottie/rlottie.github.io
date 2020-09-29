@@ -28,7 +28,7 @@
           <span>
             <v-card class="m-0" max-width="400">
               <v-img class="white--text align-end" height="200px" 
-              src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
+              src="./assets/ChangeTR.png">
                 <v-card-title>Change Fill</v-card-title>
               </v-img>
               <v-card-subtitle class="pb-0">Change 2 properties</v-card-subtitle>
@@ -50,7 +50,7 @@
           <span>
             <v-card class="m-0" max-width="400">
               <v-img class="white--text align-end" height="200px" 
-              src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
+              src="./assets/ChangeTR.png">
                 <v-card-title>Change Stroke</v-card-title>
               </v-img>
               <v-card-subtitle class="pb-0">Change 3 properties</v-card-subtitle>
@@ -75,7 +75,7 @@
           <span>
             <v-card class="m-0" max-width="400">
               <v-img class="white--text align-end" height="200px" 
-                src="./../assets/ChangeTR.png">
+                src="./assets/ChangeTR.png">
                 <v-card-title>Change Transform</v-card-title>
               </v-img>
               <v-card-subtitle class="pb-0">Change 5 properties</v-card-subtitle>
@@ -96,7 +96,7 @@
           <span>
             <v-card class="m-0" max-width="400">
               <v-img class="white--text align-end" height="200px" 
-              src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
+              src="./assets/ChangeTR.png">
                 <v-card-title>Top 10 Australian beaches</v-card-title>
               </v-img>
               <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
@@ -117,7 +117,7 @@
           <span>
             <v-card class="m-0" max-width="400">
               <v-img class="white--text align-end" height="200px" 
-              src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
+              src="./assets/ChangeTR.png">
                 <v-card-title>Top 10 Australian beaches</v-card-title>
               </v-img>
               <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
@@ -213,5 +213,8 @@ module.exports = {
   }
   .activateBtn{
     border-left: 4px solid #0099cc;
+  }
+  .tooltip-btn{
+    z-index: 100;
   }
 </style>
