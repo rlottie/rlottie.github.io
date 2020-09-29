@@ -19,7 +19,7 @@
         </v-col>
       </v-row>
     </div>
-    <v-row>
+    <v-row class="mt-4">>
       <v-col class="d-flex justify-center pa-0">
         <v-color-picker
           flat
@@ -72,7 +72,7 @@
         </v-col>
       </v-row>
     </div>
-    <div class="uploadBTN" style="align-left">
+    <div class="uploadBTN" style="align-left;border-bottom: none;">
       <v-tooltip right class="tooltip-btn">
         <template v-slot:activator="{ on, attrs }">
           <v-btn tile class="py-7" text color="white" v-bind="attrs" v-on="on">
@@ -220,8 +220,5 @@ span {
 #backgroundImg {
   display: none;
   cursor: pointer;
-}
-.uploadBTN {
-  border-bottom: none;
 }
 </style>
