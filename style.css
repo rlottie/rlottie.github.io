@@ -1,9 +1,13 @@
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   margin: 0;
 }
 
+/*  
+  The layout for the basic screen
+*/
 .window {
   display: flex;
   width: 100%;
@@ -13,51 +17,51 @@ html, body {
 }
 
 .header {
-  height: 10%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; 
-  align-items: center;
+  background: linear-gradient(90deg, #00c4cc, #7d2ae8);
 }
 
 .content {
-  height: 75%;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  height: 79%;
+  background-color: rgb(240, 240, 240);
 }
 
-.renderer {
-  width: 300px;
-  height: 300px;
-  background-color: red;
+.upper-bar {
+  height: 6% !important;
 }
 
-.footer {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  height: 15%;
-  min-width: 250px;
+.info-bar {
+  height: 6%;
 }
+
+.left-bar {
+  height: 94%;
+}
+
+.left-bar-detail {
+  height: 94%;
+}
+
+.right-bar {
+  height: 94%;
+}
+
+.loading-bar {
+  height: 9%;
+}
+
+/*
+  CSS properties to support components of class and id.
+*/
 
 .slider {
   display: flex;
   flex-direction: row;
-  justify-content: center; 
-  align-items: center;
-  width: 250px;
-  height: 50px;
-}
-
-.bg_color_container {
-  display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 250px;
+  width: 300px;
   height: 50px;
 }
 
@@ -75,68 +79,203 @@ html, body {
   border-style: groove;
 }
 
-.color_text {
-}
-
-.color_button_group {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  min-width : 140px;
-  max-width : 140px;
-  background: lightergrey;
-}
-.color_button {
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-}
-.btn_white { background-color: white;}
-.btn_black { background-color: black;}
-.btn_red { background-color: red;}
-.btn_green { background-color: green;}
-.btn_blue { background-color: blue;}
-
 .card {
-  #box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
-
-
-// copied
 
 .justify-center {
-    justify-content: center;
+  justify-content: center;
 }
 
 .text-xs {
-    font-size: .75rem;
+  font-size: 0.75rem;
+}
+
+.text-md {
+  font-size: 15px;
 }
 
 .border-grey-light {
-    border-color: #dae1e7;
+  border-color: #dae1e7;
 }
 
 .bg-grey-lighter {
-    background-color: #f1f5f8;
+  background-color: #f1f5f8;
 }
 
 .rounded {
-    border-radius: .25rem;
+  border-radius: 0.25rem;
 }
 
 .text-grey-darkest {
-    color: #3d4852;
+  color: #3d4852;
 }
+
 .font-bold {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .cursor-pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .margin-left-10px {
   margin-left: 10px;
 }
 
+.font-white {
+  color: white;
+}
+
+.bg-transparent {
+  background-color: transparent !important;
+}
+
+.width-100-percent {
+  width: 100%;
+}
+
+.width-90-percent {
+  width: 90%;
+}
+
+.height-100-percent {
+  height: 100% !important;
+}
+
+.comb-list {
+  width: 190px;
+  background-color: rgba(33, 33, 33, 0.9) !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.upload-btn {
+  border-bottom: 1px solid grey;
+  align-content: center;
+}
+
+.activate-btn {
+  border-left: 4px solid #01c3cc;
+}
+
+.tooltip-btn {
+  z-index: 100;
+}
+
+.card-title {
+  color: #2b2b2b;
+}
+
+.card-gif {
+  position: absolute;
+  transform: translateY(-110px);
+}
+
+.border-left-1 {
+  border-left: 0.5px solid #242a32 !important;
+}
+
+#file-selector {
+  display: none;
+  cursor: pointer;
+}
+
+/*
+  CSS properties for drag.js 
+*/
+.drsElement {
+  position: absolute;
+  border: 1px solid #333;
+}
+
+/*
+  The main mouse handle that moves the whole element.
+  You can apply to the same tag as drsElement if you want.
+*/
+.drsMoveHandle {
+  height: 20px;
+  background-color: #ccc;
+  border-bottom: 1px solid #666;
+  cursor: move;
+}
+
+/*
+  The DragResize object name is automatically applied to all generated
+  corner resize handles, as well as one of the individual classes below.
+*/
+.dragresize {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  font-size: 1px;
+  background: #eee;
+  border: 1px solid #333;
+}
+
+/*
+  Individual corner classes - required for resize support.
+  These are based on the object name plus the handle ID.
+*/
+.dragresize-tl {
+  top: -8px;
+  left: -8px;
+  cursor: nw-resize;
+}
+
+.dragresize-tm {
+  top: -8px;
+  left: 50%;
+  margin-left: -4px;
+  cursor: n-resize;
+}
+
+.dragresize-tr {
+  top: -8px;
+  right: -8px;
+  cursor: ne-resize;
+}
+
+.dragresize-ml {
+  top: 50%;
+  margin-top: -4px;
+  left: -8px;
+  cursor: w-resize;
+}
+
+.dragresize-mr {
+  top: 50%;
+  margin-top: -4px;
+  right: -8px;
+  cursor: e-resize;
+}
+
+.dragresize-bl {
+  bottom: -8px;
+  left: -8px;
+  cursor: sw-resize;
+}
+
+.dragresize-bm {
+  bottom: -8px;
+  left: 50%;
+  margin-left: -4px;
+  cursor: s-resize;
+}
+
+.dragresize-br {
+  bottom: -8px;
+  right: -8px;
+  cursor: se-resize;
+}
+
+.drsElement {
+  position: absolute;
+  border: 1px solid #333;
+}
+/*
+  The main mouse handle that moves the whole element.
+  You can apply to the same tag as drsElement if you want.
+*/

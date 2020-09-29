@@ -1,55 +1,212 @@
-
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width height=device-height">
-    <meta name="description" content="rlottie viewer">
-    <meta name="keywords" content="lottie, rlottie, lottie viewer, rlottie viewer">
-    <meta name="author" content="Subhransu">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width height=device-height" />
+    <meta name="description" content="rlottie viewer" />
+    <meta name="keywords" content="lottie, rlottie, lottie viewer, rlottie viewer"/>
+    <meta name="author" content="Subhransu" />
     <title>rlottie viewer</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="./js/main.js"></script>
+    <!-- External Library -->
+    <script type="text/javascript" src="./js/gif/gif.js"></script>
+    <script type="text/javascript" src="./js/dragresize/dragresize.js"></script>
+    <!-- Vue, Vuex -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/3.5.1/vuex.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet"/>
+    <!-- Vuetify -->
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"/>
   </head>
-<body>
 
-<div class="window">
-    <p>Experimental Multiple lottie view <a href="multiview.html">ClickToView</a> ?</p>
-    <div class="header bg-grey-lighter border-grey-light rounded border or">
-      <span text-grey-darkest font-bold justify-center text-xs>  Drag and Drop your Lottie JSON file to the window </span>
-      <span text-grey-darkest font-bold justify-center text-xs>  Or </span>
-      <input class="cursor-pointer" type="file" id="fileSelector" accept=".json">
+  <body>
+    <div id="app">
+      <v-app>
+        <v-main class="main-window">
+          <!-- upper bar -->
+          <upper-bar class="upper-bar"></upper-bar>
+          <!-- left bar component : navigation -->
+          <left-bar
+            :selectedmenu="selectedMenu"
+            @menuclicked="changeMenu"
+            class="left-bar"
+          ></left-bar>
+          <!-- left detail component : manage detail properties -->
+          <left-bar-detail
+            :canvas-size="canvasSize"
+            :selectedmenu="selectedMenu"
+            class="left-bar-detail"
+          ></left-bar-detail>
+          <!-- right bar component : manage key path -->
+          <right-bar></right-bar>
+          <!-- info bar component : show file name, manage redo and undo -->
+          <info-bar class="info-bar"></info-bar>
+          <!-- main canvas -->
+          <div
+            id="content"
+            class="content"
+            ref="content"
+          >
+            <div id="img-background"></div>
+            <!-- wrapper box for drag -->
+            <div
+              v-on:mouseover.left="changeSize"
+              id="canvas-box"
+              class="drsElement drsMoveHandle"
+              :style="{'left': initCanvasLeft+'px', 'top': initCanvasTop+'px', 'width': '550px', 'height': '550px', 'borderStyle':'none', 'background-color':'rgba(255,255,255,0)'}"
+            >
+              <canvas
+                id="myCanvas"
+                style="
+                  width: 100%;
+                  height: 100%;
+                  background-color: rgba(255, 255, 255, 0);
+                "
+              >
+              </canvas>
+            </div>
+          </div>
+          <!-- loading bar component -->
+          <loading-bar 
+            @pointer="setPointer"
+            class="loading-bar"
+          ></loading-bar>
+          <!-- thumbnail component -->
+          <thumbnail-preview
+            v-show="activeThumbnail"
+            :pointx="pointX"
+            :pointy="pointY"
+          ></thumbnail-preview>
+        </v-main>
+      </v-app>
     </div>
-    <div class="content " id="content">
-      <canvas class="" id="myCanvas" width="100" height="100" style="border:1px solid #dae1e7;"></canvas>
-    </div>
-    <div class="footer">  
-      <div class="slider bg-grey-lighter border-grey-light rounded border">
-        <button class="playButton cursor-pointer" type="button" id="playButton" onclick="buttonClicked()">Pause</button>
-        <input  class="margin-left-10px" type="range" id="slider" min="0" max="100" value="0" id="slider" oninput="onSliderDrag(this.value)">
-      </div>
-      <div class="bg_color_container bg-grey-lighter border-grey-light rounded border">
-        <div class="text-grey-darkest font-bold justify-center text-xs"> Background Color</div>
-        <div class="margin-left-10px color_button_group">
-          <button class="color_button btn_white cursor-pointer" 
-            onclick="document.getElementById('content').style.backgroundColor = 'white'"> </button>
-          <button class="color_button btn_black cursor-pointer"
-            onclick="document.getElementById('content').style.backgroundColor = 'black'"> </button>
-          <button class="color_button btn_red cursor-pointer"
-            onclick="document.getElementById('content').style.backgroundColor = 'red'"> </button> 
-          <button class="color_button btn_green cursor-pointer"
-            onclick="document.getElementById('content').style.backgroundColor = 'green'"> </button>
-          <button class="color_button btn_blue cursor-pointer"
-            onclick="document.getElementById('content').style.backgroundColor = 'blue'"> </button>
-        </div>
-      </div>
-      <div class="speed bg-grey-lighter border-grey-light rounded border"> 
-        <div class="margin-left-10px text-grey-darkest font-bold justify-center text-xs">Canvas Resize </div>
-        <input  class="margin-left-10px" type="range" id="slider" min="0" max="100" value="100" id="slider" oninput="onResizeSliderDrag(this.value)">
-      </div>
-    </div>
-</div>
 
-<script src="main.js"></script>
-</body>
+    <script>
+      Vue.use(httpVueLoader);
+      Vue.use(Vuex);
+
+      // Drag and Resize
+      var dragresize = new DragResize("dragresize", {
+        minWidth: 10,
+        minHeight: 10,
+        minLeft: 64,
+        minTop: 0,
+        maxLeft: 1912,
+        maxTop: 830,
+      });
+      dragresize.isElement = function (elm) {
+        if (elm.className && elm.className.indexOf("drsElement") > -1){
+          return true;
+        }
+      };
+      dragresize.isHandle = function (elm) {
+        if (elm.className && elm.className.indexOf("drsMoveHandle") > -1){
+          return true;
+        }
+      };
+      dragresize.apply(document);
+
+      // Import store
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "store/index.js";
+      document.head.appendChild(script);
+
+      //Import Vue
+      script.onload = (_) => {
+        new Vue({
+          el: "#app",
+          vuetify: new Vuetify(),
+          store,
+          components: {
+            "info-bar": "url:./components/layouts/InfoBar.vue",
+            "left-bar": "url:./components/layouts/LeftBar.vue",
+            "left-bar-detail": "url:./components/layouts/LeftBarDetail.vue",
+            "loading-bar": "url:./components/layouts/LoadingBar.vue",
+            "right-bar": "url:./components/layouts/RightBar.vue",
+            "thumbnail-preview": "url:./components/utils/ThumbnailPreview.vue",
+            "upper-bar": "url:./components/layouts/UpperBar.vue",
+          },
+          data() {
+            return {
+              selectedMenu: 0,
+              canvasSize: {
+                height: 550,
+                width: 550,
+              },
+              initialPosition: (window.innerWidth - 550) / 2,
+              initCanvasTop: 0,
+              initCanvasLeft: 0,
+              pointX: 0,
+              pointY: 0,
+              activeThumbnail: false,
+            };
+          },
+          methods: {
+            changeMenu(i) {
+              this.selectedMenu = i;
+            },
+            changeSize() {
+              this.canvasSize.height = Number(
+                document.getElementById("canvas-box").style.height.slice(0, -2)
+              );
+              this.canvasSize.width = Number(
+                document.getElementById("canvas-box").style.width.slice(0, -2)
+              );
+            },
+            setPointer(pointer) {
+              this.pointX = pointer.x - 75;
+              this.pointY = pointer.y - 180;
+              this.activeThumbnail = pointer.isThumbnail;
+            },
+          },
+          mounted() {
+            this.initCanvasLeft = (window.innerWidth - 550) / 2;
+            this.initCanvasTop = (window.innerHeight - 550) / 2;
+          },
+        });
+      };
+    </script>
+  </body>
+  <style>
+    .main-window {
+      width: 100%;
+      height: 100%;
+    }
+    #app {
+      overflow: hidden;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+      border: 3px solid #fff;
+    }
+    ::-webkit-scrollbar-button:start:decrement,
+    ::-webkit-scrollbar-button:end:increment {
+      display: block;
+      height: 10px;
+      background: #efefef;
+    }
+    ::-webkit-scrollbar-track {
+      background: #efefef;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      height: 50px;
+      width: 50px;
+      background: rgb(41, 44, 49, 0.3);
+      -webkit-border-radius: 8px;
+      border-radius: 8px;
+    }
+  </style>
 </html>
-
