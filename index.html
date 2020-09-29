@@ -21,7 +21,7 @@
   <!-- Drag and Resize -->
   <script type="text/javascript">
     var dragresize = new DragResize('dragresize',
-      { minWidth: 10, minHeight: 10, minLeft: 500, minTop: 65, maxLeft: 1900, maxTop: 900 });
+      { minWidth: 10, minHeight: 10, minLeft: 64, minTop: 0, maxLeft: 1912, maxTop: 830 });
     dragresize.isElement = function (elm) {
       if (elm.className && elm.className.indexOf('drsElement') > -1) return true;
     };
@@ -38,17 +38,16 @@
     <v-app>
       <v-main class="main-window">
         <left-bar @child-event="setHeight" :selectedmenu="selectedMenu" @menuclicked="ChangeMenu"></left-bar>
-        <left-bar-detail class="setScroll" :selectedmenu="selectedMenu" v-if="activeDetailBar" @close-sidebar="CloseMenuBar" :height="leftHeight" ></left-bar-detail>
+        <left-bar-detail class="setScroll" :canvas-size="canvasSize" :selectedmenu="selectedMenu" v-if="activeDetailBar" @close-sidebar="CloseMenuBar" :height="leftHeight" ></left-bar-detail>
         <right-bar :height="leftHeight"></right-bar>
-        <div id="content" class="content mt-15" style="background-color: white; border-style: 10px solid red;">
+        <div id="content" class="content" style="height: 90%; background-color: white;">
           <!-- 배경담는 div -->
           <div id="img-background">
           </div>
-
           <!-- cnavas에 직접 drsElement와 drsMoveHandle을 주면 크기조절이 불가능해서 div로 감싸줘서 이걸 움직이도록 -->
-          <div id="canvasBox" class="drsElement drsMoveHandle"
-            style="left: 37.3%; top: 7%; width: 400px; height: 400px; border-style: 10px solid red">
-            <canvas id="myCanvas" style="width: 100%; height: 100%; background: white;">
+          <div v-on:mouseover.left="changeSize" id="canvasBox" class="drsElement drsMoveHandle"
+            style="left: 37.3% ; top: 7%; width: 400px; height: 400px; border-style: 10px solid red; background-color:rgba(255,255,255,0);">
+            <canvas id="myCanvas" style="width: 100%; height: 100%; background-color:rgba(255,255,255,0);">
             </canvas>
           </div>
         </div>
@@ -77,7 +76,12 @@
         return {
           activeDetailBar: false,
           selectedMenu: 0,
-          leftHeight: 0
+          leftHeight: 0,
+          canvasSize:{
+            height: 400,
+            width: 400 
+          },
+          initialPosition: (window.innerWidth - 400)/2
         }
       },
       methods: {
@@ -96,11 +100,14 @@
         },
         setHeight(val){
           this.leftHeight = val-104;
+        },
+        changeSize(){
+          this.canvasSize.height = Number(document.getElementById("canvasBox").style.height.slice(0,-2))
+          this.canvasSize.width = Number(document.getElementById("canvasBox").style.width.slice(0,-2))
         }
       },
-      mounted(){
-
-      }
+    mounted(){
+    }
     })
   </script>
 </body>

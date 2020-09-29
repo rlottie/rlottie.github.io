@@ -69,9 +69,29 @@
             </v-col>
           </v-row>
         </v-col>
+        <!-- borderline -->
         <v-col
           class="pa-0"
-          cols="9">
+          cols="2"
+          style="min-width:100px;">
+          <v-row
+            class="ma-0 pa-0"
+            align="center"
+            justify="end">
+            <v-col
+              class="pa-0">
+              <v-switch
+                color="rgba(255, 255, 255, 1)"
+                v-model="borderOn"
+                :label="borderOn ? `Borderline Off` : `Borderline On`"
+                >
+              </v-switch>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col
+          class="pa-0"
+          cols="7">
           <v-row
             class="px-5">
             <v-col
@@ -202,11 +222,15 @@ module.exports = {
 
       isPrev: false,
       isNext: false,
+      borderOn: false,
     };
   },
   watch: {
     frameRateFlag: function(frame){
       RLottieModule.frameRate = this.frameRateFlag ? -this.frameRate : this.frameRate
+    },
+    borderOn: function(){
+      this.changeCanvasBorderColor()
     }
   },
   mounted() {
@@ -264,7 +288,16 @@ module.exports = {
     },
     moveNext() {
       RLottieModule.history.moveNext();
-    }
+    },
+    changeCanvasBorderColor(){
+      if (this.borderOn){
+        document.getElementById('canvasBox').style.borderStyle="none";
+
+      }else{
+        document.getElementById('canvasBox').style.border="1px solid black";
+
+      }
+    },
   },
 };
 </script>
