@@ -86,14 +86,14 @@ module.exports = {
         setFlag: false,
         width: 0,
 
-        setHistory: true,
+        stack: [],
         interval: '',        
       }
     },
     mounted(){   
       var self = this
       this.interval = setInterval(() => {
-          self.setHistory = true;
+          self.clearStack()
       }, 500);      
     },
     beforeDestroy(){
@@ -106,26 +106,36 @@ module.exports = {
           const g = this.picker.rgba.g / 255;
           const b = this.picker.rgba.b / 255;
           const a = this.picker.rgba.a * 100;
-          RLottieModule.strokeColors(RLottieModule.keypath, r, g, b, a);
-          if(this.setHistory) {         
-            this.setHistory = false;
-            RLottieModule.history.insert(RLottieModule.keypath, "StrokeColor", [r,g,b,a])  
-          }
+          RLottieModule.strokeColors(RLottieModule.keypath, r, g, b, a);          
+          this.stack.push({
+            'property': 'StrokeColor',
+            'args': [r,g,b,a]
+          })
+          
         }else{
           this.setFlag = true;
         }
       },
       width(width){
         RLottieModule.strokeWidth(RLottieModule.keypath, Number(this.width));
-        if(this.setHistory) {         
-            this.setHistory = false;
-            RLottieModule.history.insert(RLottieModule.keypath, "StrokeWidth", [Number(this.width)])  
-        }
+        this.stack.push({
+          'property': 'StrokeWidth',
+          'args': [Number(this.width)]
+        })
       }
     },
     methods: {
       closeSidebar(){
         this.$emit("call-close-menu-parent");
+      },
+      clearStack() {
+        let len = this.stack.length;
+        if(!len)
+          return
+
+        let top = this.stack.pop()
+        RLottieModule.history.insert(RLottieModule.keypath, top.property, top.args)
+        this.stack = []
       }
     },
 }
