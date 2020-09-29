@@ -343,38 +343,63 @@ module.exports = {
         h: 0,
       },
       degree: 0,
-      opacity: 0
+      opacity: 0,
+      stack: [],
     };
+  },
+  mounted(){   
+    var self = this
+    this.interval = setInterval(() => {
+      self.clearStack()
+    }, 500);      
+  },
+  beforeDestroy(){
+    clearInterval(this.interval);
   },
   watch: {
     anchor:{
         deep: true,
         handler(){
             RLottieModule.trAnchor(RLottieModule.keypath,Number(this.anchor.x),Number(this.anchor.y))
-            RLottieModule.history.insert(RLottieModule.keypath, "TrAnchor", [Number(this.anchor.x),Number(this.anchor.y)])  
+            this.stack.push({
+                'property': 'TrAnchor',
+                'args': [Number(this.anchor.x),Number(this.anchor.y)]
+            })
         }
     },
     position: {
         deep: true,
         handler(){
             RLottieModule.trPosition(RLottieModule.keypath,Number(this.position.x),Number(this.position.y))
-            RLottieModule.history.insert(RLottieModule.keypath, "TrPosition", [Number(this.position.x),Number(this.position.y)])  
+            this.stack.push({
+                'property': 'TrPosition',
+                'args': [Number(this.position.x),Number(this.position.y)]
+            })
         }
     },
     scale: {
         deep: true,
         handler(){
             RLottieModule.trScale(RLottieModule.keypath,Number(this.scale.w),Number(this.scale.h))
-            RLottieModule.history.insert(RLottieModule.keypath, "TrScale", [Number(this.scale.w),Number(this.scale.h)])  
+            this.stack.push({
+                'property': 'TrScale',
+                'args': [Number(this.scale.w),Number(this.scale.h)]
+            })
         }
     },
     degree: function (val) {
         RLottieModule.trRotation(RLottieModule.keypath,Number(this.degree))
-        RLottieModule.history.insert(RLottieModule.keypath, "TrRotation", [Number(this.degree)])  
+        this.stack.push({
+            'property': 'TrRotation',
+            'args': [Number(this.degree)]
+        })
     },
     opacity: function (val) {
         RLottieModule.trOpacity(RLottieModule.keypath,Number(this.opacity))
-        RLottieModule.history.insert(RLottieModule.keypath, "TrOpacity", [Number(this.opacity)])
+        this.stack.push({
+            'property': 'TrOpacity',
+            'args': [Number(this.opacity)]
+        })
     },
   },
   computed: {
@@ -383,6 +408,15 @@ module.exports = {
   methods: {
       closeSidebar(){
         this.$emit("call-close-menu-parent");
+      },
+      clearStack() {
+        let len = this.stack.length;
+        if(!len)
+          return
+
+        let top = this.stack.pop()
+        RLottieModule.history.insert(RLottieModule.keypath, top.property, top.args)
+        this.stack = []
       }
     },
 }
