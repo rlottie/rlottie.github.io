@@ -19,7 +19,7 @@
         </v-col>
       </v-row>
     </div>
-    <v-row>
+    <v-row class="mt-4">>
       <v-col class="d-flex justify-center pa-0">
         <v-color-picker
           flat
@@ -79,7 +79,7 @@
         tile
         class="py-7"
         text color="white"
-        style="width:90%; height: 200px; border: 2px dashed; border-radius: 20px; background-color:rgba(100,100,100,0.2);"
+        style="width:90%; height: 200px; border: 2px dashed; border-radius: 20px; background-color:rgba(100,100,100,0.2) border-bottom: none;;"
         @click="clickToBackgroundImage">
           <v-icon style="pointer: cursor; font-size:30px;">mdi-image-plus</v-icon>
       </v-btn>
@@ -224,8 +224,5 @@ span {
 #backgroundImg {
   display: none;
   cursor: pointer;
-}
-.uploadBTN {
-  border-bottom: none;
 }
 </style>
