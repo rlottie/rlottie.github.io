@@ -25,6 +25,7 @@ html, body {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  background-position: center center;
 }
 
 .renderer {
