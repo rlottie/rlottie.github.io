@@ -58,6 +58,31 @@ var RLottieModule = (function () {
     frameList.init();
   };
 
+  //add custom by lee frameList
+  var frameList = {};
+  frameList.canvas = {};
+  frameList.context = {};
+  frameList.list = {};
+
+  frameList.init = function () {
+    frameList.list = document.getElementById("frameList");
+
+    for (var i = 0; i < obj.frameCount; i++) {
+      var canvas = document.createElement("canvas");
+      canvas.setAttribute("id", "frame" + i);
+      frameList.list.appendChild(canvas);
+
+      frameList.canvas = document.getElementById("frame" + i);
+      frameList.context = frameList.canvas.getContext("2d");
+
+      var buffer = obj.lottieHandle.render(i, 100, 100);
+      var result = Uint8ClampedArray.from(buffer);
+      var imageData = new ImageData(result, 100, 100);
+
+      frameList.context.putImageData(imageData, 0, 0);
+    }
+  };
+
   // animation logic
   obj.render = function () {
     if (obj.canvas.width == 0 || obj.canvas.height == 0) return;
@@ -90,32 +115,6 @@ var RLottieModule = (function () {
     obj.resizeId = {};
     obj.playing = true;
     obj.wasPlaying = false;
-
-    var frameList = {};
-    frameList.canvas = {};
-    frameList.context = {};
-    frameList.list = {};
-
-    //add custom by lee frameList
-    frameList.init = function () {
-      console.log(imageData);
-      frameList.list = document.getElementById("frameList");
-
-      for (var i = 0; i < obj.frameCount; i++) {
-        var canvas = document.createElement("canvas");
-        canvas.setAttribute("id", "frame" + i);
-        frameList.list.appendChild(canvas);
-
-        frameList.canvas = document.getElementById("frame" + i);
-        frameList.context = frameList.canvas.getContext("2d");
-
-        var buffer = obj.lottieHandle.render(i, 100, 100);
-        var result = Uint8ClampedArray.from(buffer);
-        var imageData = new ImageData(result, 100, 100);
-
-        frameList.context.putImageData(imageData, 0, 0);
-      }
-    };
 
     //layer list by yoon
     obj.layerList = [];
