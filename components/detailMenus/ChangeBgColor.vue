@@ -73,13 +73,13 @@
         </v-col>
       </v-row>
     </div>
-    <div class="uploadBTN" style="align-left">
+    <div class="uploadBTN" style="align-left; border-bottom: none;">
         <!-- <label for="backgroundImg"> -->
       <v-btn
         tile
         class="py-7"
         text color="white"
-        style="width:90%; height: 200px; border: 2px dashed; border-radius: 20px; background-color:rgba(100,100,100,0.2) border-bottom: none;;"
+        style="width:90%; height: 200px; border: 2px dashed; border-radius: 20px; background-color:rgba(100,100,100,0.2);"
         @click="clickToBackgroundImage">
           <v-icon style="pointer: cursor; font-size:30px;">mdi-image-plus</v-icon>
       </v-btn>
