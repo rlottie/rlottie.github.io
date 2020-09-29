@@ -355,8 +355,10 @@ function initHistory(jsString) {
   obj.originJson = jsString;
 
   obj.setProperty = function(keypath, property, args) {
+    
     switch(property) {
       case 'FillColor':
+        console.log(keypath, [args[0]*255,args[1]*255,args[2]*255,args[3]*255])
         RLottieModule.fillColors(keypath, args[0], args[1], args[2], args[3])
         break;
       case 'StrokeColor':        
@@ -402,18 +404,18 @@ function initHistory(jsString) {
     RLottieModule.reload(obj.originJson);
 
     let check = []
-    for(let i = obj.cur; i >= 0; i--) {      
+    for(let i = 0; i <= obj.cur; i++) {      
       let key = obj.history[i]['keypath'];
       let prop = obj.history[i]['property'];
       let args = obj.history[i]['args'];
 
-      if(!check[key]){
-        check[key] = []        
-      }
-      if(!check[key][prop]){
-        check[key][prop] = 1;
-        obj.setProperty(key, prop, args)
-      }
+      // if(!check[key]){
+      //   check[key] = []        
+      // }
+      // if(!check[key][prop]){
+      //   check[key][prop] = 1;        
+      // }
+      obj.setProperty(key, prop, args)
     }
 
     obj.setHistoryState();
@@ -421,7 +423,7 @@ function initHistory(jsString) {
 
   obj.setHistoryState = function() {
     window.dispatchEvent(
-      new CustomEvent("setHistoryState", {
+      new CustomEvent("setHistoryState", {     
         detail: {
           isPrev: obj.hasPrev(),
           isNext: obj.hasNext(),

@@ -66,37 +66,39 @@
       </v-row>
     </div>
     <div class="text-center mt-0">
-      <v-row class="px-5">
-        <v-col cols="12" class="justify-center mt-0">
+      <v-row class="px-5"
+        align="center">
+        <v-col cols="7" class="justify-center pt-0 pr-0">
           <div class="text-left" style="color: white">Background Image</div>
         </v-col>
       </v-row>
     </div>
-    <div class="uploadBTN" style="align-left;border-bottom: none;">
-      <v-tooltip right class="tooltip-btn">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn tile class="py-7" text color="white" v-bind="attrs" v-on="on">
-            <label for="backgroundImg">
-              <v-icon style="pointer: cursor">fas fa-file-upload</v-icon>
-            </label>
-            <input
-              type="file"
-              id="backgroundImg"
-              accept="image/*"
-              @change="setBackgroundImg"
-            />
-          </v-btn>
-        </template>
-        <span> Upload Background Image </span>
-      </v-tooltip>
+    <div class="uploadBTN" style="align-left">
+        <!-- <label for="backgroundImg"> -->
+      <v-btn
+        tile
+        class="py-7"
+        text color="white"
+        style="width:90%; height: 200px; border: 2px dashed; border-radius: 20px; background-color:rgba(100,100,100,0.2) border-bottom: none;;"
+        @click="clickToBackgroundImage">
+          <v-icon style="pointer: cursor; font-size:30px;">mdi-image-plus</v-icon>
+      </v-btn>
+        <!-- </label> -->
+        <input
+          ref="image"
+          type="file"
+          id="backgroundImg"
+          accept="image/*"
+          @change="setBackgroundImg"
+        >
     </div>
-    <input
-      type="file"
-      id="backgroundImg"
-      accept="image/*"
-      @change="setBackgroundImg"
-    />
-    <v-btn @click="backgroundReset">Delete Background Image</v-btn>
+    <v-btn
+      class="mx-4 mt-4"
+      @click="backgroundReset"
+      style="background-color:rgba(0, 153, 204, 1); width:90%;"
+      >
+        Delete Background Image
+    </v-btn>
   </div>
 </template>
 
@@ -106,7 +108,7 @@ module.exports = {
   data() {
     return {
       type: "rgba",
-      rgba: { r: 255, g: 255, b: 255, a: 1 },
+      rgba: { r: 255, g: 255, b: 255 },
       canvasSizeInput: this.canvasSize,
       backgroundImg: false
     };
@@ -115,6 +117,9 @@ module.exports = {
     canvasSize: Object
   },
   methods: {
+    clickToBackgroundImage(){
+      this.$refs.image.click();
+    },
     closeSidebar() {
       this.$emit("call-close-menu-parent");
     },
@@ -179,10 +184,9 @@ module.exports = {
       const r = this.rgba.r;
       const g = this.rgba.g;
       const b = this.rgba.b;
-      const a = this.rgba.a;
       document.getElementById(
         "content"
-      ).style.backgroundColor = `rgba(${r},${g},${b},${a})`;
+      ).style.backgroundColor = `rgba(${r},${g},${b})`;
     },
     canvasSizeInput: {
       deep: true,

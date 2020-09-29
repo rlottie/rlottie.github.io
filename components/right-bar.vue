@@ -72,7 +72,7 @@ module.exports = {
     props:['height'],
     data() {
         return {
-            isSelectAll: false,
+            isSelectAll: true,
             navigation: false,
             layers: [],
             keypath: '',
@@ -80,7 +80,7 @@ module.exports = {
     },
     watch: {
         isSelectAll() {            
-            RLottieModule.keypath = this.isSelectAll ? (this.keypath ? this.keypath + '.**' : '**') : this.keypath;
+            RLottieModule.keypath = this.isSelectAll ? (this.keypath ? this.keypath + '.**' : '**') : (this.keypath ? this.keypath : '');
         }
     },
     mounted() {
@@ -96,7 +96,13 @@ module.exports = {
 
         changeFocus(e){
             this.keypath = e[0]
-            RLottieModule.keypath = this.isSelectAll ? (this.keypath ? this.keypath + '.**' : '**') : this.keypath
+            RLottieModule.keypath = this.isSelectAll ? (this.keypath ? this.keypath + '.**' : '**') : (this.keypath ? this.keypath : '');
+
+            RLottieModule.history.reload();
+            RLottieModule.lottieHandle.set_fill_opacity("**", 30);
+            RLottieModule.lottieHandle.set_fill_opacity(RLottieModule.keypath, 100);
+            RLottieModule.lottieHandle.set_stroke_opacity("**", 30);
+            RLottieModule.lottieHandle.set_stroke_opacity(RLottieModule.keypath, 100);
         }
     }
 }
