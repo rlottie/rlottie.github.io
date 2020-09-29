@@ -40,13 +40,13 @@
         <left-bar @child-event="setHeight" :selectedmenu="selectedMenu" @menuclicked="ChangeMenu"></left-bar>
         <left-bar-detail class="setScroll" :canvas-size="canvasSize" :selectedmenu="selectedMenu" v-if="activeDetailBar" @close-sidebar="CloseMenuBar" :height="leftHeight" ></left-bar-detail>
         <right-bar :height="leftHeight"></right-bar>
-        <div id="content" class="content" style="height: 90%; background-color: white;">
+        <div id="content" class="content" style="height: 90%; background-color: white;" ref="content">
           <!-- 배경담는 div -->
           <div id="img-background">
           </div>
           <!-- cnavas에 직접 drsElement와 drsMoveHandle을 주면 크기조절이 불가능해서 div로 감싸줘서 이걸 움직이도록 -->
           <div v-on:mouseover.left="changeSize" id="canvasBox" class="drsElement drsMoveHandle"
-            style="left: 37.3% ; top: 7%; width: 400px; height: 400px; border-style: 10px solid red; background-color:rgba(255,255,255,0);">
+            :style="{'left': initCanvasLeft+'px', 'top': initCanvasTop+'px', 'width': '400px', 'height': '400px', 'border-style': '10px solid red', 'background-color':'rgba(255,255,255,0)'}">
             <canvas id="myCanvas" style="width: 100%; height: 100%; background-color:rgba(255,255,255,0);">
             </canvas>
           </div>
@@ -81,7 +81,9 @@
             height: 400,
             width: 400 
           },
-          initialPosition: (window.innerWidth - 400)/2
+          initialPosition: (window.innerWidth - 400)/2,
+          initCanvasTop: 0,
+          initCanvasLeft: 0,
         }
       },
       methods: {
@@ -102,11 +104,14 @@
           this.leftHeight = val-104;
         },
         changeSize(){
+          console.log()
           this.canvasSize.height = Number(document.getElementById("canvasBox").style.height.slice(0,-2))
           this.canvasSize.width = Number(document.getElementById("canvasBox").style.width.slice(0,-2))
         }
       },
     mounted(){
+      this.initCanvasLeft = this.$refs.content.clientWidth * 0.4;
+      this.initCanvasTop = this.$refs.content.clientHeight * 0.2;
     }
     })
   </script>
