@@ -69,18 +69,31 @@ var RLottieModule = (function () {
     while (frameList.list.hasChildNodes()) {
       frameList.list.removeChild(frameList.list.firstChild);
     }
-
-    for (var i = 0; i < obj.frameCount; i++) {
+    var term = 1;
+    if (obj.frameCount > 10) {
+      var term = parseInt(obj.frameCount / 10);
+    }
+    for (var i = 0; i < obj.frameCount; i += term) {
       var canvas = document.createElement("canvas");
       canvas.setAttribute("id", "frame" + i);
+      (function (m) {
+        canvas.addEventListener(
+          "click",
+          function () {
+            obj.seek(m);
+          },
+          false
+        );
+      })(i);
+
       frameList.list.appendChild(canvas);
 
       frameList.canvas = document.getElementById("frame" + i);
       frameList.context = frameList.canvas.getContext("2d");
 
-      var buffer = obj.lottieHandle.render(i, 100, 100);
+      var buffer = obj.lottieHandle.render(i, 150, 150);
       var result = Uint8ClampedArray.from(buffer);
-      var imageData = new ImageData(result, 100, 100);
+      var imageData = new ImageData(result, 150, 150);
 
       frameList.context.putImageData(imageData, 0, 0);
     }
@@ -406,4 +419,7 @@ function getKeyPathTree(obj, depth = 0) {
     }
   }
   return node;
+}
+function kkk() {
+  console.log("asdf");
 }
