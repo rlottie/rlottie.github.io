@@ -6,10 +6,10 @@ function setup() {
   head.appendChild(script);
 
   // >>> Import Inho module, don't remove it before MR >>>
-  script = document.createElement("script");
-  script.type = "text/javascript";
-  script.src = "Inho_module.js";
-  head.appendChild(script);
+  var Inhoscript = document.createElement("script");
+  Inhoscript.type = "text/javascript";
+  Inhoscript.src = "Inho_module.js";
+  head.appendChild(Inhoscript);
   //  <<<< end of Inho module, will be deleted with MR <<<
 
   script.onload = (_) => {
