@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -23,7 +24,7 @@ aside {
   height: 10%;
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
 }
 
@@ -54,7 +55,7 @@ footer {
 .slider {
   display: flex;
   flex-direction: row;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   width: 20%;
   height: 50px;
@@ -90,8 +91,8 @@ footer {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  min-width : 140px;
-  max-width : 140px;
+  min-width: 140px;
+  max-width: 140px;
   background: lightergrey;
 }
 .color_button {
@@ -99,51 +100,70 @@ footer {
   width: 20px;
   height: 20px;
 }
-.btn_white { background-color: white;}
-.btn_black { background-color: black;}
-.btn_red { background-color: red;}
-.btn_green { background-color: green;}
-.btn_blue { background-color: blue;}
-
-.card {
-  #box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+.btn_white {
+  background-color: white;
+}
+.btn_black {
+  background-color: black;
+}
+.btn_red {
+  background-color: red;
+}
+.btn_green {
+  background-color: green;
+}
+.btn_blue {
+  background-color: blue;
 }
 
+.card {
+  #box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
 
 // copied
 
 .justify-center {
-    justify-content: center;
+  justify-content: center;
 }
 
 .text-xs {
-    font-size: .75rem;
+  font-size: 0.75rem;
 }
 
 .border-grey-light {
-    border-color: #dae1e7;
+  border-color: #dae1e7;
 }
 
 .bg-grey-lighter {
-    background-color: #f1f5f8;
+  background-color: #f1f5f8;
 }
 
 .rounded {
-    border-radius: .25rem;
+  border-radius: 0.25rem;
 }
 
 .text-grey-darkest {
-    color: #3d4852;
+  color: #3d4852;
 }
 .font-bold {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .cursor-pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .margin-left-10px {
   margin-left: 10px;
 }
 
+#frameList {
+  display: flex;
+  border: 1px solid black;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+}
+#frameList canvas {
+  height: 40px;
+}
