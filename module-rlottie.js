@@ -146,7 +146,7 @@ var RLottieModule = (function () {
   };
 
   obj.seek = function (value) {
-    obj.curFrame = value;
+    obj.curFrame = Number(value);
     window.requestAnimationFrame(obj.render);
   };
 
@@ -189,7 +189,6 @@ var RLottieModule = (function () {
   obj.setTrOpacity = function (keyPath, opacity) {
     obj.lottieHandle.setTrOpacity(keyPath, opacity);
   };
-
   function mainLoop() {
     obj.rafId = window.requestAnimationFrame(mainLoop);
     obj.render();
