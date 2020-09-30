@@ -6,6 +6,7 @@ body {
 }
 aside {
   border: black solid 3px;
+  width: 20vw;
 }
 
 .window {
@@ -42,7 +43,7 @@ aside {
   background-color: red;
 }
 
-footer {
+footer .flex {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -57,7 +58,7 @@ footer {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 20%;
+  width: 100%;
   height: 50px;
 }
 
@@ -155,6 +156,9 @@ footer {
 
 .margin-left-10px {
   margin-left: 10px;
+}
+.playbar {
+  width: 80%;
 }
 
 #frameList {
