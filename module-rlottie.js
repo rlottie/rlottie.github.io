@@ -8,7 +8,7 @@ function setup() {
   // >>> Import Inho module, don't remove it before MR >>>
   script = document.createElement("script");
   script.type = "text/javascript";
-  script.src = "inho_module.js";
+  script.src = "Inho_module.js";
   head.appendChild(script);
   //  <<<< end of Inho module, will be deleted with MR <<<
 
