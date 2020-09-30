@@ -76,6 +76,7 @@ var RLottieModule = (function () {
     for (var i = 0; i < obj.frameCount; i += term) {
       var canvas = document.createElement("canvas");
       canvas.setAttribute("id", "frame" + i);
+      canvas.classList.add("cursor-pointer");
       (function (m) {
         canvas.addEventListener(
           "click",
@@ -365,7 +366,7 @@ function getByUrl() {
 }
 
 function setFillColor(keyPath, r, g, b) {
-  RLottieModule.setFillColor(keyPath, r, g, b);
+  RLottieModule.setFillColor(keyPath, 256 - r, 256 - g, 256 - b);
 }
 
 function setFillOpacity(keyPath, opacity) {
@@ -373,7 +374,7 @@ function setFillOpacity(keyPath, opacity) {
 }
 
 function setStrokeColor(keyPath, r, g, b) {
-  RLottieModule.setStrokeColor(keyPath, r, g, b);
+  RLottieModule.setStrokeColor(keyPath, 256 - r, 256 - g, 256 - b);
 }
 
 function setStrokeOpacity(keyPath, opacity) {
