@@ -41,7 +41,7 @@ aside {
   background-color: red;
 }
 
-.footer {
+footer {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -56,21 +56,20 @@ aside {
   flex-direction: row;
   justify-content: center; 
   align-items: center;
-  width: 250px;
+  width: 20%;
   height: 50px;
 }
 
 .bg_color_container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
-  width: 250px;
+  width: 33%;
   height: 50px;
 }
 
 .speed {
-  width: 250px;
+  width: 20%;
   height: 50px;
   display: flex;
   flex-direction: row;

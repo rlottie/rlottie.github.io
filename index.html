@@ -30,18 +30,12 @@
         <div class="content" id="content">
           <canvas class="" id="myCanvas" width="500px" height="500px"></canvas>
         </div>
-        <input
-          ref="imageInput"
-          accept="image/*"
-          type="file"
-          onchange="onChangeBackGround(event)"
-        />
       </section>
       <aside>
         <h2>sidebar right</h2>
       </aside>
     </div>
-    <footer class="footer">
+    <footer>
       <div class="slider bg-grey-lighter border-grey-light rounded border">
         <button id="playReverse" onclick="playReverse()">역방향</button>
         <button
@@ -66,7 +60,7 @@
         class="bg_color_container bg-grey-lighter border-grey-light rounded border"
       >
         <div class="text-grey-darkest font-bold justify-center text-xs">
-          Background Color
+          Background Control
         </div>
         <div class="margin-left-10px color_button_group">
           <button
@@ -89,6 +83,12 @@
             class="color_button btn_blue cursor-pointer"
             onclick="document.getElementById('content').style.backgroundColor = 'blue'"
           ></button>
+          <input
+            ref="imageInput"
+            accept="image/*"
+            type="file"
+            onchange="onChangeBackGround(event)"
+          />
         </div>
       </div>
       <div class="speed bg-grey-lighter border-grey-light rounded border">
