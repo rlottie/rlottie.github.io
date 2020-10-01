@@ -6,10 +6,6 @@
     <title>rlottieWebPlayer</title>
     <link rel="stylesheet" href="webplayerstyle.css" />
     <link
-    href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
-    rel="stylesheet"
-    />
-    <link
       href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css"
       rel="stylesheet"
     />
@@ -21,8 +17,6 @@
             <input type="text" id="urlInput"/>
             <button id="getByUrl" onclick="getByUrl()">url 입력</button>
           </div>
-
-        
           <button id="modalOpenBtn">Lottie JSON upload</button>
           <div class="modal-bg">
             <div class="upload-modal">
@@ -42,21 +36,87 @@
         <section class="layers">
         </section>
         <section class="display">
-            <div
-            class="content"
-            id="content"
-            style="background-position:center;height: 100%;"
-          >
+          <div class="content" id="content" style="height:80%;display:flex;align-items:center;justify-content:center;">
             <canvas
               class=""
               id="myCanvas"
             ></canvas>
           </div>
+          <div style="height:10%;width:100%;background:rgba(255,255,255,.5);display:flex;flex-direction:row;align-items:center;">
+            <button id="playReverse" style="width:7%" onclick="playReverse()">역방향</button>
+            <button
+              class="playButton cursor-pointer"
+              type="button"
+              id="playButton"
+              style="width:7%"
+              onclick="buttonClicked()"
+            >
+             Pause
+            </button>
+            <input
+              class="margin-left-10px playbar"
+              type="range"
+              min="0"
+              max="100"
+              value="0"
+              id="slider"
+              style="width:86%;"
+              oninput="onSliderDrag(this.value)"
+            />
+          </div>
+          <div id="frameList"></div>
         </section>
         <section class="manipulate">
+          <div class="flex">
+            <div
+              class="bg_color_container bg-grey-lighter border-grey-light rounded border"
+            >
+              <div class="text-grey-darkest font-bold justify-center text-xs" style="color:white;">
+                Background Control
+              </div>
+              <div class="wheel" id="colorWheel"></div>
+              <div class="margin-left-10px color_button_group">
+                <button
+                  class="color_button btn_white cursor-pointer"
+                  onclick="document.getElementById('content').style.backgroundColor = 'white'"
+                ></button>
+                <button
+                  class="color_button btn_black cursor-pointer"
+                  onclick="document.getElementById('content').style.backgroundColor = 'black'"
+                ></button>
+                <button
+                  class="color_button btn_red cursor-pointer"
+                  onclick="document.getElementById('content').style.backgroundColor = 'red'"
+                ></button>
+                <button
+                  class="color_button btn_green cursor-pointer"
+                  onclick="document.getElementById('content').style.backgroundColor = 'green'"
+                ></button>
+                <button
+                  class="color_button btn_blue cursor-pointer"
+                  onclick="document.getElementById('content').style.backgroundColor = 'blue'"
+                ></button>
+              </div>
+            </div>
+            <div class="speed bg-grey-lighter border-grey-light rounded border">
+              <div
+                class="margin-left-10px text-grey-darkest font-bold justify-center text-xs"
+                style="color:white;"
+              >
+                Canvas Resize
+              </div>
+              <input
+                class="margin-left-10px"
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                oninput="onResizeSliderDrag(this.value)"
+              />
+            </div>
+          </div>
         </section>
       </div>
-
       <script src="main.js"></script>
       <script src="draganddrop.js"></script>
       <script src="uploadmodal.js"></script>
