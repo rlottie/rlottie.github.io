@@ -5,6 +5,13 @@ function setup() {
   script.src = "rlottie-wasm.js";
   head.appendChild(script);
 
+  // >>> Import Inho module, don't remove it before MR >>>
+  var Inhoscript = document.createElement("script");
+  Inhoscript.type = "text/javascript";
+  Inhoscript.src = "Inho_module.js";
+  head.appendChild(Inhoscript);
+  //  <<<< end of Inho module, will be deleted with MR <<<
+
   script.onload = (_) => {
     Module.onRuntimeInitialized = (_) => {
       RLottieModule.init();
@@ -12,6 +19,8 @@ function setup() {
   };
 }
 setup();
+
+var aa = 1239;
 
 // Create a LottieView Module responsible of rendering a lottie file
 var RLottieModule = (function () {
@@ -49,6 +58,48 @@ var RLottieModule = (function () {
     frameList.init();
   };
 
+  //add custom by lee frameList
+  var frameList = {};
+
+  frameList.init = function () {
+    frameList.canvas = {};
+    frameList.context = {};
+    frameList.list = document.getElementById("frameList");
+
+    while (frameList.list.hasChildNodes()) {
+      frameList.list.removeChild(frameList.list.firstChild);
+    }
+    var term = 1;
+    if (obj.frameCount > 10) {
+      var term = parseInt(obj.frameCount / 10);
+    }
+    for (var i = 0; i < obj.frameCount; i += term) {
+      var canvas = document.createElement("canvas");
+      canvas.setAttribute("id", "frame" + i);
+      canvas.classList.add("cursor-pointer");
+      (function (m) {
+        canvas.addEventListener(
+          "click",
+          function () {
+            obj.seek(m);
+          },
+          false
+        );
+      })(i);
+
+      frameList.list.appendChild(canvas);
+
+      frameList.canvas = document.getElementById("frame" + i);
+      frameList.context = frameList.canvas.getContext("2d");
+
+      var buffer = obj.lottieHandle.render(i, 150, 150);
+      var result = Uint8ClampedArray.from(buffer);
+      var imageData = new ImageData(result, 150, 150);
+
+      frameList.context.putImageData(imageData, 0, 0);
+    }
+  };
+
   // animation logic
   obj.render = function () {
     if (obj.canvas.width == 0 || obj.canvas.height == 0) return;
@@ -71,9 +122,9 @@ var RLottieModule = (function () {
 
   obj.reload = function (jsString) {
     var len = obj.lottieHandle.load(jsString);
-    obj.layerList = JSON.parse(jsString).layers
-    document.getElementById("layerlist").innerHTML = ""
-    getAllLayers(obj.layerList, document.getElementById("layerlist"))
+    obj.layerList = JSON.parse(jsString).layers;
+    document.getElementById("layerlist").innerHTML = "";
+    getAllLayers(obj.layerList, document.getElementById("layerlist"));
     obj.frameCount = obj.lottieHandle.frames();
     obj.curFrame = 0;
     obj.frameRate = 0;
@@ -82,37 +133,12 @@ var RLottieModule = (function () {
     obj.playing = true;
     obj.wasPlaying = false;
 
-    var frameList = {};
-    frameList.canvas = {};
-    frameList.context = {};
-    frameList.list = {};
-
-    //add custom by lee frameList
-    frameList.init = function () {
-      console.log(imageData);
-      frameList.list = document.getElementById("frameList");
-
-      for (var i = 0; i < obj.frameCount; i++) {
-        var canvas = document.createElement("canvas");
-        canvas.setAttribute("id", "frame" + i);
-        frameList.list.appendChild(canvas);
-
-        frameList.canvas = document.getElementById("frame" + i);
-        frameList.context = frameList.canvas.getContext("2d");
-
-        var buffer = obj.lottieHandle.render(i, 100, 100);
-        var result = Uint8ClampedArray.from(buffer);
-        var imageData = new ImageData(result, 100, 100);
-
-        frameList.context.putImageData(imageData, 0, 0);
-      }
-    };
-
     //layer list by yoon
     obj.layerList = [];
 
     // force a render in pause state
     sliderReset();
+    frameList.init();
     obj.update();
   };
 
@@ -134,10 +160,9 @@ var RLottieModule = (function () {
   };
 
   obj.seek = function (value) {
-    obj.curFrame = value;
+    obj.curFrame = Number(value);
     window.requestAnimationFrame(obj.render);
   };
-
 
   obj.setFillColor = function (keyPath, r, g, b) {
     obj.lottieHandle.setFillColor(keyPath, r, g, b);
@@ -178,14 +203,12 @@ var RLottieModule = (function () {
   obj.setTrOpacity = function (keyPath, opacity) {
     obj.lottieHandle.setTrOpacity(keyPath, opacity);
   };
-
   function mainLoop() {
     obj.rafId = window.requestAnimationFrame(mainLoop);
     obj.render();
     document.getElementById("slider").max = obj.frameCount;
     document.getElementById("slider").value = obj.curFrame;
   }
-
 
   // resize canvas
   function relayoutCanvas() {
@@ -222,17 +245,17 @@ var RLottieModule = (function () {
   function getAllLayers(list, par) {
     for (var i in list) {
       if (list[i].nm != null) {
-        var layer = document.createElement("li")
-        layer.innerHTML = list[i].nm
+        var layer = document.createElement("li");
+        layer.innerHTML = list[i].nm;
       }
       for (var j in list[i]) {
         if (Array.isArray(list[i][j])) {
-          var sublayer = document.createElement("ul")
-          getAllLayers(list[i][j], sublayer)
-          layer.appendChild(sublayer)
+          var sublayer = document.createElement("ul");
+          getAllLayers(list[i][j], sublayer);
+          layer.appendChild(sublayer);
         }
       }
-      par.appendChild(layer)
+      par.appendChild(layer);
     }
   }
   return obj;
@@ -322,26 +345,28 @@ function playReverse() {
 }
 
 //get rlottie by url -write by lee
-function getByUrl(){
-  var url=document.getElementById("urlInput").value;
-  if(url===""){
-    alert("url을 입력해주세요")
+function getByUrl() {
+  var url = document.getElementById("urlInput").value;
+  if (url === "") {
+    alert("url을 입력해주세요");
     return;
   }
-  axios.get(url).then((res) => {
-    var read=res.data;
-    console.log(read);
-    RLottieModule.reload(JSON.stringify(read));
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+  axios
+    .get(url)
+    .then((res) => {
+      var read = res.data;
+      console.log(read);
+      RLottieModule.reload(JSON.stringify(read));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
   console.log(url);
 }
 
 function setFillColor(keyPath, r, g, b) {
-  RLottieModule.setFillColor(keyPath, r, g, b);
+  RLottieModule.setFillColor(keyPath, 256 - r, 256 - g, 256 - b);
 }
 
 function setFillOpacity(keyPath, opacity) {
@@ -349,7 +374,7 @@ function setFillOpacity(keyPath, opacity) {
 }
 
 function setStrokeColor(keyPath, r, g, b) {
-  RLottieModule.setStrokeColor(keyPath, r, g, b);
+  RLottieModule.setStrokeColor(keyPath, 256 - r, 256 - g, 256 - b);
 }
 
 function setStrokeOpacity(keyPath, opacity) {
@@ -396,4 +421,6 @@ function getKeyPathTree(obj, depth = 0) {
   }
   return node;
 }
+function kkk() {
+  console.log("asdf");
 }
