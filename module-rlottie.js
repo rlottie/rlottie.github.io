@@ -464,3 +464,22 @@ function getKeyPathTree(obj, depth = 0) {
 function kkk() {
   console.log("asdf");
 }
+
+var apiList = null;
+
+function loadApiList() {
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function() {
+    if(xhr.status == 200) {
+      var data = xhr.responseText;
+      apiList = JSON.parse(data);
+    } else {
+      console.log("Error!");
+    }
+  }
+
+  xhr.open("GET", "CppAPI.json");
+  xhr.send(null);
+}
+
+loadApiList();
