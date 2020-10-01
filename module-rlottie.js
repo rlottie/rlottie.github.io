@@ -207,6 +207,15 @@ var RLottieModule = (function () {
   obj.setTrOpacity = function (keyPath, opacity) {
     obj.lottieHandle.setTrOpacity(keyPath, opacity);
   };
+
+  obj.callAPI = function (name, argv) {
+    try {
+      obj.lottieHandle[name](...argv);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   function mainLoop() {
     obj.rafId = window.requestAnimationFrame(mainLoop);
     obj.render();
@@ -336,6 +345,33 @@ function onResizeSliderDrag(value) {
   document.getElementById("myCanvas").width = size;
   document.getElementById("myCanvas").height = size;
   RLottieModule.update();
+}
+
+function callAPI(name) {
+  var controller = document.getElementById(name);
+  var inputs = controller.getElementsByTagName("input");
+  var argv = [];
+
+  for(var i = 0; i < inputs.length; i++) {
+    var type = inputs[i].dataset.type;
+    var required = inputs[i].dataset.required;
+    var value = inputs[i].value;
+
+    if(required == "true" && value == "") {
+      throw new Error("empty value");
+    }
+
+    if(type == "float") {
+      var value = parseFloat(value);
+      if(value == NaN) {
+        throw new Error("invalid value");
+      }
+    }
+
+    argv.push(value);
+  }
+
+  RLottieModule.callAPI(name, argv);
 }
 
 // play reverse
