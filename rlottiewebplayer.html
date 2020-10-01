@@ -33,7 +33,8 @@
           </div>
       </header>
       <div class="sections">
-        <section class="layers">
+        <section class="layers" style="overflow:auto;">
+          <ul id="layerlist" style="color:white;"></ul>
         </section>
         <section class="display">
           <div class="content" id="content" style="height:80%;display:flex;align-items:center;justify-content:center;">
@@ -42,7 +43,7 @@
               id="myCanvas"
             ></canvas>
           </div>
-          <div style="height:10%;width:100%;background:rgba(255,255,255,.5);display:flex;flex-direction:row;align-items:center;">
+          <div class="progressBar">
             <button id="playReverse" style="width:7%" onclick="playReverse()">역방향</button>
             <button
               class="playButton cursor-pointer"
@@ -71,37 +72,15 @@
             <div
               class="bg_color_container bg-grey-lighter border-grey-light rounded border"
             >
-              <div class="text-grey-darkest font-bold justify-center text-xs" style="color:white;">
+              <div class="text-grey-darkest font-bold justify-center text-xs" style="color:white;padding:5px;">
                 Background Control
               </div>
-              <div class="wheel" id="colorWheel"></div>
-              <div class="margin-left-10px color_button_group">
-                <button
-                  class="color_button btn_white cursor-pointer"
-                  onclick="document.getElementById('content').style.backgroundColor = 'white'"
-                ></button>
-                <button
-                  class="color_button btn_black cursor-pointer"
-                  onclick="document.getElementById('content').style.backgroundColor = 'black'"
-                ></button>
-                <button
-                  class="color_button btn_red cursor-pointer"
-                  onclick="document.getElementById('content').style.backgroundColor = 'red'"
-                ></button>
-                <button
-                  class="color_button btn_green cursor-pointer"
-                  onclick="document.getElementById('content').style.backgroundColor = 'green'"
-                ></button>
-                <button
-                  class="color_button btn_blue cursor-pointer"
-                  onclick="document.getElementById('content').style.backgroundColor = 'blue'"
-                ></button>
-              </div>
+              <input id="bg-color" data-jscolor="">
             </div>
             <div class="speed bg-grey-lighter border-grey-light rounded border">
               <div
                 class="margin-left-10px text-grey-darkest font-bold justify-center text-xs"
-                style="color:white;"
+                style="color:white;padding:5px;"
               >
                 Canvas Resize
               </div>
@@ -111,12 +90,14 @@
                 min="0"
                 max="100"
                 value="100"
+                style="width:100%;"
                 oninput="onResizeSliderDrag(this.value)"
               />
             </div>
           </div>
         </section>
       </div>
+      <script src="jscolor.js"></script>
       <script src="main.js"></script>
       <script src="draganddrop.js"></script>
       <script src="uploadmodal.js"></script>
