@@ -207,6 +207,15 @@ var RLottieModule = (function () {
   obj.setTrOpacity = function (keyPath, opacity) {
     obj.lottieHandle.setTrOpacity(keyPath, opacity);
   };
+
+  obj.callAPI = function (name, argv) {
+    try {
+      obj.lottieHandle[name](...argv);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   function mainLoop() {
     obj.rafId = window.requestAnimationFrame(mainLoop);
     obj.render();
@@ -338,6 +347,33 @@ function onResizeSliderDrag(value) {
   RLottieModule.update();
 }
 
+function callAPI(name) {
+  var controller = document.getElementById(name);
+  var inputs = controller.getElementsByTagName("input");
+  var argv = [];
+
+  for(var i = 0; i < inputs.length; i++) {
+    var type = inputs[i].dataset.type;
+    var required = inputs[i].dataset.required;
+    var value = inputs[i].value;
+
+    if(required == "true" && value == "") {
+      throw new Error("empty value");
+    }
+
+    if(type == "float") {
+      var value = parseFloat(value);
+      if(value == NaN) {
+        throw new Error("invalid value");
+      }
+    }
+
+    argv.push(value);
+  }
+
+  RLottieModule.callAPI(name, argv);
+}
+
 // play reverse
 function playReverse() {
   RLottieModule.reverse = !RLottieModule.reverse;
@@ -427,4 +463,112 @@ function getKeyPathTree(obj, depth = 0) {
 }
 function kkk() {
   console.log("asdf");
+}
+
+var apiList = null;
+
+function loadApiList() {
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function() {
+    if(xhr.status == 200) {
+      var data = xhr.responseText;
+      apiList = JSON.parse(data);
+    } else {
+      console.log("Error!");
+    }
+  }
+
+  xhr.open("GET", "CppAPI.json");
+  xhr.send(null);
+}
+
+loadApiList();
+
+function toggle(name) {
+  var controller = document.getElementById(name);
+  var inputs = controller.getElementsByClassName("d")[0];
+
+  inputs.classList.toggle("hide");
+}
+
+function createApiController() {
+  var section = document.getElementById("a");
+  while(section.hasChildNodes()) {
+    section.removeChild(section.lastChild);
+  }
+
+  for(var type in apiList) {
+    var apis = apiList[type];
+    var objType = document.createElement("div");
+    var typeName = document.createElement("div");
+    typeName.innerText = type;
+    objType.appendChild(typeName);
+    for(var i = 0; i < apis.length; i++) {
+      var controller = document.createElement("div");
+      controller.id = apis[i].name;
+
+      var title = document.createElement("div");
+      var name = document.createElement("div");
+      name.innerText = apis[i].name;
+      var button = document.createElement("button");
+      button.type = "button"
+      button.innerText = "hide/show";
+      button.addEventListener("click", (function(m) {
+        return function() {
+          toggle(m);
+        };
+      })(apis[i].name));
+      title.appendChild(name);
+      title.appendChild(button);
+
+      controller.appendChild(title);
+
+      var inputs = document.createElement("div");
+      inputs.classList.add("d");
+      inputs.classList.add("hide");
+      var argv = apis[i].argv;
+      for(var j = 0; j < argv.length; j++) {
+        var input = document.createElement("div");
+        var desc = document.createElement("span");
+        desc.innerText = argv[j].desc;
+        var type = document.createElement("span");
+        type.innerText = "(type: " + argv[j].type + ")";
+        var value = document.createElement("input");
+        if(argv[j].type == "string") {
+          value.type = "text";
+        } else if(argv[j].type == "float") {
+          value.type = "number";
+          value.step = "0.01";
+          if(argv[j].min != undefined) {
+            value.min = argv[j].min;
+          }
+          if(argv[j].max != undefined) {
+            value.max = argv[j].max;
+          }
+        }
+        value.dataset.type = argv[j].type;
+        value.dataset.required = argv[j].required;
+
+        input.appendChild(desc);
+        input.appendChild(type);
+        input.appendChild(value);
+
+        inputs.appendChild(input);
+      }
+      var button = document.createElement("button");
+      button.type = "button";
+      button.innerText = "run";
+      button.addEventListener("click", (function(m) {
+        return function() {
+          callAPI(m);
+        }
+      })(apis[i].name))
+      inputs.append(button);
+
+      controller.appendChild(inputs);
+      objType.appendChild(controller);
+    }
+    
+    section.appendChild(objType);
+  }
 }

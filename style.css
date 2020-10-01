@@ -171,3 +171,17 @@ footer .flex {
 #frameList canvas {
   height: 40px;
 }
+
+.b {
+  border: 1px solid black;
+}
+
+.d {
+  overflow: auto;
+  max-height: 500px;
+  transition: max-height 0.5s;
+}
+
+.hide {
+  max-height: 0px;
+}

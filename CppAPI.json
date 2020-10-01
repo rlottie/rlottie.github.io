@@ -1,0 +1,254 @@
+{
+  "fill": [
+    {
+      "name": "setFillColor",
+      "argc": 4,
+      "argv": [
+        {
+          "id": 0,
+          "desc": "keyPath",
+          "type": "string",
+          "required": "true"
+        },
+        {
+          "id": 1,
+          "desc": "r",
+          "type": "float",
+          "required": "true",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": 2,
+          "desc": "g",
+          "type": "float",
+          "required": "true",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": 3,
+          "desc": "b",
+          "type": "float",
+          "required": "true",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    {
+      "name": "setFillOpacity",
+      "argc": 2,
+      "argv": [
+        {
+          "id": 0,
+          "desc": "keyPath",
+          "type": "string",
+          "required": "true"
+        },
+        {
+          "id": 1,
+          "desc": "opacity",
+          "type": "float",
+          "required": "true",
+          "min": 0,
+          "max": 100
+        }
+      ]
+    }
+  ],
+  "stroke": [
+    {
+      "name": "setStrokeColor",
+      "argc": 4,
+      "argv": [
+        {
+          "id": 0,
+          "desc": "keyPath",
+          "type": "string",
+          "required": "true"
+        },
+        {
+          "id": 1,
+          "desc": "r",
+          "type": "float",
+          "required": "true",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": 2,
+          "desc": "g",
+          "type": "float",
+          "required": "true",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": 3,
+          "desc": "b",
+          "type": "float",
+          "required": "true",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    {
+      "name": "setStrokeOpacity",
+      "argc": 2,
+      "argv": [
+        {
+          "id": 0,
+          "desc": "keyPath",
+          "type": "string",
+          "required": "true"
+        },
+        {
+          "id": 1,
+          "desc": "opacity",
+          "type": "float",
+          "required": "true",
+          "min": 0,
+          "max": 100
+        }
+      ]
+    },
+    {
+      "name": "setStrokeWidth",
+      "argc": 2,
+      "argv": [
+        {
+          "id": 0,
+          "desc": "keyPath",
+          "type": "string",
+          "required": "true"
+        },
+        {
+          "id": 1,
+          "desc": "width",
+          "type": "float",
+          "required": "true"
+        }
+      ]
+    }
+  ],
+  "group": [
+    {
+      "name": "setTrAnchor",
+      "argc": 3,
+      "argv": [
+        {
+          "id": 0,
+          "desc": "keyPath",
+          "type": "string",
+          "required": "true"
+        },
+        {
+          "id": 1,
+          "desc": "x",
+          "type": "float",
+          "required": "true"
+        },
+        {
+          "id": 2,
+          "desc": "y",
+          "type": "float",
+          "required": "true"
+        }
+      ]
+    },
+    {
+      "name": "setTrPosition",
+      "argc": 3,
+      "argv": [
+        {
+          "id": 0,
+          "desc": "keyPath",
+          "type": "string",
+          "required": "true"
+        },
+        {
+          "id": 1,
+          "desc": "x",
+          "type": "float",
+          "required": "true"
+        },
+        {
+          "id": 2,
+          "desc": "y",
+          "type": "float",
+          "required": "true"
+        }
+      ]
+    },
+    {
+      "name": "setTrScale",
+      "argc": 3,
+      "argv": [
+        {
+          "id": 0,
+          "desc": "keyPath",
+          "type": "string",
+          "required": "true"
+        },
+        {
+          "id": 1,
+          "desc": "w",
+          "type": "float",
+          "required": "true",
+          "min": 0,
+          "max": 100
+        },
+        {
+          "id": 2,
+          "desc": "h",
+          "type": "float",
+          "required": "true",
+          "min": 0,
+          "max": 100
+        }
+      ]
+    },
+    {
+      "name": "setTrRotation",
+      "argc": 2,
+      "argv": [
+        {
+          "id": 0,
+          "desc": "keyPath",
+          "type": "string",
+          "required": "true"
+        },
+        {
+          "id": 1,
+          "desc": "degree",
+          "type": "float",
+          "required": "true",
+          "min": 0,
+          "max": 360
+        }
+      ]
+    },
+    {
+      "name": "setTrOpacity",
+      "argc": 2,
+      "argv": [
+        {
+          "id": 0,
+          "desc": "keyPath",
+          "type": "string",
+          "required": "true"
+        },
+        {
+          "id": 1,
+          "desc": "opacity",
+          "type": "float",
+          "required": "true",
+          "min": 0,
+          "max": 100
+        }
+      ]
+    }
+  ]
+}
