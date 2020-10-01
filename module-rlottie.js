@@ -121,25 +121,29 @@ var RLottieModule = (function () {
   };
 
   obj.reload = function (jsString) {
-    var len = obj.lottieHandle.load(jsString);
-    obj.layerList = JSON.parse(jsString).layers;
-    document.getElementById("layerlist").innerHTML = "";
-    getAllLayers(obj.layerList, document.getElementById("layerlist"));
-    obj.frameCount = obj.lottieHandle.frames();
-    obj.curFrame = 0;
-    obj.frameRate = 0;
-    obj.rafId = {};
-    obj.resizeId = {};
-    obj.playing = true;
-    obj.wasPlaying = false;
+    try {
+      var len = obj.lottieHandle.load(jsString);
+      obj.layerList = JSON.parse(jsString).layers;
+      document.getElementById("layerlist").innerHTML = "";
+      getAllLayers(obj.layerList, document.getElementById("layerlist"));
+      obj.frameCount = obj.lottieHandle.frames();
+      obj.curFrame = 0;
+      obj.frameRate = 0;
+      obj.rafId = {};
+      obj.resizeId = {};
+      obj.playing = true;
+      obj.wasPlaying = false;
 
-    //layer list by yoon
-    obj.layerList = [];
+      //layer list by yoon
+      obj.layerList = [];
 
-    // force a render in pause state
-    sliderReset();
-    frameList.init();
-    obj.update();
+      // force a render in pause state
+      sliderReset();
+      frameList.init();
+      obj.update();
+    } catch (e) {
+      alert("this JSON file is not supported");
+    }
   };
 
   obj.update = function () {
