@@ -82,6 +82,31 @@
             "
             id="frameList"
           ></div>
+          <!-- 
+            ssafysr project
+            customize form
+          -->
+          <form id="customize">
+            <select id="customize-type" onchange="typeChange(this.value)" name="customize-type">
+              <option value="0">Fill Color</option>
+              <option value="1">Fill Opacity</option>
+              <option value="2">Stroke Color</option>
+              <option value="3">Stroke Opacity</option>
+              <option value="4">Stroke Width</option>
+              <option value="5">Transform Anchor</option>
+              <option value="6">Transform Position</option>
+              <option value="7">Transform Scale</option>
+              <option value="8">Transform Rotation</option>
+              <option value="9">Transform Opacity</option>
+            </select>
+            <input type="text" placeholder="keyPath" id="customize-keypath" name="customize-keypath">
+            <div id="customize-value">
+              <input type="color">
+            </div>
+            <input type="button" value="Submit" onclick="customizeLottie()">
+          </form>
+          </div>
+
           <v-card
           class="mx-auto"
           tile>
@@ -212,5 +237,42 @@
         },
       });
     </script>
+    <!--
+      ssafysr project
+      customize form style
+      add palette for color picking
+    -->
+    <style>
+      #customize {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+      }
+      
+      #customize input[type=text], #customize-type, #customize-value {
+        width: 24%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      
+      #customize input[type=button] {
+        width: 24%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      #customize input[type=button]:hover {
+        background-color: #45a049;
+      }
+    </style>
   </body>
 </html>
