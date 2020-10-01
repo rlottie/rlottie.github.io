@@ -483,3 +483,92 @@ function loadApiList() {
 }
 
 loadApiList();
+
+function toggle(name) {
+  var controller = document.getElementById(name);
+  var inputs = controller.getElementsByClassName("d")[0];
+
+  inputs.classList.toggle("hide");
+}
+
+function createApiController() {
+  var section = document.getElementById("a");
+  while(section.hasChildNodes()) {
+    section.removeChild(section.lastChild);
+  }
+
+  for(var type in apiList) {
+    var apis = apiList[type];
+    var objType = document.createElement("div");
+    var typeName = document.createElement("div");
+    typeName.innerText = type;
+    objType.appendChild(typeName);
+    for(var i = 0; i < apis.length; i++) {
+      var controller = document.createElement("div");
+      controller.id = apis[i].name;
+
+      var title = document.createElement("div");
+      var name = document.createElement("div");
+      name.innerText = apis[i].name;
+      var button = document.createElement("button");
+      button.type = "button"
+      button.innerText = "hide/show";
+      button.addEventListener("click", (function(m) {
+        return function() {
+          toggle(m);
+        };
+      })(apis[i].name));
+      title.appendChild(name);
+      title.appendChild(button);
+
+      controller.appendChild(title);
+
+      var inputs = document.createElement("div");
+      inputs.classList.add("d");
+      inputs.classList.add("hide");
+      var argv = apis[i].argv;
+      for(var j = 0; j < argv.length; j++) {
+        var input = document.createElement("div");
+        var desc = document.createElement("span");
+        desc.innerText = argv[j].desc;
+        var type = document.createElement("span");
+        type.innerText = "(type: " + argv[j].type + ")";
+        var value = document.createElement("input");
+        if(argv[j].type == "string") {
+          value.type = "text";
+        } else if(argv[j].type == "float") {
+          value.type = "number";
+          value.step = "0.01";
+          if(argv[j].min != undefined) {
+            value.min = argv[j].min;
+          }
+          if(argv[j].max != undefined) {
+            value.max = argv[j].max;
+          }
+        }
+        value.dataset.type = argv[j].type;
+        value.dataset.required = argv[j].required;
+
+        input.appendChild(desc);
+        input.appendChild(type);
+        input.appendChild(value);
+
+        inputs.appendChild(input);
+      }
+      var button = document.createElement("button");
+      button.type = "button";
+      button.innerText = "run";
+      button.addEventListener("click", (function(m) {
+        return function() {
+          callAPI(m);
+        }
+      })(apis[i].name))
+      inputs.append(button);
+
+      controller.appendChild(inputs);
+      objType.appendChild(controller);
+    }
+    
+    section.appendChild(objType);
+  }
+}
