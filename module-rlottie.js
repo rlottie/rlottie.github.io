@@ -212,7 +212,7 @@ var RLottieModule = (function () {
       if (list[i].nm != null) {
         var layer = document.createElement("li");
         layer.innerHTML = list[i].nm;
-      }else{
+      } else {
         continue;
       }
       for (var j in list[i]) {
@@ -263,7 +263,6 @@ function handleFiles(files) {
       read.readAsText(f);
       read.onloadend = function () {
         const lottie = JSON.parse(read.result);
-        RLottieModule.keyPathTree = getKeyPathTree(lottie);
         RLottieModule.reload(read.result);
       };
       break;
@@ -323,14 +322,14 @@ function getLottieFromUrl() {
   xhr.onload = function () {
     if (xhr.status == 200) {
       var contentType = xhr.getResponseHeader("Content-Type");
-      if(contentType != "application/json") {
-        throw new Error('Response data is not JSON format');
+      if (contentType != "application/json") {
+        throw new Error("Response data is not JSON format");
       }
 
       var data = xhr.responseText;
       RLottieModule.reload(data);
     } else {
-        throw new Error('Request failed');
+      throw new Error("Request failed");
     }
   };
 
@@ -347,18 +346,18 @@ function onExecClick(event) {
   var inputs = apiCard.getElementsByTagName("input");
   var argv = [];
 
-  for(var i = 0; i < inputs.length; i++) {
+  for (var i = 0; i < inputs.length; i++) {
     var type = inputs[i].dataset.type;
     var required = inputs[i].dataset.required;
     var value = inputs[i].value;
 
-    if(required == "true" && value == "") {
+    if (required == "true" && value == "") {
       throw new Error("empty value");
     }
 
-    if(type == "float") {
+    if (type == "float") {
       var value = parseFloat(value);
-      if(value == NaN) {
+      if (value == NaN) {
         throw new Error("invalid value");
       }
     }
