@@ -178,3 +178,12 @@ function addAPI(event) {
   createApiController();
 }
 
+function downloadApiList() {
+  var blob = new Blob([JSON.stringify(apiList, null, 2)], {type: 'application/json'});
+  var url = URL.createObjectURL(blob);
+  var link = document.createElement("a");
+
+  link.setAttribute('href', url);
+  link.setAttribute('download', 'CppAPI.json');
+  link.click();
+}

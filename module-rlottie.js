@@ -20,8 +20,6 @@ function setup() {
 }
 setup();
 
-var aa = 1239;
-
 // Create a LottieView Module responsible of rendering a lottie file
 var RLottieModule = (function () {
   // create a object;
