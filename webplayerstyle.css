@@ -207,3 +207,7 @@ button {
   background-position: center center;
   background-repeat:no-repeat;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
