@@ -256,6 +256,8 @@ var RLottieModule = (function () {
       if (list[i].nm != null) {
         var layer = document.createElement("li");
         layer.innerHTML = list[i].nm;
+      }else{
+        continue;
       }
       for (var j in list[i]) {
         if (Array.isArray(list[i][j])) {
