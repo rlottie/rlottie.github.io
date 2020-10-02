@@ -16,15 +16,22 @@
 function resetBackGround() {
   var board = document.getElementById("content");
   board.removeAttribute("style");
+  document.getElementById("bg-color").value = "#FFFFFF";
+  document.getElementById("bg-color").style.backgroundImage = "";
 }
 function onChangeBackGround(e) {
-  console.log(e.target.files);
   const file = e.target.files[0];
-  var board = document.getElementById("content");
-  board.setAttribute(
-    "style",
-    `background-image: url(${URL.createObjectURL(file)})`
-  );
+  if (!!file) {
+    document.getElementById(
+      "content"
+    ).style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+  }
+
+  // var board = document.getElementById("content");
+  // board.setAttribute(
+  //   "style",
+  //   `background-image: url(${URL.createObjectURL(file)})`
+  // );
 
   // this.imgUrl = URL.createObjectURL(file);
 }
