@@ -109,33 +109,39 @@
             </div>
           </div>
           <div id="api-creator-section"></div>
-          <div class="api-creator">
-            <div class="label">API name: </div>
-            <input class="api-name" type="text">
-            <div class="label">API for: </div>
-            <select class="target-object">
-              <option value="fill">Fill</option>
-              <option value="stroke">Stroke</option>
-              <option value="group">Group</option>
-            </select>
-            <button type="button" onclick="addArgument(event)">add argument</button>
-            <button type="button" onclick="addAPI(event)">submit</button>
-          </div>
-          <div class="argument">
-            <div class="label">desc</div>
-            <input class="arg-desc" type="text" value="Argument">
-            <select class="arg-type" onchange="onTypeChange(event)">
-              <option value="string">string</option>
-              <option value="float">float</option>
-            </select>
-            <div class="label">limit</div>
-            <input class="arg-limit" type="checkbox" onchange="onLimitChange(event)" disabled>
-            <div class="label">Min: </div>
-            <input class="limit-min" type="number" step="0.01" disabled>
-            <div class="label">Max: </div>
-            <input class="limit-max" type="number" step="0.01" disabled>
-            <button type="button" onclick="deleteArgument(event)">delete</button>
-          </div>
+
+          <template id="api-creator">
+            <div class="api-creator">
+              <div class="label">API name: </div>
+              <input class="api-name" type="text">
+              <div class="label">API for: </div>
+              <select class="target-object">
+                <option value="fill">Fill</option>
+                <option value="stroke">Stroke</option>
+                <option value="group">Group</option>
+              </select>
+              <button type="button" onclick="addArgument(event)">add argument</button>
+              <button type="button" onclick="addAPI(event)">submit</button>
+            </div>
+          </template>
+      
+          <template id="argument">
+            <div class="argument">
+              <div class="label">desc</div>
+              <input class="arg-desc" type="text" value="Argument">
+              <select class="arg-type" onchange="onTypeChange(event)">
+                <option value="string">string</option>
+                <option value="float">float</option>
+              </select>
+              <div class="label">limit</div>
+              <input class="arg-limit" type="checkbox" onchange="onLimitChange(event)" disabled>
+              <div class="label">Min: </div>
+              <input class="limit-min" type="number" step="0.01" disabled>
+              <div class="label">Max: </div>
+              <input class="limit-max" type="number" step="0.01" disabled>
+              <button type="button" onclick="deleteArgument(event)">delete</button>
+            </div>
+          </template>
           </section>
         </div>
       <script src="jscolor.js"></script>
