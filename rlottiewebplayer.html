@@ -37,7 +37,7 @@
           <ul id="layerlist" style="color:white;"></ul>
         </section>
         <section class="display">
-          <div class="content" id="content" style="height:80%;display:flex;align-items:center;justify-content:center;">
+          <div class="content" id="content">
             <canvas
               class=""
               id="myCanvas"
@@ -76,6 +76,13 @@
                 Background Control
               </div>
               <input id="bg-color" data-jscolor="">
+              <input
+              ref="imageInput"
+              accept="image/*"
+              type="file"
+              onchange="onChangeBackGround(event)"
+            />
+            <button onclick="resetBackGround()">reset Background</button>
             </div>
             <div class="speed bg-grey-lighter border-grey-light rounded border">
               <div
