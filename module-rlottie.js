@@ -121,29 +121,25 @@ var RLottieModule = (function () {
   };
 
   obj.reload = function (jsString) {
-    try {
-      var len = obj.lottieHandle.load(jsString);
-      obj.layerList = JSON.parse(jsString).layers;
-      document.getElementById("layerlist").innerHTML = "";
-      getAllLayers(obj.layerList, document.getElementById("layerlist"));
-      obj.frameCount = obj.lottieHandle.frames();
-      obj.curFrame = 0;
-      obj.frameRate = 0;
-      obj.rafId = {};
-      obj.resizeId = {};
-      obj.playing = true;
-      obj.wasPlaying = false;
+    var len = obj.lottieHandle.load(jsString);
+    obj.layerList = JSON.parse(jsString).layers;
+    document.getElementById("layerlist").innerHTML = "";
+    getAllLayers(obj.layerList, document.getElementById("layerlist"));
+    obj.frameCount = obj.lottieHandle.frames();
+    obj.curFrame = 0;
+    obj.frameRate = 0;
+    obj.rafId = {};
+    obj.resizeId = {};
+    obj.playing = true;
+    obj.wasPlaying = false;
 
-      //layer list by yoon
-      obj.layerList = [];
+    //layer list by yoon
+    obj.layerList = [];
 
-      // force a render in pause state
-      sliderReset();
-      frameList.init();
-      obj.update();
-    } catch (e) {
-      alert("this JSON file is not supported");
-    }
+    // force a render in pause state
+    sliderReset();
+    frameList.init();
+    obj.update();
   };
 
   obj.update = function () {
@@ -352,18 +348,18 @@ function callAPI(name) {
   var inputs = controller.getElementsByTagName("input");
   var argv = [];
 
-  for(var i = 0; i < inputs.length; i++) {
+  for (var i = 0; i < inputs.length; i++) {
     var type = inputs[i].dataset.type;
     var required = inputs[i].dataset.required;
     var value = inputs[i].value;
 
-    if(required == "true" && value == "") {
+    if (required == "true" && value == "") {
       throw new Error("empty value");
     }
 
-    if(type == "float") {
+    if (type == "float") {
       var value = parseFloat(value);
-      if(value == NaN) {
+      if (value == NaN) {
         throw new Error("invalid value");
       }
     }
@@ -469,14 +465,14 @@ var apiList = null;
 
 function loadApiList() {
   var xhr = new XMLHttpRequest();
-  xhr.onload = function() {
-    if(xhr.status == 200) {
+  xhr.onload = function () {
+    if (xhr.status == 200) {
       var data = xhr.responseText;
       apiList = JSON.parse(data);
     } else {
       console.log("Error!");
     }
-  }
+  };
 
   xhr.open("GET", "CppAPI.json");
   xhr.send(null);
@@ -493,17 +489,17 @@ function toggle(name) {
 
 function createApiController() {
   var section = document.getElementById("a");
-  while(section.hasChildNodes()) {
+  while (section.hasChildNodes()) {
     section.removeChild(section.lastChild);
   }
 
-  for(var type in apiList) {
+  for (var type in apiList) {
     var apis = apiList[type];
     var objType = document.createElement("div");
     var typeName = document.createElement("div");
     typeName.innerText = type;
     objType.appendChild(typeName);
-    for(var i = 0; i < apis.length; i++) {
+    for (var i = 0; i < apis.length; i++) {
       var controller = document.createElement("div");
       controller.id = apis[i].name;
 
@@ -511,13 +507,16 @@ function createApiController() {
       var name = document.createElement("div");
       name.innerText = apis[i].name;
       var button = document.createElement("button");
-      button.type = "button"
+      button.type = "button";
       button.innerText = "hide/show";
-      button.addEventListener("click", (function(m) {
-        return function() {
-          toggle(m);
-        };
-      })(apis[i].name));
+      button.addEventListener(
+        "click",
+        (function (m) {
+          return function () {
+            toggle(m);
+          };
+        })(apis[i].name)
+      );
       title.appendChild(name);
       title.appendChild(button);
 
@@ -527,22 +526,22 @@ function createApiController() {
       inputs.classList.add("d");
       inputs.classList.add("hide");
       var argv = apis[i].argv;
-      for(var j = 0; j < argv.length; j++) {
+      for (var j = 0; j < argv.length; j++) {
         var input = document.createElement("div");
         var desc = document.createElement("span");
         desc.innerText = argv[j].desc;
         var type = document.createElement("span");
         type.innerText = "(type: " + argv[j].type + ")";
         var value = document.createElement("input");
-        if(argv[j].type == "string") {
+        if (argv[j].type == "string") {
           value.type = "text";
-        } else if(argv[j].type == "float") {
+        } else if (argv[j].type == "float") {
           value.type = "number";
           value.step = "0.01";
-          if(argv[j].min != undefined) {
+          if (argv[j].min != undefined) {
             value.min = argv[j].min;
           }
-          if(argv[j].max != undefined) {
+          if (argv[j].max != undefined) {
             value.max = argv[j].max;
           }
         }
@@ -558,21 +557,23 @@ function createApiController() {
       var button = document.createElement("button");
       button.type = "button";
       button.innerText = "run";
-      button.addEventListener("click", (function(m) {
-        return function() {
-          callAPI(m);
-        }
-      })(apis[i].name))
+      button.addEventListener(
+        "click",
+        (function (m) {
+          return function () {
+            callAPI(m);
+          };
+        })(apis[i].name)
+      );
       inputs.append(button);
 
       controller.appendChild(inputs);
       objType.appendChild(controller);
     }
-    
+
     section.appendChild(objType);
   }
 }
-
 
 function openApiCreator() {
   var ref = document.getElementById("api-creator-section");
@@ -586,7 +587,7 @@ function openApiCreator() {
 function closeApiCreator() {
   var ref = document.getElementById("api-creator-section");
 
-    while(ref.hasChildNodes()) {
+  while (ref.hasChildNodes()) {
     ref.removeChild(ref.lastChild);
   }
 }
@@ -611,12 +612,12 @@ function onTypeChange(event) {
   var parent = ref.parentNode;
 
   var limit = parent.getElementsByClassName("arg-limit")[0];
-  if(ref.value == "string") {
-    if(limit.checked) {
+  if (ref.value == "string") {
+    if (limit.checked) {
       limit.click();
     }
     limit.disabled = true;
-  } else if(ref.value = "float") {
+  } else if ((ref.value = "float")) {
     limit.disabled = false;
   }
 }
@@ -628,7 +629,7 @@ function onLimitChange(event) {
   var max = parent.getElementsByClassName("limit-max")[0];
   var min = parent.getElementsByClassName("limit-min")[0];
 
-  if(ref.checked) {
+  if (ref.checked) {
     max.disabled = false;
     min.disabled = false;
   } else {
@@ -642,29 +643,30 @@ function onLimitChange(event) {
 function addAPI(event) {
   var apiCreator = event.target.parentNode;
 
-  var targetObject = apiCreator.getElementsByClassName("target-object")[0].value;
+  var targetObject = apiCreator.getElementsByClassName("target-object")[0]
+    .value;
   var name = apiCreator.getElementsByClassName("api-name")[0].value;
 
   var arguments = apiCreator.getElementsByClassName("argument");
   var argc = arguments.length;
   var argv = [];
 
-  for(var i = 0; i < argc; i++) {
+  for (var i = 0; i < argc; i++) {
     var argument = {};
     argument.id = i;
     argument.desc = arguments[i].getElementsByClassName("arg-desc")[0].value;
     argument.type = arguments[i].getElementsByClassName("arg-type")[0].value;
     argument.required = "true";
-    if(arguments[i].getElementsByClassName("arg-limit")[0].checked) {
+    if (arguments[i].getElementsByClassName("arg-limit")[0].checked) {
       argument.max = arguments[i].getElementsByClassName("limit-max")[0].value;
       argument.min = arguments[i].getElementsByClassName("limit-min")[0].value;
     }
     argv.push(argument);
   }
-  
+
   var newApi = { name, argc, argv };
 
-  if(apiList[targetObject]) {
+  if (apiList[targetObject]) {
     apiList[targetObject].push(newApi);
   } else {
     apiList[targetObject] = [newApi];
