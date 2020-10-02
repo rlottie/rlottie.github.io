@@ -164,46 +164,6 @@ var RLottieModule = (function () {
     window.requestAnimationFrame(obj.render);
   };
 
-  obj.setFillColor = function (keyPath, r, g, b) {
-    obj.lottieHandle.setFillColor(keyPath, r, g, b);
-  };
-
-  obj.setFillOpacity = function (keyPath, opacity) {
-    obj.lottieHandle.setFillOpacity(keyPath, opacity);
-  };
-
-  obj.setStrokeColor = function (keyPath, r, g, b) {
-    obj.lottieHandle.setStrokeColor(keyPath, r, g, b);
-  };
-
-  obj.setStrokeOpacity = function (keyPath, opacity) {
-    obj.lottieHandle.setStrokeOpacity(keyPath, opacity);
-  };
-
-  obj.setStrokeWidth = function (keyPath, width) {
-    obj.lottieHandle.setStrokeWidth(keyPath, width);
-  };
-
-  obj.setTrAnchor = function (keyPath, x, y) {
-    obj.lottieHandle.setTrAnchor(keyPath, x, y);
-  };
-
-  obj.setTrPosition = function (keyPath, x, y) {
-    obj.lottieHandle.setTrPosition(keyPath, x, y);
-  };
-
-  obj.setTrScale = function (keyPath, w, h) {
-    obj.lottieHandle.setTrScale(keyPath, w, h);
-  };
-
-  obj.setTrRotation = function (keyPath, degree) {
-    obj.lottieHandle.setTrRotation(keyPath, degree);
-  };
-
-  obj.setTrOpacity = function (keyPath, opacity) {
-    obj.lottieHandle.setTrOpacity(keyPath, opacity);
-  };
-
   obj.callAPI = function (name, argv) {
     try {
       obj.lottieHandle[name](...argv);
@@ -363,33 +323,6 @@ sizeSlider.addEventListener('input',()=>{
   document.getElementById("myCanvas").height = size;
 })
 
-function callAPI(name) {
-  var controller = document.getElementById(name);
-  var inputs = controller.getElementsByTagName("input");
-  var argv = [];
-
-  for (var i = 0; i < inputs.length; i++) {
-    var type = inputs[i].dataset.type;
-    var required = inputs[i].dataset.required;
-    var value = inputs[i].value;
-
-    if (required == "true" && value == "") {
-      throw new Error("empty value");
-    }
-
-    if (type == "float") {
-      var value = parseFloat(value);
-      if (value == NaN) {
-        throw new Error("invalid value");
-      }
-    }
-
-    argv.push(value);
-  }
-
-  RLottieModule.callAPI(name, argv);
-}
-
 // play reverse
 function playReverse() {
   RLottieModule.reverse = !RLottieModule.reverse;
@@ -421,66 +354,6 @@ function getByUrl() {
   console.log(url);
 }
 
-function setFillColor(keyPath, r, g, b) {
-  RLottieModule.setFillColor(keyPath, 256 - r, 256 - g, 256 - b);
-}
-
-function setFillOpacity(keyPath, opacity) {
-  RLottieModule.setFillOpacity(keyPath, opacity);
-}
-
-function setStrokeColor(keyPath, r, g, b) {
-  RLottieModule.setStrokeColor(keyPath, 256 - r, 256 - g, 256 - b);
-}
-
-function setStrokeOpacity(keyPath, opacity) {
-  RLottieModule.setStrokeOpacity(keyPath, opacity);
-}
-
-function setStrokeWidth(keyPath, width) {
-  RLottieModule.setStrokeWidth(keyPath, width);
-}
-
-function setTrAnchor(keyPath, x, y) {
-  RLottieModule.setTrAnchor(keyPath, x, y);
-}
-
-function setTrPosition(keyPath, x, y) {
-  RLottieModule.setTrPosition(keyPath, x, y);
-}
-
-function setTrScale(keyPath, w, h) {
-  RLottieModule.setTrScale(keyPath, w, h);
-}
-
-function setTrRotation(keyPath, degree) {
-  RLottieModule.setTrRotation(keyPath, degree);
-}
-
-function setTrOpacity(keyPath, opacity) {
-  RLottieModule.setTrOpacity(keyPath, opacity);
-}
-
-function getKeyPathTree(obj, depth = 0) {
-  const node = {
-    depth: depth,
-    name: obj.nm,
-    type: obj.ty,
-    child: [],
-  };
-  for (const prop in obj) {
-    if (obj[prop].map) {
-      node.child = node.child.concat(
-        obj[prop].map((v) => getKeyPathTree(v, depth + 1))
-      );
-    }
-  }
-  return node;
-}
-function kkk() {
-  console.log("asdf");
-}
-
 var apiList = null;
 
 function loadApiList() {
@@ -499,101 +372,6 @@ function loadApiList() {
 }
 
 loadApiList();
-
-function toggle(name) {
-  var controller = document.getElementById(name);
-  var inputs = controller.getElementsByClassName("d")[0];
-
-  inputs.classList.toggle("hide");
-}
-
-function createApiController() {
-  var section = document.getElementById("a");
-  while (section.hasChildNodes()) {
-    section.removeChild(section.lastChild);
-  }
-
-  for (var type in apiList) {
-    var apis = apiList[type];
-    var objType = document.createElement("div");
-    var typeName = document.createElement("div");
-    typeName.innerText = type;
-    objType.appendChild(typeName);
-    for (var i = 0; i < apis.length; i++) {
-      var controller = document.createElement("div");
-      controller.id = apis[i].name;
-
-      var title = document.createElement("div");
-      var name = document.createElement("div");
-      name.innerText = apis[i].name;
-      var button = document.createElement("button");
-      button.type = "button";
-      button.innerText = "hide/show";
-      button.addEventListener(
-        "click",
-        (function (m) {
-          return function () {
-            toggle(m);
-          };
-        })(apis[i].name)
-      );
-      title.appendChild(name);
-      title.appendChild(button);
-
-      controller.appendChild(title);
-
-      var inputs = document.createElement("div");
-      inputs.classList.add("d");
-      inputs.classList.add("hide");
-      var argv = apis[i].argv;
-      for (var j = 0; j < argv.length; j++) {
-        var input = document.createElement("div");
-        var desc = document.createElement("span");
-        desc.innerText = argv[j].desc;
-        var type = document.createElement("span");
-        type.innerText = "(type: " + argv[j].type + ")";
-        var value = document.createElement("input");
-        if (argv[j].type == "string") {
-          value.type = "text";
-        } else if (argv[j].type == "float") {
-          value.type = "number";
-          value.step = "0.01";
-          if (argv[j].min != undefined) {
-            value.min = argv[j].min;
-          }
-          if (argv[j].max != undefined) {
-            value.max = argv[j].max;
-          }
-        }
-        value.dataset.type = argv[j].type;
-        value.dataset.required = argv[j].required;
-
-        input.appendChild(desc);
-        input.appendChild(type);
-        input.appendChild(value);
-
-        inputs.appendChild(input);
-      }
-      var button = document.createElement("button");
-      button.type = "button";
-      button.innerText = "run";
-      button.addEventListener(
-        "click",
-        (function (m) {
-          return function () {
-            callAPI(m);
-          };
-        })(apis[i].name)
-      );
-      inputs.append(button);
-
-      controller.appendChild(inputs);
-      objType.appendChild(controller);
-    }
-
-    section.appendChild(objType);
-  }
-}
 
 function openApiCreator() {
   var ref = document.getElementById("api-creator-section");
