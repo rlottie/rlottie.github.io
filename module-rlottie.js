@@ -345,6 +345,24 @@ function onResizeSliderDrag(value) {
   RLottieModule.update();
 }
 
+let sizeSlider = document.querySelector('#resizeSlider');
+
+sizeSlider.addEventListener('input',()=>{
+  var width = document.getElementById("content").clientWidth;
+  var height = document.getElementById("content").clientHeight;
+  var size = width;
+  let value = sizeSlider.value;
+  if (width < height) size = width;
+  else size = height;
+  size = size - 8;
+  size = size * (value / 100);
+
+  if (size < 10) size = 10;
+  size = size | 0;
+  document.getElementById("myCanvas").width = size;
+  document.getElementById("myCanvas").height = size;
+})
+
 function callAPI(name) {
   var controller = document.getElementById(name);
   var inputs = controller.getElementsByTagName("input");
