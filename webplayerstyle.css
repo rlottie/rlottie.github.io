@@ -207,6 +207,7 @@ button {
   border-radius: 4px;
   width: 100%;
   height: 30px;
+}
 
 }
 
@@ -221,4 +222,18 @@ button {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.api-card {
+  border: 1px solid black;
+}
+
+.api-body {
+  overflow: auto;
+  max-height: 500px;
+  transition: max-height 0.5s;
+}
+
+.hide {
+  max-height: 0px;
 }
