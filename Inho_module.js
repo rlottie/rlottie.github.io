@@ -13,6 +13,10 @@
 // });
 
 // change Background
+function resetBackGround() {
+  var board = document.getElementById("content");
+  board.removeAttribute("style");
+}
 function onChangeBackGround(e) {
   console.log(e.target.files);
   const file = e.target.files[0];
@@ -21,5 +25,6 @@ function onChangeBackGround(e) {
     "style",
     `background-image: url(${URL.createObjectURL(file)})`
   );
+
   // this.imgUrl = URL.createObjectURL(file);
 }
