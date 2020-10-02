@@ -108,7 +108,30 @@
               />
             </div>
           </div>
+          <div id="api-controller-section"></div>
           <div id="api-creator-section"></div>
+
+          <template id="api-card">
+            <div class="api-card">
+              <div class="api-head">
+                <div class="api-name"></div>
+                <button class="api-fold" type="button" onclick="onFoldClick(event)">show/hide</button>
+              </div>
+              <div class="api-body hide">
+                <button class="api-exec" type="button" onclick="onExecClick(event)">execute</button>
+              </div>
+            </div>
+          </template>
+      
+          <template id="api-arg">
+            <div class="api-arg">
+              <div class="arg-info">
+                <span class="arg-desc"></span>
+                <span class="arg-type"></span>
+              </div>
+              <input class="arg-input">
+            </div>
+          </template>
 
           <template id="api-creator">
             <div class="api-creator">
