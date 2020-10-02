@@ -472,3 +472,122 @@ function addAPI(event) {
 
   closeApiCreator();
 }
+
+function callAPI(name) {
+  var controller = document.getElementById(name);
+  var inputs = controller.getElementsByTagName("input");
+  var argv = [];
+
+  for(var i = 0; i < inputs.length; i++) {
+    var type = inputs[i].dataset.type;
+    var required = inputs[i].dataset.required;
+    var value = inputs[i].value;
+
+    if(required == "true" && value == "") {
+      throw new Error("empty value");
+    }
+
+    if(type == "float") {
+      var value = parseFloat(value);
+      if(value == NaN) {
+        throw new Error("invalid value");
+      }
+    }
+
+    argv.push(value);
+  }
+
+  RLottieModule.callAPI(name, argv);
+}
+
+function onFoldClick(event) {
+  var ref = event.target;
+  var apiCard = ref.parentNode.parentNode;
+  var apiBody = apiCard.getElementsByClassName("api-body")[0];
+
+  apiBody.classList.toggle("hide");
+}
+
+function onExecClick(event) {
+  var ref = event.target;
+  var apiCard = ref.parentNode.parentNode;
+  var apiName = apiCard.getElementsByClassName("api-name")[0];
+  var name = apiName.innerText;
+
+  var inputs = apiCard.getElementsByTagName("input");
+  var argv = [];
+
+  for(var i = 0; i < inputs.length; i++) {
+    var type = inputs[i].dataset.type;
+    var required = inputs[i].dataset.required;
+    var value = inputs[i].value;
+
+    if(required == "true" && value == "") {
+      throw new Error("empty value");
+    }
+
+    if(type == "float") {
+      var value = parseFloat(value);
+      if(value == NaN) {
+        throw new Error("invalid value");
+      }
+    }
+
+    argv.push(value);
+  }
+
+  RLottieModule.callAPI(name, argv);
+}
+
+function createApiController() {
+  var section = document.getElementById("api-controller-section");
+  while(section.hasChildNodes()) {
+    section.removeChild(section.lastChild);
+  }
+
+  for(var type in apiList) {
+    var apis = apiList[type];
+    for(let i = 0; i < apis.length; i++) {
+      var api = apis[i];
+      var apiCard = document.getElementById("api-card");
+      apiCard = document.importNode(apiCard.content, true);
+
+      var apiName = apiCard.querySelectorAll(".api-name")[0];
+      apiName.innerText = api.name;
+
+      var apiBody = apiCard.querySelectorAll(".api-body")[0];
+      var apiExec = apiBody.querySelectorAll(".api-exec")[0];
+      for(let j = 0; j < api.argc; j++) {
+        var arg = api.argv[j];
+        var apiArg = document.getElementById("api-arg");
+        apiArg = document.importNode(apiArg.content, true);
+
+        var argDesc = apiArg.querySelectorAll(".arg-desc")[0];
+        argDesc.innerText = arg.desc;
+        var argType = apiArg.querySelectorAll(".arg-type")[0];
+        argType.innerText = "(type: " + arg.type + ")";
+        
+        var argInput = apiArg.querySelectorAll(".arg-input")[0];
+        if(arg.type == "string") {
+          argInput.type = "text";
+        } else if(arg.type == "float") {
+          argInput.type = "number";
+          argInput.step = "0.01";
+          if(arg.min != undefined) {
+            argInput.min = arg.min;
+          }
+          if(arg.max != undefined) {
+            argInput.max = arg.max;
+          }
+        }
+        argInput.dataset.type = arg.type;
+        argInput.dataset.required = arg.required;
+
+        apiBody.insertBefore(apiArg, apiExec);
+      }
+      
+      section.appendChild(apiCard);
+    }
+  }
+
+}
