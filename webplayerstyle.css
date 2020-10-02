@@ -235,3 +235,22 @@ button {
 .hide {
   max-height: 0px;
 }
+
+#snackbar {
+  width: 288px;
+  height: 48px;
+  padding: 6px 16px;
+  line-height: 32px;
+  border-radius: 4px;
+  box-shadow: 0px 1px 3px 1px #808080;
+  position: absolute;
+  opacity: 0;
+  top: 100px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4caf50;
+  transition: opacity 225ms;
+}
+#snackbar.show {
+  opacity: 1;
+}
