@@ -212,6 +212,24 @@ var RLottieModule = (function () {
       if (list[i].nm != null) {
         var layer = document.createElement("li");
         layer.innerHTML = list[i].nm;
+        layer.addEventListener("click", function(e) {
+          e.stopPropagation()
+          var t = document.createElement("textarea")
+          var node = this
+          var text = "**"
+          while (node.id != "layerlist") {
+            if (node.tagName == "LI")
+              text = node.innerText.split("\n")[0] + "." + text
+            node = node.parentNode
+          }
+          t.value = text
+          document.body.appendChild(t)
+          t.focus()
+          t.select()
+          document.execCommand("copy")
+          document.body.removeChild(t)
+          
+        })
       } else {
         continue;
       }
