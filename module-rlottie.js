@@ -333,25 +333,31 @@ function playReverse() {
   document.getElementById("playReverse").innerText = status;
 }
 
-//get rlottie by url -write by lee
-function getByUrl() {
-  var url = document.getElementById("urlInput").value;
-  if (url === "") {
-    alert("url을 입력해주세요");
+//Get lottie file from url -write by lee
+function getLottieFromUrl() {
+  var url = document.getElementById("urlInput").value.trim();
+  if (url == "" || !(url.startWith("http://") || url.startWith("https://"))) {
+    alert("Enter correct URL starting with 'http://' or 'https://'");
     return;
   }
-  axios
-    .get(url)
-    .then((res) => {
-      var read = res.data;
-      console.log(read);
-      RLottieModule.reload(JSON.stringify(read));
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 
-  console.log(url);
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    if (xhr.status == 200) {
+      var contentType = xhr.getResponseHeader("Content-Type");
+      if(contentType != "application/json") {
+        throw new Error('Response data is not JSON format');
+      }
+
+      var data = xhr.responseText;
+      RLottieModule.reload(data);
+    } else {
+        throw new Error('Request failed');
+    }
+  };
+
+  xhr.open("GET", url);
+  xhr.send(null);
 }
 
 var apiList = null;
