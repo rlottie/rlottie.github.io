@@ -198,3 +198,12 @@ button {
 #frameList canvas {
   height: 50px;
 }
+
+#content {
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-position: center center;
+  background-repeat:no-repeat;
+}
