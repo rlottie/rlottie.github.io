@@ -572,3 +572,103 @@ function createApiController() {
     section.appendChild(objType);
   }
 }
+
+
+function openApiCreator() {
+  var ref = document.getElementById("api-creator-section");
+
+  var apiCreator = document.getElementById("api-creator");
+  var clone = document.importNode(apiCreator.content, true);
+
+  ref.appendChild(clone);
+}
+
+function closeApiCreator() {
+  var ref = document.getElementById("api-creator-section");
+
+    while(ref.hasChildNodes()) {
+    ref.removeChild(ref.lastChild);
+  }
+}
+
+function addArgument(event) {
+  var ref = event.target;
+  var parent = ref.parentNode;
+
+  var argument = document.getElementById("argument");
+  var clone = document.importNode(argument.content, true);
+
+  parent.insertBefore(clone, ref);
+}
+
+function deleteArgument(event) {
+  var ref = event.target;
+  ref.parentNode.parentNode.removeChild(ref.parentNode);
+}
+
+function onTypeChange(event) {
+  var ref = event.target;
+  var parent = ref.parentNode;
+
+  var limit = parent.getElementsByClassName("arg-limit")[0];
+  if(ref.value == "string") {
+    if(limit.checked) {
+      limit.click();
+    }
+    limit.disabled = true;
+  } else if(ref.value = "float") {
+    limit.disabled = false;
+  }
+}
+
+function onLimitChange(event) {
+  var ref = event.target;
+  var parent = ref.parentNode;
+
+  var max = parent.getElementsByClassName("limit-max")[0];
+  var min = parent.getElementsByClassName("limit-min")[0];
+
+  if(ref.checked) {
+    max.disabled = false;
+    min.disabled = false;
+  } else {
+    max.value = "";
+    max.disabled = true;
+    min.value = "";
+    min.disabled = true;
+  }
+}
+
+function addAPI(event) {
+  var apiCreator = event.target.parentNode;
+
+  var targetObject = apiCreator.getElementsByClassName("target-object")[0].value;
+  var name = apiCreator.getElementsByClassName("api-name")[0].value;
+
+  var arguments = apiCreator.getElementsByClassName("argument");
+  var argc = arguments.length;
+  var argv = [];
+
+  for(var i = 0; i < argc; i++) {
+    var argument = {};
+    argument.id = i;
+    argument.desc = arguments[i].getElementsByClassName("arg-desc")[0].value;
+    argument.type = arguments[i].getElementsByClassName("arg-type")[0].value;
+    argument.required = "true";
+    if(arguments[i].getElementsByClassName("arg-limit")[0].checked) {
+      argument.max = arguments[i].getElementsByClassName("limit-max")[0].value;
+      argument.min = arguments[i].getElementsByClassName("limit-min")[0].value;
+    }
+    argv.push(argument);
+  }
+  
+  var newApi = { name, argc, argv };
+
+  if(apiList[targetObject]) {
+    apiList[targetObject].push(newApi);
+  } else {
+    apiList[targetObject] = [newApi];
+  }
+
+  closeApiCreator();
+}
