@@ -2,62 +2,80 @@
   <div class="navbar d-flex justify-content-between">
     <!-- logo -->
     <div class="d-flex align-items-center">
-        <img class="logo" src="../static/logo.png" alt="logo">
-        <h2 class="ml-3">PrettyView</h2>
+      <img class="logo" src="https://user-images.githubusercontent.com/25967949/94992643-7173a580-05c6-11eb-8514-322f459a88d8.png" alt="logo">
     </div>
 
     <!-- button group -->
     <div class="d-flex">
-      <!-- canvas shape -->
-      <v-btn-toggle light v-model="toggle_one" class="mx-2" mandatory>
-        <v-btn>
-          <v-icon class="fas fa-square-full text-dark"></v-icon>
-        </v-btn>
-        <v-btn>
-          <v-icon class="fas fa-circle text-dark"></v-icon>
-        </v-btn>
-      </v-btn-toggle>
-
-
-      <!-- light/dark mode -->
-      <button class="btn mx-2 mode" @click="changeMode" :class="{ 'text-white': !$vuetify.theme.dark }">{{ mode }}</button>
-      <!-- <v-select
-        dark
-        color="white"
-        :items="modes"
-        outlined
-      ></v-select> -->
-
-      <!-- import/export -->
+      <div class="d-none d-sm-block">
+        <!-- single/multi view -->
+        <button class="multiview-btn btn mx-2 view-count preview text-white" @click="changeViewCount">{{ viewCount }}</button>
+        <!-- light/dark mode -->
+        <button v-if="$vuetify.theme.dark" class="btn mx-2 mode" @click="changeMode"><v-icon class="text-dark">mdi-white-balance-sunny</v-icon></button>
+        <button v-else class="btn mx-2 mode" @click="changeMode"><em class="fas fa-moon text-white"></em></button>
+      </div>
+      <!-- import file -->
       <div class="filebox mx-2">
         <label for="fileSelector"><span class="d-inline-block pt-1">New Lottie</span></label>
-        <input class="upload-hidden" @change="changeFile" type="file" id="fileSelector" accept=".json" placeholder="New Lottie">
+        <input class="upload-hidden" type="file" id="fileSelector" accept=".json" placeholder="New Lottie">
       </div>
-      <button class="btn accent mx-2" :class="{ 'text-white': $vuetify.theme.dark }" data-toggle="modal" data-target="#exportModal">Export <i class="fas fa-download ml-2"></i></button>
-
-
-      <!-- Modal -->
-      <div class="modal fade text-dark" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header border-bottom-0">
-              <h5 class="modal-title" id="exportModalLabel">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+      <!-- export to gif -->
+      <v-dialog
+        v-model="exportdialog"
+        max-width="500"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <button
+            class="btn accent mx-2" 
+            :class="{ 'text-white': $vuetify.theme.dark }" 
+            depressed 
+            v-bind="attrs"
+            v-on="on"
+          >
+            Export
+            <em class="fas fa-download ml-2"></em>
+          </button>
+        </template>
+        <v-card>
+          <v-card-title class="headline mb-2">
+            Export file to GIF
+          </v-card-title>
+          <v-card-subtitle>
+            Size: {{canvasWidth}}px x {{canvasHeight}}px
+          </v-card-subtitle>
+          <v-card-text>
+            <div class="d-flex align-items-center">
+              <v-text-field
+                solo-reverse
+                color="text"
+                placeholder="File name"
+                v-model="gifname"
+              ></v-text-field>
+              <v-btn class="ml-4" color="accent" @click="downloadGIF" :disabled="downloadDisabled">Download</v-btn>
             </div>
-            <div class="modal-body">
-              modal modal
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="text"
+              text
+              @click="clickExportDialogClose"
+              :disabled="closeDisabled"
+            >
+              Close
+            </v-btn>
+          </v-card-actions>
+          <v-overlay :value="exportOverlay" opacity="0.6">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <h4 class="mb-5">Creating GIF file...</h4>
+              <v-progress-circular
+                indeterminate
+                size="50"
+              ></v-progress-circular>
             </div>
-            <div class="modal-footer border-top-0">
-              <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-              <button type="button" class="btn accent text-white" :class="{ 'text-white': $vuetify.theme.dark }">Export</button>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
+          </v-overlay>
+        </v-card>
+      </v-dialog>
     </div>
   </div>
 </template>
@@ -65,34 +83,64 @@
 <script>
 module.exports = {
   name: 'navbar',
-
+  props: {
+    exportdialog: Boolean,
+  },
   data: function () {
     return {
-      toggle_one: 0,
-      mode: 'Light Mode',
+      viewCount: 'Multi View',
+      gifname: "",
+      canvasWidth: 0,
+      canvasHeight: 0,
+      exportOverlay: false,
+      downloadDisabled: false,
+      closeDisabled: false,
     }
   },
-
-  methods: {
-    changeFile() {
-      this.$emit('file-changed')
-    },
-
-    changeMode() {
-      if (this.mode == 'Light Mode') {
-        this.mode = 'Dark Mode'
-        this.$vuetify.theme.dark = false
-      } else {
-        this.mode = 'Light Mode'
-        this.$vuetify.theme.dark = true
-      }
-    },
-  },
   watch: {
-    toggle_one() {
-      this.$emit('canvas-changed', this.toggle_one)
-    },
+    exportdialog(val) {
+      if(val) {
+        this.canvasWidth = getRModule(rlottieHandler.mainCanvasId).canvas.width;
+        this.canvasHeight = getRModule(rlottieHandler.mainCanvasId).canvas.height;
+        pause();
+      } else {
+        document.getElementById("playButton").innerHTML = "<i class='fas fa-pause'></i>";
+        rlottieHandler.play();
+      }
+    }
   },
+  methods: {
+    changeMode() {
+        this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+    },
+    changeViewCount() {
+      if (this.viewCount === 'Multi View') {
+        this.viewCount = 'Single View'
+        this.$emit('viewcount-changed', true)
+      } else {
+        this.viewCount = 'Multi View'
+        this.$emit('viewcount-changed', false);
+      }
+      windowResize();
+    },
+    clickExportDialogClose() {
+      this.exportdialog = false
+      this.$emit('exportdialog-changed')
+    },
+    downloadGIF() {
+      this.closeDisabled = true
+      this.downloadDisabled = true
+      this.exportOverlay = true
+      if (this.gifname == "") this.gifname = "download";
+      rlottieHandler.rlotties[rlottieHandler.mainCanvasId].makeGifFile(this.gifname, _ => {
+        this.gifname = "";
+        this.closeDisabled = false
+        this.downloadDisabled = false
+        this.exportOverlay = false;
+        this.clickExportDialogClose();
+      });
+    }
+  }
 }
 </script>
 
@@ -130,16 +178,26 @@ module.exports = {
     font-size: inherit;
     line-height: normal;
     vertical-align: middle;
-    background-color: #fdfdfd;
+    background-color: #ECEFF1;
     cursor: pointer;
-    border: 1px solid #fdfdfd;
-    border-bottom-color: #fdfdfd;
+    border: 1px solid #ECEFF1;
+    border-bottom-color: #ECEFF1;
     border-radius: .25em;
     margin-bottom: 0;
     height: 48px;
   }
 
-  .bg-green {
-    background-color: rgba(10, 142, 144, 0.74);
+  .mode {
+    width: 50px;
+    height: 48px;
+  }
+
+  .multiview-btn {
+    height: 48px;
+  }
+
+  .view-count {
+    background-color: #fdfdfd;
+    color: #1D3557
   }
 </style>

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+URL="https://github.com/jnordberg/gif.js"
+TMP="./dist/tmp"
+
+if [ -d ./node_modules ]; then
+  PATH="./node_modules/.bin/:$PATH"
+  VERSION=`./bin/version`
+  echo "Packaging gif.js $VERSION"
+  browserify -d -s GIF -t coffeeify src/gif.coffee | exorcist dist/_gif.js.map > dist/_gif.js
+  uglifyjs dist/_gif.js \
+    --preamble "// gif.js $VERSION - $URL" \
+    --in-source-map dist/_gif.js.map \
+    --source-map dist/gif.js.map \
+    --source-map-url gif.js.map \
+    > dist/gif.js
+  browserify -d -t coffeeify --bare src/gif.worker.coffee | exorcist dist/_gif.worker.js.map > dist/_gif.worker.js
+  uglifyjs dist/_gif.worker.js \
+    --preamble "// gif.worker.js $VERSION - $URL" \
+    --in-source-map dist/_gif.worker.js.map \
+    --source-map dist/gif.worker.js.map \
+    --source-map-url gif.worker.js.map \
+    > dist/gif.worker.js
+  rm dist/_*
+else
+  echo "Build dependencies missing. Run npm install"
+  exit 1
+fi
