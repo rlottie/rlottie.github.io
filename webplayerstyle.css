@@ -282,3 +282,70 @@ p {
 li:hover {
   background: rgb(41, 43, 49);
 }
+
+.accordion-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.accordion-menu li.open > ul {
+  display: block;
+}
+
+.accordion-menu li > ul {
+  /* position: absolute; */
+  display: none;
+  height: 0;
+  overflow: hidden;
+  transition: height 350ms ease-in-out;
+  margin-left: 25px;
+}
+
+.accordion-menu ul.is-visible {
+  display: block;
+  /* height: auto; */
+}
+
+.accordion-menu li {
+  border-bottom: 1px solid rgba(194, 194, 194, 0.333);
+  position: relative;
+  overflow: hidden;
+  transition: all .4s ease;
+}
+
+.accordion-menu li:last-child {
+  border: none;
+}
+
+.accordion-menu li::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.accordion-menu li > span > svg {
+  display: block;
+  position: relative;
+  fill: rgb(167, 162, 162);
+  width: 10px;
+  float: right;
+  transition: all .3s ease;
+}
+
+.accordion-menu li.open > span > svg {
+  transform: rotate(90deg);
+}
+
+.accordion-menu span {
+  padding: 7px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+}
+
+.accordion-menu * {
+  box-sizing: border-box;
+}
