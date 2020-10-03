@@ -78,14 +78,14 @@ function onFoldClick(event) {
   apiBody.classList.toggle("hide");
 }
 
-function openApiCreator() {
+function openApiCreator() { 
   //add
   if(this.opneCreator){
     alert("already open creator");
     return;
   }
   this.opneCreator=true;
-
+  this.openApiCreatorModal();
   var ref = document.getElementById("api-creator-section");
 
   var apiCreator = document.getElementById("api-creator");
@@ -97,7 +97,8 @@ function openApiCreator() {
 function closeApiCreator() {
   var ref = document.getElementById("api-creator-section");
   this.opneCreator=false;
-
+  var shadow = document.getElementById("shadow");
+  shadow.style.display="none";
   while (ref.hasChildNodes()) {
     ref.removeChild(ref.lastChild);
   }
@@ -197,3 +198,14 @@ function downloadApiList() {
   link.setAttribute('download', 'CppAPI.json');
   link.click();
 }
+
+
+function openApiCreatorModal(){
+  var modal=document.getElementById("api-creator-section");
+  modal.style.display="block";
+
+  var shadow = document.getElementById("shadow");
+  shadow.style.display="block";
+
+}
+
