@@ -1,7 +1,6 @@
 <center><img src="./static/logo.png"></center>
 
 ## Introduction
-
 Prettyview is the most convenient lottie web player.
 
 - **Simple Customization**: In the left panel(called the Layer Panel), the layers are shown in a tree structure, and users can access each layer by clicking on it or searching the keypath. If one of the layers are clicked, the Property Panel will be activated on the right side. In the Property Panel, you can easily adjust properties such as color, opacity, and position, and find out the immediate changes. In addition, various options are provided to allow users to freely adjust the playback settings.
@@ -45,7 +44,7 @@ $ git clone --recurse-submodules https://github.com/rlottie/rlottie.github.io.gi
 ### Build
 ```bash
 $ cd rlottie
-$ ./wasm_build {absolute_emsdk_folder_path}
+$ ./wasm_build.sh {absolute_emsdk_folder_path}
 $ cp builddir_wasm/src/rlottie-wasm.* ../
 ```
 - NOTE : to get a callstack modify build.sh file by passing the build flag -s assertions=1
