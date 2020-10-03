@@ -128,6 +128,9 @@ button {
 .drop-zone__input {
   display: none;
 }
+.background__input {
+  display: none
+}
 
 .drop-zone__thumb {
   width: 150px;

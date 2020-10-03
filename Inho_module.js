@@ -19,6 +19,10 @@ function resetBackGround() {
   document.getElementById("bg-color").value = "#FFFFFF";
   document.getElementById("bg-color").style.backgroundImage = "";
 }
+function backgroundChangeClick() {
+  document.getElementById("background__input").click();
+}
+
 function onChangeBackGround(e) {
   const file = e.target.files[0];
   if (!!file) {
