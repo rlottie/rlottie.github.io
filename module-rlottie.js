@@ -234,7 +234,7 @@ var RLottieModule = (function () {
           t.select();
           document.execCommand("copy");
           document.body.removeChild(t);
-          openSnackbar()
+          openSnackbar();
         });
       } else {
         continue;
@@ -356,8 +356,8 @@ function playReverse() {
 }
 
 //Get lottie file from url -write by lee
-function getLottieFromUrl() {
-  var url = document.getElementById("urlInput").value.trim();
+function getLottieFromUrl(input) {
+  var url = input.trim();
   if (url == "" || !(url.startsWith("http://") || url.startsWith("https://"))) {
     alert("Enter correct URL starting with 'http://' or 'https://'");
     return;
