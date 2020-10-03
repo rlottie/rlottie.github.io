@@ -156,8 +156,7 @@ function addAPI(event) {
   this.opneCreator=false;
   var apiCreator = event.target.parentNode;
 
-  var targetObject = apiCreator.getElementsByClassName("target-object")[0]
-    .value;
+  var targetObject = apiCreator.getElementsByClassName("target-object")[0].value;
   var name = apiCreator.getElementsByClassName("api-name")[0].value;
 
   var arguments = apiCreator.getElementsByClassName("argument");
