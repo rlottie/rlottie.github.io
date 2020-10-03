@@ -117,6 +117,14 @@ class RLottieModule {
             borderShape: 0,
             degree: 0
         }
+        this.canvas.style.backgroundColor = this.canvasStyle.backgroundColor.hex;
+        this.canvas.style.borderColor = this.canvasStyle.borderColor.hex;
+        this.canvas.style.borderWidth = this.canvasStyle.borderWidth + 'px';
+        this.canvas.style.width = this.canvasStyle.width + "px";
+        this.canvas.style.height = this.canvasStyle.height + "px";
+        this.canvas.style.borderRadius = 0;
+        this.canvas.style.transform = `rotate(${this.canvasStyle.degree}deg)`;
+
     }
 
     makeGifFile(filename, callback) {
@@ -132,7 +140,8 @@ class RLottieModule {
 
             for (let k = 0; k < imageData.data.length; k += 4) {
                 // background color가 아니면 continue;
-                if (imageData.data[k + 0] + imageData.data[k + 1] + imageData.data[k + 2] != 0) continue;
+                if (imageData.data[k + 0] + imageData.data[k + 1] + imageData.data[k + 2] +imageData.data[k + 3] != 0) continue;
+
 
                 // background color
                 imageData.data[k + 0] = this.canvasStyle.backgroundColor.rgba.r;

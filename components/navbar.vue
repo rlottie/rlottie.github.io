@@ -2,7 +2,7 @@
   <div class="navbar d-flex justify-content-between">
     <!-- logo -->
     <div class="d-flex align-items-center">
-        <img class="logo" src="https://user-images.githubusercontent.com/25967949/94992514-68ce9f80-05c5-11eb-91ad-f8264e6a4a6b.png" alt="logo">
+      <img class="logo" src="https://user-images.githubusercontent.com/25967949/94992643-7173a580-05c6-11eb-8514-322f459a88d8.png" alt="logo">
     </div>
 
     <!-- button group -->
