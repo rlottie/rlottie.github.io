@@ -81,12 +81,16 @@
                 Background Control
               </div>
               <input id="bg-color" data-jscolor="">
+              <button onclick="backgroundChangeClick()">
+                select background
               <input
-              ref="imageInput"
+              class= "background__input"
+              id="background__input"
               accept="image/*"
               type="file"
               onchange="onChangeBackGround(event)"
             />
+          </button>
             <button onclick="resetBackGround()">reset Background</button>
             </div>
             <div class="speed bg-grey-lighter border-grey-light rounded border">
