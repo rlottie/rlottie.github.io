@@ -14,7 +14,6 @@
 
 // change Background
 function resetBackGround() {
-  document.getElementById("frameList").removeAttribute("style");
   var board = document.getElementById("content");
   board.removeAttribute("style");
   document.getElementById("bg-color").value = "#FFFFFF";

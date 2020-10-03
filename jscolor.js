@@ -3470,5 +3470,4 @@ let bginput = document.querySelector("#bg-color");
 // let bgbtn = document.querySelector('#bg-color-btn')
 bginput.addEventListener("input", () => {
   document.getElementById("content").style.backgroundColor = bginput.value;
-  document.getElementById("frameList").style.backgroundColor = bginput.value;
 });
