@@ -130,8 +130,12 @@
             <svg  style="margin-left:auto;" onclick="closeSnackbar()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
           </div>
           <button onclick="resetLottie()">Reset Lottie</button>
-          <div id="api-controller-section"></div>
+          <hr>
+
+          <button style="width: 100%;" onclick="openApiCreator()">openApiCreator</button>
           <div id="api-creator-section"></div>
+
+          <div id="api-controller-section"></div>
 
           <template id="api-card">
             <div class="api-card">
@@ -166,13 +170,16 @@
                 <option value="group">Group</option>
               </select>
               <button type="button" onclick="addArgument(event)">add argument</button>
-              <button type="button" onclick="addAPI(event)">submit</button>
+              <div style="margin-top: 5px;">
+                <button type="button" onclick="addAPI(event)">submit</button>
+                <button type="button" onclick="closeApiCreator(event)">close</button>
+              </div>
             </div>
           </template>
       
           <template id="argument">
             <div class="argument">
-              <div class="label">desc</div>
+              <div class="label">argument</div>
               <input class="arg-desc" type="text" value="Argument">
               <select class="arg-type" onchange="onTypeChange(event)">
                 <option value="string">string</option>
