@@ -335,7 +335,7 @@ function playReverse() {
 //Get lottie file from url -write by lee
 function getLottieFromUrl() {
   var url = document.getElementById("urlInput").value.trim();
-  if (url == "" || !(url.startWith("http://") || url.startWith("https://"))) {
+  if (url == "" || !(url.startsWith("http://") || url.startsWith("https://"))) {
     alert("Enter correct URL starting with 'http://' or 'https://'");
     return;
   }
