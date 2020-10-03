@@ -70,6 +70,9 @@ button {
   margin-left: 2px;
   margin-right: 2px;
 }
+button:hover {
+  opacity: 0.7;
+}
 .modal-bg {
   position: fixed;
   display: none;
