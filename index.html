@@ -1,319 +1,209 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width height=device-height" />
-    <meta name="description" content="rlottie viewer" />
-    <meta
-      name="keywords"
-      content="lottie, rlottie, lottie viewer, rlottie viewer"
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>rlottieWebPlayer</title>
+    <link rel="stylesheet" href="webplayerstyle.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
     />
-    <meta name="author" content="Subhransu" />
-    <title>rlottie viewer</title>
-    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="app">
-      <v-app>
-        <v-container>
-          <div class="window">
-            <p>
-              Experimental Multiple lottie view?
-              <v-btn @click="multiview" color="primary">click to View</v-btn>
-            </p>
-            <v-card class="pa-5">
-              <h4>Drag and Drop your Lottie JSON file to the window</h4>
-              <v-file-input
-                accept=".json"
-                label="Upload lottie JSON"
-                type="file"
-                id="fileSelector"
-              ></v-file-input>
-              <div
-                class="content"
-                id="content"
-                v-bind:style="{ backgroundImage: 'url(' + imgUrl + ')' }"
-                style="background-position: center center"
+      <header>
+          <h4>Rlottie web viewer</h4>
+          <div style="display:flex; flex-direction:row;align-items:center;">
+            <p style="color:white;margin:0;">Drag and Drop your Lottie JSON file to the window</p>
+            <small style="margin:10px;">or</small>
+            <button class="drop-zone">
+              Upload JSON
+              <input type="file" name="myFile" class="drop-zone__input" id="fileSelector" accept=".json">
+            </button>
+            <small style="margin:10px;">or</small>
+            <div>
+              <button  onclick="openURLprompt()">Use Lottie URL</button>
+            </div>
+          </div>
+      </header>
+      <div id="shadow"></div>
+      <div id="api-creator-section">
+      </div>
+      <div class="sections">
+        <section class="layers" style="overflow:auto;">
+          <div id="layerlist" class="accordion-menu lllist" style="color:white;"></div>
+        </section>
+        <section class="display">
+          <div style="height: 90%;">
+            <div class="content" id="content">
+              <canvas
+                class=""
+                id="myCanvas"
+              ></canvas>
+            </div>
+            <div class="progressBar">
+              <button id="playReverse" style="width:7%" onclick="playReverse()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18px" height="18px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
+              </button>
+              <button
+                class="playButton cursor-pointer"
+                type="button"
+                id="playButton"
+                style="width:7%; margin-left: 2px;margin-right: 2px;"
+                onclick="buttonClicked()"
               >
-                <canvas
-                  class=""
-                  id="myCanvas"
-                  width="500px"
-                  height="500px"
-                ></canvas>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18px" height="18px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </button>
+              <input
+                class="margin-left-10px playbar cursor-pointer"
+                type="range"
+                min="0"
+                max="100"
+                value="0"
+                id="slider"
+                style="width:86%;"
+                oninput="onSliderDrag(this.value)"
+              />
+            </div>
+          </div>
+          <div id="frameList"></div>
+        </section>
+        <section class="manipulate">
+          <div class="flex">
+            <div class="">
+              <div
+                class=""
+                style="color:white;padding:5px;"
+              >
+                Canvas Resize
               </div>
               <input
-                ref="imageInput"
-                accept="image/*"
-                type="file"
-                hidden
-                @change="onChangeImages"
+                id="resizeSlider"
+                class="margin-left-10px cursor-pointer w-100"
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                oninput="onResizeSliderDrag(this.value)"
               />
-              <v-btn type="button" @click="onClickImageUpload"
-                >이미지 업로드</v-btn
-              >
-            </v-card>
-            프레임 리스트
-            <v-text-field
-              outlined
-              placeholder="쪼갤 단위 입력(기본값 3)"
-              v-model="frameSplit"
-            ></v-text-field>
-            <v-btn @click="changeFrameSplit">변경</v-btn>
+            </div>
             <div
-            style="
-              white-space: nowrap;
-              overflow: auto;
-              width: 100%;
-              height: 150px;
-            "
-            id="frameList"
-          ></div>
-          <!-- 
-            ssafysr project
-            customize form
-          -->
-          <form id="customize">
-            <select id="customize-type" onchange="typeChange(this.value)" name="customize-type">
-              <option value="0">Fill Color</option>
-              <option value="1">Fill Opacity</option>
-              <option value="2">Stroke Color</option>
-              <option value="3">Stroke Opacity</option>
-              <option value="4">Stroke Width</option>
-              <option value="5">Transform Anchor</option>
-              <option value="6">Transform Position</option>
-              <option value="7">Transform Scale</option>
-              <option value="8">Transform Rotation</option>
-              <option value="9">Transform Opacity</option>
-            </select>
-            <input type="text" placeholder="keyPath" id="customize-keypath" name="customize-keypath">
-            <div id="customize-value">
-              <input type="color">
-            </div>
-            <input type="button" value="Submit" onclick="customizeLottie()">
-          </form>
-          </div>
-
-          <v-card
-          class="mx-auto"
-          tile>
-            <ul id="layerlist">
-            </ul>
-        </v-card>
-            <div class="footer">
-              <div
-                class="slider bg-grey-lighter border-grey-light rounded border"
-              >
-                <button
-                id="playReverse"
-                onclick="playReverse()">
-                  역방향
-                </button>
-                <button
-                  class="playButton cursor-pointer"
-                  type="button"
-                  id="playButton"
-                  onclick="buttonClicked()"
-                >
-                  Pause
-                </button>
-                <input
-                  class="margin-left-10px"
-                  type="range"
-                  min="0"
-                  max="100"
-                  value="0"
-                  id="slider"
-                  oninput="onSliderDrag(this.value)"
-                />
+              class="bg_color_container bg-grey-lighter border-grey-light rounded border"
+            >
+              <div class="text-grey-darkest font-bold justify-center text-xs" style="color:white;padding:5px;">
+                Background Control
               </div>
-              <div
-                class="bg_color_container bg-grey-lighter border-grey-light rounded border"
-              >
-                <div class="text-grey-darkest font-bold justify-center text-xs">
-                  Background Color
-                </div>
-                <div class="margin-left-10px color_button_group">
-                  <button
-                    class="color_button btn_white cursor-pointer"
-                    onclick="document.getElementById('content').style.backgroundColor = 'white'"
-                  ></button>
-                  <button
-                    class="color_button btn_black cursor-pointer"
-                    onclick="document.getElementById('content').style.backgroundColor = 'black'"
-                  ></button>
-                  <button
-                    class="color_button btn_red cursor-pointer"
-                    onclick="document.getElementById('content').style.backgroundColor = 'red'"
-                  ></button>
-                  <button
-                    class="color_button btn_green cursor-pointer"
-                    onclick="document.getElementById('content').style.backgroundColor = 'green'"
-                  ></button>
-                  <button
-                    class="color_button btn_blue cursor-pointer"
-                    onclick="document.getElementById('content').style.backgroundColor = 'blue'"
-                  ></button>
-                </div>
+              <input class="cursor-pointer" id="bg-color" data-jscolor="">
+              <div class="text-grey-darkest font-bold justify-center text-xs" style="color:white;padding:5px;">
+                Background Image
               </div>
-              <div
-                class="speed bg-grey-lighter border-grey-light rounded border"
-              >
-                <div
-                  class="margin-left-10px text-grey-darkest font-bold justify-center text-xs"
-                >
-                  Canvas Resize
-                </div>
-                <input
-                  class="margin-left-10px"
-                  type="range"
-                  min="0"
-                  max="100"
-                  value="100"
-                  oninput="onResizeSliderDrag(this.value)"
-                />
+              <div style="display:flex;flex-direction:row;justify-content:space-between;">
+                <button class="drop-zone" style="width:70%; margin-left: 2px; margin-right: 2px;">
+                  Upload Image
+                  <input ref="imageInput" type="file" class="drop-zone__input" ref="imageInput" onchange="onChangeBackGround(event)" accept="image/*">
+                </button>
+                <button style="background:rgb(190, 93, 93);width:30%;  margin-left: 2px;margin-right: 2px;" onclick="resetBackGround()">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+                </button>
               </div>
             </div>
+            <div class="speed bg-grey-lighter border-grey-light rounded border">
+              <div
+                class="margin-left-10px text-grey-darkest font-bold justify-center text-xs"
+                style="color:white;padding:5px;"
+              >
+                Background Resize
+              </div>
+              <input
+                id="resizeSlider"
+                class="margin-left-10px cursor-pointer w-100"
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                oninput="onBackgroundSliderDrag(this.value)"
+              />
+            </div>
+            <hr>
           </div>
-        </v-container>
-      </v-app>
-    <div class="to-flex">
-      <aside>
-        <h2>layer lists</h2>
-        <ul id="layerlist"></ul>
-      </aside>
-      <section class="window">
-        <h4>Drag and Drop your Lottie JSON file to the window</h4>
-        <label for="fileSelector">Upload lottie JSON file</label>
-        <input
-          class="cursor-pointer"
-          id="fileSelector"
-          type="file"
-          accept=".json"
-        />
-        <div class="content" id="content">
-          <canvas class="" id="myCanvas" width="500px" height="500px"></canvas>
-        </div>
-      </section>
-      <aside>
-        <h2>sidebar right</h2>
-      </aside>
-    </div>
-    <div id="a"></div>
-    <footer>
-      <div id="frameList"></div>
-      <div class="slider bg-grey-lighter border-grey-light rounded border">
-        <button id="playReverse" onclick="playReverse()">역방향</button>
-        <button
-          class="playButton cursor-pointer"
-          type="button"
-          id="playButton"
-          onclick="buttonClicked()"
-        >
-          Pause
-        </button>
-        <input
-          class="margin-left-10px playbar"
-          type="range"
-          min="0"
-          max="100"
-          value="0"
-          id="slider"
-          oninput="onSliderDrag(this.value)"
-        />
-      </div>
-      <div class="flex">
-        <div
-          class="bg_color_container bg-grey-lighter border-grey-light rounded border"
-        >
-          <div class="text-grey-darkest font-bold justify-center text-xs">
-            Background Control
+          <div id="snackbar" style="display:flex;align-items:center;">
+            Copied to clipboard
+            <svg  style="margin-left:auto;" onclick="closeSnackbar()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
           </div>
-          <div class="margin-left-10px color_button_group">
-            <button
-              class="color_button btn_white cursor-pointer"
-              onclick="document.getElementById('content').style.backgroundColor = 'white'"
-            ></button>
-            <button
-              class="color_button btn_black cursor-pointer"
-              onclick="document.getElementById('content').style.backgroundColor = 'black'"
-            ></button>
-            <button
-              class="color_button btn_red cursor-pointer"
-              onclick="document.getElementById('content').style.backgroundColor = 'red'"
-            ></button>
-            <button
-              class="color_button btn_green cursor-pointer"
-              onclick="document.getElementById('content').style.backgroundColor = 'green'"
-            ></button>
-            <button
-              class="color_button btn_blue cursor-pointer"
-              onclick="document.getElementById('content').style.backgroundColor = 'blue'"
-            ></button>
-            <input
-              ref="imageInput"
-              accept="image/*"
-              type="file"
-              onchange="onChangeBackGround(event)"
-            />
-          </div>
-        </div>
-        <div class="speed bg-grey-lighter border-grey-light rounded border">
-          <div
-            class="margin-left-10px text-grey-darkest font-bold justify-center text-xs"
-          >
-            Canvas Resize
-          </div>
-          <input
-            class="margin-left-10px"
-            type="range"
-            min="0"
-            max="100"
-            value="100"
-            oninput="onResizeSliderDrag(this.value)"
-          />
-        </div>
-      </div>
-    </footer>
+          <button class="w-100" onclick="resetLottie()">Reset Lottie</button>
+          <hr>
 
-    <script src="main.js"></script>
-  </body>
+          <button class="w-100" onclick="openApiCreator()">openApiCreator</button>
+          <button class="w-100" onclick="downloadApiList()" style="margin-top: 8px">Save API List</button>
+          <hr>
+          <div id="api-creator-section"></div>
 
-    <!--
-      ssafysr project
-      customize form style
-      add palette for color picking
-    -->
-    <style>
-      #customize {
-        border-radius: 5px;
-        background-color: #f2f2f2;
-        padding: 20px;
-      }
+          <div id="api-controller-section"></div>
+
+          <template id="api-card">
+            <div class="api-card">
+              <div class="api-head">
+                <div class="api-name"></div>
+                <button class="api-fold" type="button" style="width: 80px;padding:5px;" onclick="onFoldClick(event)">show/hide</button>
+              </div>
+              <div class="api-body hide">
+                <button class="api-exec" type="button" style="margin:5px auto;" onclick="onExecClick(event)">execute</button>
+              </div>
+            </div>
+          </template>
       
-      #customize input[type=text], #customize-type, #customize-value {
-        width: 24%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
+          <template id="api-arg">
+            <div class="api-arg">
+              <div class="arg-info">
+                <span class="arg-desc"></span>
+                <span class="arg-type"></span>
+              </div>
+              <input class="arg-input">
+            </div>
+          </template>
+
+          <template id="api-creator">
+            <div class="api-creator">
+              <svg  style="float: right;" onclick="closeApiCreator(event)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+              <div class="label">API name: </div> 
+
+              <input class="api-name" type="text">
+              <div class="label">API for: </div>
+              <select class="target-object">
+                <option value="fill">Fill</option>
+                <option value="stroke">Stroke</option>
+                <option value="group">Group</option>
+              </select>
+              <br>
+                <button type="button" style="width: 49%; margin: 5px 1px;" onclick="addArgument(event)">add argument</button>
+                <button type="button" style="background:rgb(190, 93, 93);width: 49%; margin-top: 5px;margin-left:2px;" onclick="addAPI(event)">submit</button>
+          
+            </div>
+          </template>
       
-      #customize input[type=button] {
-        width: 24%;
-        background-color: #4CAF50;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-      
-      #customize input[type=button]:hover {
-        background-color: #45a049;
-      }
-    </style>
+          <template id="argument">
+            <div class="argument">
+              <svg  style="float: right;" onclick="deleteArgument(event)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+              <div class="label">argument</div>
+              <input class="arg-desc" type="text" value="Argument">
+              <select class="arg-type" onchange="onTypeChange(event)">
+                <option value="string">string</option>
+                <option value="float">float</option>
+              </select>
+              <div class="label">limit</div>
+              <input class="arg-limit" type="checkbox" onchange="onLimitChange(event)" disabled>
+              <div class="label">Min: </div>
+              <input class="limit-min" type="number" step="0.01" disabled>
+              <div class="label">Max: </div>
+              <input class="limit-max" type="number" step="0.01" disabled>
+            </div>
+          </template>
+          </section>
+        </div>
+      <script src="js/jscolor.js"></script>
+      <script src="main.js"></script>
+      <script src="js/draganddrop.js"></script>
+      <script src="js/snackbar.js"></script>
+    </body> 
+
 </html>
