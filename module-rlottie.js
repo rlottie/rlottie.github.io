@@ -72,7 +72,7 @@ var RLottieModule = (function () {
     }
     var term = 1;
     if (obj.frameCount > 10) {
-      var term = parseInt(obj.frameCount / 10);
+      var term = parseInt(obj.frameCount / 4);
     }
     for (var i = 0; i < obj.frameCount; i += term) {
       var canvas = document.createElement("canvas");
@@ -93,9 +93,9 @@ var RLottieModule = (function () {
       frameList.canvas = document.getElementById("frame" + i);
       frameList.context = frameList.canvas.getContext("2d");
 
-      var buffer = obj.lottieHandle.render(i, 150, 150);
+      var buffer = obj.lottieHandle.render(i, 110, 110);
       var result = Uint8ClampedArray.from(buffer);
-      var imageData = new ImageData(result, 150, 150);
+      var imageData = new ImageData(result, 110, 110);
 
       frameList.context.putImageData(imageData, 0, 0);
     }
