@@ -5,13 +5,6 @@ function setup() {
   script.src = "rlottie-wasm.js";
   head.appendChild(script);
 
-  // >>> Import Inho module, don't remove it before MR >>>
-  var Inhoscript = document.createElement("script");
-  Inhoscript.type = "text/javascript";
-  Inhoscript.src = "Inho_module.js";
-  head.appendChild(Inhoscript);
-  //  <<<< end of Inho module, will be deleted with MR <<<
-
   script.onload = (_) => {
     Module.onRuntimeInitialized = (_) => {
       RLottieModule.init();
@@ -419,6 +412,37 @@ function onExecClick(event) {
 
   RLottieModule.callAPI(name, argv);
 }
+
+function resetBackGround() {
+  var board = document.getElementById("content");
+  board.removeAttribute("style");
+  document.getElementById("bg-color").value = "#FFFFFF";
+  document.getElementById("bg-color").style.backgroundImage = "";
+}
+function backgroundChangeClick() {
+  document.getElementById("background__input").click();
+}
+
+function onChangeBackGround(e) {
+  const file = e.target.files[0];
+  if (!!file) {
+    document.getElementById(
+      "content"
+    ).style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+  }
+}
+
+function resetLottie() {
+  RLottieModule.reload(RLottieModule.json);
+}
+
+function openURLprompt() {
+  var input = prompt("enter lottie url from https://lottiefiles.com/featured");
+  if (input) {
+    getLottieFromUrl(input);
+  }
+}
+
 
 var resource = {
   v: "5.1.8",
