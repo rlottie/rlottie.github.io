@@ -365,12 +365,12 @@ function getLottieFromUrl() {
   var xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status == 200) {
-      var contentType = xhr.getResponseHeader("Content-Type");
-      if (contentType != "application/json") {
+      var data = xhr.responseText;
+      try {
+        JSON.parse(data);
+      } catch (error) {
         throw new Error("Response data is not JSON format");
       }
-
-      var data = xhr.responseText;
       RLottieModule.reload(data);
     } else {
       throw new Error("Request failed");
