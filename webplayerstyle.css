@@ -78,8 +78,7 @@ button {
   border: none;
   border-radius: 4px;
   color: white;
-  margin-left: 2px;
-  margin-right: 2px;
+ 
 }
 button:hover {
   opacity: 0.7;
@@ -300,4 +299,10 @@ li:hover {
 
 .w-100 {
   width: 100%;
+ 
+}
+
+#playReverse{
+  margin-left: 2px;
+  margin-right: 2px;
 }

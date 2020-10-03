@@ -46,7 +46,7 @@
                 class="playButton cursor-pointer"
                 type="button"
                 id="playButton"
-                style="width:7%"
+                style="width:7%; margin-left: 2px;margin-right: 2px;"
                 onclick="buttonClicked()"
               >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18px" height="18px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
@@ -95,11 +95,11 @@
                 Background Image
               </div>
               <div style="display:flex;flex-direction:row;justify-content:space-between;">
-                <button class="drop-zone" style="width:70%;">
+                <button class="drop-zone" style="width:70%; margin-left: 2px; margin-right: 2px;">
                   Upload Image
                   <input ref="imageInput" type="file" class="drop-zone__input" ref="imageInput" onchange="onChangeBackGround(event)" accept="image/*">
                 </button>
-                <button style="background:rgb(190, 93, 93);width:30%;" onclick="resetBackGround()">
+                <button style="background:rgb(190, 93, 93);width:30%;  margin-left: 2px;margin-right: 2px;" onclick="resetBackGround()">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
                 </button>
               </div>
@@ -167,9 +167,10 @@
                 <option value="stroke">Stroke</option>
                 <option value="group">Group</option>
               </select>
-              <button type="button" style="width: 60%; margin-top: 5px;" onclick="addArgument(event)">add argument</button>
-              <button type="button" style="width: 45%; margin: 5px 5px;" onclick="addAPI(event)">submit</button>
-              <button type="button" style="width: 45%; margin: 5px 5px;" onclick="closeApiCreator(event)">close</button>
+              <br>
+              <button type="button" style="width: 60%; margin: 5px auto;" onclick="addArgument(event)">add argument</button>
+              <button type="button" style="width: 48%; margin: 5px auto;" onclick="addAPI(event)">submit</button>
+              <button type="button" style="width: 48%; margin: 5px auto;" onclick="closeApiCreator(event)">close</button>
             </div>
           </template>
       
