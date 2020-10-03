@@ -36,6 +36,7 @@ var RLottieModule = (function () {
   obj.playing = true;
   obj.wasPlaying = false;
   obj.reverse = false;
+  obj.json = {};
 
   obj.init = function () {
     var input = document.getElementById("fileSelector");
@@ -121,6 +122,7 @@ var RLottieModule = (function () {
 
   obj.reload = function (jsString) {
     var len = obj.lottieHandle.load(jsString);
+    obj.json = jsString;
     obj.layerList = JSON.parse(jsString).layers;
     document.getElementById("layerlist").innerHTML = "";
     getAllLayers(obj.layerList, document.getElementById("layerlist"));
@@ -215,24 +217,23 @@ var RLottieModule = (function () {
       if (list[i].nm != null) {
         var layer = document.createElement("li");
         layer.innerHTML = list[i].nm;
-        layer.addEventListener("click", function(e) {
-          e.stopPropagation()
-          var t = document.createElement("textarea")
-          var node = this
-          var text = "**"
+        layer.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var t = document.createElement("textarea");
+          var node = this;
+          var text = "**";
           while (node.id != "layerlist") {
             if (node.tagName == "LI")
-              text = node.innerText.split("\n")[0] + "." + text
-            node = node.parentNode
+              text = node.innerText.split("\n")[0] + "." + text;
+            node = node.parentNode;
           }
-          t.value = text
-          document.body.appendChild(t)
-          t.focus()
-          t.select()
-          document.execCommand("copy")
-          document.body.removeChild(t)
-          
-        })
+          t.value = text;
+          document.body.appendChild(t);
+          t.focus();
+          t.select();
+          document.execCommand("copy");
+          document.body.removeChild(t);
+        });
       } else {
         continue;
       }

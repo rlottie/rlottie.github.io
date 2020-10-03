@@ -30,12 +30,8 @@ function onChangeBackGround(e) {
       "content"
     ).style.backgroundImage = `url(${URL.createObjectURL(file)})`;
   }
+}
 
-  // var board = document.getElementById("content");
-  // board.setAttribute(
-  //   "style",
-  //   `background-image: url(${URL.createObjectURL(file)})`
-  // );
-
-  // this.imgUrl = URL.createObjectURL(file);
+function resetLottie() {
+  RLottieModule.reload(RLottieModule.json);
 }
