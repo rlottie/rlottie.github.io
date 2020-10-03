@@ -8,92 +8,155 @@
     <title>rlottie viewer</title>
     <link rel="stylesheet" href="style.css">
     <!-- bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">   
     <!-- vuetify -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-
     <!-- font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
-    <style>
-      .player {
-          height: 92vh;
-          padding: 0;
-          background-color: none;
-        }
-
-        .screen {
-          height: 68vh;
-          background-color: none
-        }
-
-        #myCanvas {
-          border: 1px solid #000000
-        }
-
-        /* .toolbox {
-          background-color:#1D3557;
-          color: #fdfdfd
-        } */
-
-        .toolbox-basic {
-          height: 10vh;
-          width: 100%;
-        }
-
-        .play-button {
-          background-color: none;
-        }
-
-        .player-slider {
-          min-width: 30vw;
-        }
-
-        .extra-tools {
-          height: 12vh;
-        }
-
-        .screen-canvas {
-          /* max-width: 50vw;
-          max-height: 50vh; */
-        }
-
-        .scroll-sect {
-          overflow-y: scroll; 
-          height: 10vh;
-        }
-
-        
-
-    </style>
   </head>
 
   <body>
     <v-app class="window" id="app">
       <div class="row no-gutters">
-        <navbar @canvas-changed="changeCanvas" @file-changed="changeFile" class="col-12"></navbar>
-
-        <leftpanel @layer-selected="layerSelected" :layers="layers" :key="componentKey" class="col-3"></leftpanel>
-        
-        <!-- Player  -->
+        <!-- navbar component -->
+        <navbar @viewcount-changed="changeIsMultiView" @exportdialog-changed="exportdialog = false" :exportdialog="exportdialog" class="col-12 zindex2"></navbar>
+        <!-- leftPanel component -->
+        <leftpanel @layer-selected="layerSelected" :layers="layers" :canvasid="selectedCanvasId" :trigger="selectedLayerTrigger" class="col-3 zindex2"></leftpanel>
+        <!-- player  -->
         <div class="col-6 bg-white">
-          <div class="player d-flex flex-column justify-content-between">
-            <!-- <p>{{ canvasStyling[canvasShape] }}</p> -->
-            <div class="screen my-auto d-flex flex-column justify-content-center align-items-center" id="content">
-              <canvas
-                v-show="isContent" 
-                id="myCanvas" 
-                :style="canvasStyling" 
-              ></canvas>
-              <div v-show="!isContent">
-                <h5> Drag and Drop your Lottie JSON file to the window</h5>
+          <div id="player" class="player d-flex flex-column justify-content-between">
+            <div class="screen my-auto mx-auto d-flex justify-content-center align-items-center">
+              <div class="my-auto mx-auto d-flex justify-content-center align-items-center row" id="content">
+                <!-- canvas 1 -->
+                <div
+                  class="d-flex justify-content-center align-items-center"
+                  :class="{ 'col-6': isMultiView, 'col-12': !isMultiView }"
+                >
+                  <v-chip
+                    v-if="isMultiView"
+                    class="mr-2 canvas-chip text-caption"
+                    color="canvas"
+                    small
+                  >1</v-chip>
+                  <canvas
+                    class="common-canvas"
+                    :class="{ 'multiview-resizing': isMultiView, 'selected-canvas': isCanvas1Selected&&isMultiView }"
+                    v-show="isMultiView | (!isMultiView&&isCanvas1Selected)"
+                    id="myCanvas1"
+                    @click="selectCanvas(0)">
+                  </canvas>
+                </div>
+                <!-- canvas 2 -->
+                <div
+                  class="d-flex justify-content-center align-items-center"
+                  :class="{ 'col-6': isMultiView, 'col-0': !isMultiView }"
+                >
+                  <v-chip
+                    v-if="isMultiView"
+                    class="mr-2 canvas-chip text-caption"
+                    color="canvas"
+                    small
+                  >2</v-chip>
+                  <canvas
+                    class="multiview-resizing"
+                    :class="{ 'selected-canvas': isCanvas2Selected&&isMultiView }"
+                    v-show="isMultiView | (!isMultiView&&isCanvas2Selected)"
+                    id="myCanvas2"
+                    @click="selectCanvas(1)">
+                  </canvas>
+                </div>
+                <!-- canvas 3 -->
+                <div
+                  class="d-flex justify-content-center align-items-center"
+                  :class="{ 'col-6': isMultiView, 'col-0': !isMultiView }"
+                >
+                  <v-chip
+                    v-if="isMultiView"
+                    class="mr-2 canvas-chip text-caption"
+                    color="canvas"
+                    small
+                  >3</v-chip>
+                  <canvas
+                    class="multiview-resizing"
+                    :class="{ 'selected-canvas': isCanvas3Selected&&isMultiView }"
+                    v-show="isMultiView | (!isMultiView&&isCanvas3Selected)"
+                    id="myCanvas3"
+                    @click="selectCanvas(2)">
+                  </canvas>
+                </div>
+                <!-- canvas 4 -->
+                <div
+                  class="d-flex justify-content-center align-items-center"
+                  :class="{ 'col-6': isMultiView, 'col-0': !isMultiView }"
+                >
+                  <v-chip
+                    v-if="isMultiView"
+                    class="mr-2 canvas-chip text-caption"
+                    color="canvas"
+                    small
+                  >4</v-chip>
+                  <canvas
+                    class="multiview-resizing"
+                    :class="{ 'selected-canvas': isCanvas4Selected&&isMultiView }"
+                    v-show="isMultiView | (!isMultiView&&isCanvas4Selected)"
+                    id="myCanvas4"
+                    @click="selectCanvas(3)">
+                  </canvas>
+                </div>
               </div>
             </div>
-        
-            <div class="toolbox">
+            <!-- snapshot -->
+            <div class="zindex3 d-flex justify-content-end mr-3 mb-3">
+              <v-dialog
+                v-model="snapshotDialog"
+                max-width="500"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <button
+                    class="btn canvas" 
+                    :class="{ 'text-white': $vuetify.theme.dark }" 
+                    depressed 
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="clickSnapShot"
+                  >
+                    <em class="fas fa-camera"></em>
+                  </button>
+                </template>
+                <v-card>
+                  <v-card-title class="headline">
+                    Export file to PNG
+                  </v-card-title>
+                  <div class="d-flex justify-content-center snapshot-container">
+                    <img id="snapshot-image" height="250" :src="snapshotURL" alt="">
+                  </div>
+                  <v-card-text>
+                    <div class="d-flex align-items-center">
+                      <v-text-field
+                        solo-reverse
+                        color="text"
+                        placeholder="File name"
+                        v-model="snapshotName"
+                      ></v-text-field>
+                      <v-btn class="btn ml-4" color="canvas" :href="snapshotURL" :download="snapshotName">Download</v-btn>
+                    </div>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="text"
+                      text
+                      @click="clickSnapshotClose"
+                    >Close</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </div>
+            <!-- toolbox -->
+            <div class="toolbox zindex2">
               <div class="collapse" id="collapseExtraTools">
                 <div class="extra-tools d-flex justify-content-around align-items-center">
                   <div class="d-flex flex-column justify-content-center align-items-center mx-3">
@@ -140,8 +203,9 @@
                   </div>
                 </div>
               </div>
-              <div class="d-flex justify-content-around align-items-center toolbox-basic">
-                <span class="play-button" type="button" id="playButton" onclick="buttonClicked()"><i class="fas fa-pause"></i></span>
+              <!-- playbar -->
+              <div class="d-flex justify-content-around align-items-center toolbox-basic" id="playbar">
+                <span class="play-button" type="button" id="playButton" onclick="buttonClicked()"><em class="fas fa-pause"></em></span>
                 <div class="d-flex flex-column align-items-between">
                   <input class="player-slider mb-1" type="range" id="slider" min="0" max="100" value="0" oninput="onSliderDrag(this.value)">
                   <div class="d-flex justify-content-between">
@@ -149,19 +213,17 @@
                     <span class="badge badge-light" id="frameCount"></span>
                   </div>
                 </div>
-                <span class="" data-toggle="collapse" href="#collapseExtraTools" role="button" aria-expanded="false" aria-controls="collapseExtraTools">
-                  <i class="fas fa-bars"></i>
+                <span class="" data-toggle="collapse" href="#collapseExtraTools" role="button" 
+                  aria-expanded="false" aria-controls="collapseExtraTools" @click="extraButtonClick()">
+                  <em class="fas fa-bars"></em>
                 </span>
               </div>
             </div>
-          
           </div>
         </div>
-        
-        <property v-if="isLayer" :selected-layer="selectedLayer" class="col-3"></property>
-
-        <preference v-else @bg-color-changed="changeBackgroundColor" class="col-3"></preference>
-
+        <!-- right panels - property component and preference component -->
+        <property v-if="selectedLayer" :selected-layer="selectedLayer" :canvasid="selectedCanvasId" :multiview="isMultiView" @shortcutdialog-changed="shortcutdialog = false" :shortcutdialog="shortcutdialog" class="col-3 zindex2"></property>
+        <preference v-else :canvas="selectedCanvas" :canvasid="selectedCanvasId" :canvasstyle="selectedCanvasStyle" :multiview="isMultiView" @shortcutdialog-changed="shortcutdialog = false" :shortcutdialog="shortcutdialog" class="col-3 zindex2"></preference>
       </div>
     </v-app>
 
@@ -179,6 +241,7 @@
       var app = new Vue({
         el: '#app',
         vuetify: new Vuetify({
+          // color themes for dark/light mode
           theme: {
             themes: {
               dark: {
@@ -189,15 +252,17 @@
                 preview: '#0b6687',
                 icon: '#FFFFFF',
                 mode: '#ECEFF1',
+                canvas: '#0FCCCE'
               },
               light: {
-                navbar: '#CFD8DC',
-                toolbox: '#CFD8DC',
-                sidebar: '#ECEFF1',
+                navbar: '#90A4AE',
+                toolbox: '#90A4AE',
+                sidebar: '#CFD8DC',
                 accent: '#A8DADC',
                 preview: '#56a6c2',
                 icon: '#000000',
                 mode: '#37474F',
+                canvas: '#0FCCCE'
               }
             },
           },
@@ -206,20 +271,16 @@
         components: {
           'navbar': httpVueLoader('./components/navbar.vue'),
           'leftpanel': httpVueLoader('./components/leftPanel.vue'),
-          'player': httpVueLoader('./components/player.vue'),
           'property': httpVueLoader('./components/property.vue'),
           'preference': httpVueLoader('./components/preference.vue')
         },
 
         data() {
           return {
-            selection: '',
-            layers: null,
-            isLayer: false,
+            // layer data
+            layers: [],
             selectedLayer: null,
-            backgroundColor: null,
-            canvasShape: 0,
-            componentKey: 0,
+            selectedLayerTrigger: false,
             
             // player settings
             content: true,
@@ -230,88 +291,141 @@
             types: ['Autoplay', 'Hover', 'Bounce'],
             directions: ['Forward', 'Backward'],
             hoverFlag: false,
+
+            // multiview
+            isMultiView: false,
+            selectedCanvasId: 0,
+            selectedCanvas: null,
+            selectedCanvasStyle: null,
+            
+            // snapshot
+            snapshotDialog: false,
+            snapshotName: '',
+            snapshotURL: null,
+            snapshotPause: false,
+            
+            // dialogs
+            exportdialog: false,
+            shortcutdialog: false
           }
         },
         computed: {
-          isContent() {
-            if (true) {
+          isCanvas1Selected() {
+            if (this.selectedCanvasId === 0) {
               return true
             } else {
               return false
             }
           },
-          canvasStyling() {
-            if (this.canvasShape == 0) {
-              return {
-                'background-color': this.backgroundColor,
-                'border-radius': 0,
-                'width': '483px',
-                'height': '483px'
-              }
+          isCanvas2Selected() {
+            if (this.selectedCanvasId === 1) {
+              return true
             } else {
-              return {
-                'background-color': this.backgroundColor,
-                'border-radius': '50%',
-                'width': '483px',
-                'height': '483px'
+              return false
+            }
+          },
+          isCanvas3Selected() {
+            if (this.selectedCanvasId === 2) {
+              return true
+            } else {
+              return false
+            }
+          },
+          isCanvas4Selected() {
+            if (this.selectedCanvasId === 3) {
+              return true
+            } else {
+              return false
+            }
+          },
+        },
+
+        watch: {
+          snapshotDialog() {
+            if (this.snapshotDialog) {
+              document.getElementById("playButton").innerHTML = "<em class='fas fa-play'></em>";
+              if(rlottieHandler.playing) this.snapshotPause = true;
+              rlottieHandler.pause();
+            } else {
+              if (this.snapshotPause) {
+                document.getElementById("playButton").innerHTML = "<em class='fas fa-pause'></em>";
+                this.snapshotPause = false;
+                rlottieHandler.play();
               }
+              this.snapshotName = '';
             }
           }
         },
+        
         methods: {
           layerSelected(layer) {
-            this.isLayer = !!layer
-            if (layer) {
-              this.selectedLayer = layer
-            }
-          },
-
-          changeBackgroundColor(color) {
-            this.backgroundColor = color
-          },
-
-          changeCanvas(toggle_one) {
-            this.canvasShape = toggle_one
-          },
-          changeFile() {
-            this.layers = null;
-            setTimeout(() => {
-              this.layers = getLayerList();
-            }, 500);
+            this.selectedLayer = layer
           },
 
           changePlay() {
-            if (this.defaultDirection === 'Forward') {
-              setPlaySpeed(Number(this.defaultSpeed))
-            }
-            else {
-              setPlaySpeed(Number(this.defaultSpeed) * -1)
-            }
+            if (this.defaultDirection === 'Forward') setPlaySpeed(Number(this.defaultSpeed))
+            else setPlaySpeed(Number(this.defaultSpeed) * -1)
           },
+
           changePlayType() {
             if(this.defaultType === "Hover") {
-              RLottieModule.pause();
-              document.getElementById("content").addEventListener("mouseover", RLottieModule.play);
-              document.getElementById("content").addEventListener("mouseout", RLottieModule.pause);
+              document.getElementById("content").addEventListener("mouseover", playDisable);
+              document.getElementById("content").addEventListener("mouseout", pauseDisable);
+              rlottieHandler.isHover = true;
               this.hoverFlag = true;
+              pauseDisable();
             }
             if(this.defaultType !== "Hover" && this.hoverFlag) {
-              RLottieModule.play();
-              document.getElementById("content").removeEventListener("mouseover", RLottieModule.play);
-              document.getElementById("content").removeEventListener("mouseout", RLottieModule.pause);
+              document.getElementById("content").removeEventListener("mouseover", playDisable);
+              document.getElementById("content").removeEventListener("mouseout", pauseDisable);
+              rlottieHandler.isHover = false;
               this.hoverFlag = false;
+              play();
             }
             if(this.defaultType === "Bounce") {
-              RLottieModule.isBounce = true;
+              rlottieHandler.isBounce = true;
             }
             if(this.defaultType !== "Bounce") {
-              RLottieModule.isBounce = false;
+              rlottieHandler.isBounce = false;
+              this.changePlay()
             }
           },
+
+          changeIsMultiView(state) {
+            this.isMultiView = state
+            this.selectedLayerTrigger = !this.selectedLayerTrigger
+            canvasResize(200, 200);
+          },
+
+          selectCanvas(id) {
+            if (this.isMultiView) {
+              this.selectedCanvasId = id;
+              rlottieHandler.mainCanvasId = id;
+              this.selectedCanvas = getRModule(id).canvas;
+              this.selectedCanvasStyle = getRModule(id).canvasStyle;
+              this.layers = getRModule(id).layerTree.child;
+              this.selectedLayerTrigger = !this.selectedLayerTrigger;
+              this.selectedLayer = null;
+              setTimeout(_ => thumbnailHandler.setModuleCanvas(getRModule(id).layerTree.child), 100);
+            };
+          },
+
+          extraButtonClick() {
+            setTimeout(() => rlottieHandler.relayoutCanvas(), 350)
+          },
+
+          clickSnapShot() {
+            rlottieHandler.setSnapshotURL();
+          },
+
+          clickSnapshotClose() {
+            this.snapshotDialog = false
+          }
         },
+
         created() {
           this.$vuetify.theme.dark = true
-        },
+        }
       });
     </script>
   </body>
