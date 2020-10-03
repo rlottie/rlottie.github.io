@@ -499,7 +499,7 @@ AccordionMenu.prototype.hide = function(elem) {
 //moved api_dom.js
 
 var apiList = null;
-var opneCreator=false;
+var openCreator=false;
 
 (function loadApiList() {
   var xhr = new XMLHttpRequest();
@@ -579,12 +579,12 @@ function onFoldClick(event) {
 
 function openApiCreator() { 
   //add
-  if(this.opneCreator){
+  if(openCreator){
     alert("already open creator");
     return;
   }
-  this.opneCreator=true;
-  this.openApiCreatorModal();
+  openCreator=true;
+  openApiCreatorModal();
   var ref = document.getElementById("api-creator-section");
 
   var apiCreator = document.getElementById("api-creator");
@@ -595,7 +595,7 @@ function openApiCreator() {
 
 function closeApiCreator() {
   var ref = document.getElementById("api-creator-section");
-  this.opneCreator=false;
+  openCreator=false;
   var shadow = document.getElementById("shadow");
   shadow.style.display="none";
   while (ref.hasChildNodes()) {
@@ -653,7 +653,7 @@ function onLimitChange(event) {
 
 function addAPI(event) {
   //add 
-  this.opneCreator=false;
+  openCreator=false;
   var apiCreator = event.target.parentNode;
 
   var targetObject = apiCreator.getElementsByClassName("target-object")[0].value;
