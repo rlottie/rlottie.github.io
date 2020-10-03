@@ -76,12 +76,11 @@
               </div>
               <input
                 id="resizeSlider"
-                class="margin-left-10px cursor-pointer"
+                class="margin-left-10px cursor-pointer w-100"
                 type="range"
                 min="0"
                 max="100"
                 value="100"
-                style="width:100%;"
                 oninput="onResizeSliderDrag(this.value)"
               />
             </div>
@@ -114,12 +113,11 @@
               </div>
               <input
                 id="resizeSlider"
-                class="margin-left-10px cursor-pointer"
+                class="margin-left-10px cursor-pointer w-100"
                 type="range"
                 min="0"
                 max="100"
                 value="100"
-                style="width:100%;"
                 oninput="onBackgroundSliderDrag(this.value)"
               />
             </div>
@@ -129,10 +127,10 @@
             Copied to clipboard
             <svg  style="margin-left:auto;" onclick="closeSnackbar()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
           </div>
-          <button onclick="resetLottie()">Reset Lottie</button>
+          <button class="w-100" onclick="resetLottie()">Reset Lottie</button>
           <hr>
 
-          <button style="width: 100%;" onclick="openApiCreator()">openApiCreator</button>
+          <button class="w-100" onclick="openApiCreator()">openApiCreator</button>
           <div id="api-creator-section"></div>
 
           <div id="api-controller-section"></div>
