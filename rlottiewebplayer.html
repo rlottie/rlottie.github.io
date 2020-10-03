@@ -22,8 +22,7 @@
             </button>
             <small style="margin:10px;">or</small>
             <div>
-              <input type="text" id="urlInput"/>
-              <button id="getByUrl" onclick="getLottieFromUrl()">Use Lottie URL</button>
+              <button  onclick="openURLprompt()">Use Lottie URL</button>
             </div>
           </div>
       </header>
@@ -53,7 +52,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18px" height="18px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
               </button>
               <input
-                class="margin-left-10px playbar"
+                class="margin-left-10px playbar cursor-pointer"
                 type="range"
                 min="0"
                 max="100"
@@ -77,7 +76,7 @@
               </div>
               <input
                 id="resizeSlider"
-                class="margin-left-10px"
+                class="margin-left-10px cursor-pointer"
                 type="range"
                 min="0"
                 max="100"
@@ -92,7 +91,7 @@
               <div class="text-grey-darkest font-bold justify-center text-xs" style="color:white;padding:5px;">
                 Background Control
               </div>
-              <input id="bg-color" data-jscolor="">
+              <input class="cursor-pointer" id="bg-color" data-jscolor="">
               <div class="text-grey-darkest font-bold justify-center text-xs" style="color:white;padding:5px;">
                 Background Image
               </div>
@@ -115,7 +114,7 @@
               </div>
               <input
                 id="resizeSlider"
-                class="margin-left-10px"
+                class="margin-left-10px cursor-pointer"
                 type="range"
                 min="0"
                 max="100"
@@ -126,11 +125,9 @@
             </div>
             <hr>
           </div>
-          <div id="snackbar">
+          <div id="snackbar" style="display:flex;align-items:center;">
             Copied to clipboard
-            <span onclick="closeSnackbar()">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-            </span>
+            <svg  style="margin-left:auto;" onclick="closeSnackbar()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
           </div>
           <button onclick="resetLottie()">Reset Lottie</button>
           <hr>
@@ -142,7 +139,7 @@
 
           <template id="api-card">
             <div class="api-card">
-              <div class="api-head" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
+              <div class="api-head">
                 <div class="api-name"></div>
                 <button class="api-fold" type="button" style="width: 80px;padding:5px;" onclick="onFoldClick(event)">show/hide</button>
               </div>

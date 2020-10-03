@@ -22,7 +22,17 @@
 }
 *::-webkit-scrollbar-thumb {
   background-color: #e78632;
-  background-image:-webkit-linear-gradient(45deg,rgba(255,255,255,.3) 20%,transparent 20%,transparent 40%,rgba(255, 255, 255, 0.3) 40%,rgba(255,255,255,.3) 60%,transparent 60%,transparent 80%,rgba(255, 255, 255, 0.3) 80%);
+  background-image: -webkit-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.3) 20%,
+    transparent 20%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.3) 40%,
+    rgba(255, 255, 255, 0.3) 60%,
+    transparent 60%,
+    transparent 80%,
+    rgba(255, 255, 255, 0.3) 80%
+  );
   border-radius: 10px;
 }
 body {
@@ -71,6 +81,9 @@ button {
   margin-left: 2px;
   margin-right: 2px;
 }
+button:hover {
+  opacity: 0.7;
+}
 .modal-bg {
   position: fixed;
   display: none;
@@ -78,7 +91,7 @@ button {
   left: 0;
   height: 100vh;
   width: 100vw;
-  background: rgba(0,0,0,.5);
+  background: rgba(0, 0, 0, 0.5);
 }
 .upload-modal {
   /* display: none; */
@@ -90,15 +103,17 @@ button {
   height: 300px;
   border: 1px solid gray;
   border-radius: 4px;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, .5);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
   padding: 15px;
   display: flex;
-  background: rgba(255,255,255);
+  background: rgba(255, 255, 255);
   flex-direction: column;
   align-items: center;
   color: black;
 }
-.upload-modal h1,h2,p {
+.upload-modal h1,
+h2,
+p {
   color: black;
   margin: 20px;
 }
@@ -132,7 +147,7 @@ button {
   display: none;
 }
 .background__input {
-  display: none
+  display: none;
 }
 
 .sections {
@@ -169,33 +184,33 @@ button {
   /* align-items: center */
 }
 .progressBar {
-  height:7%;
-  width:100%;
-  background:rgba(255,255,255,.5);
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  background:#eeeeee;
+  height: 7%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #eeeeee;
 }
 .sections .manipulate {
   position: absolute;
-  top:0;
-  right:0;
+  top: 0;
+  right: 0;
   min-width: 300px;
   right: 0;
   padding: 50px 10px 10px 10px;
   width: 300px;
   overflow: auto;
-  z-index:99;
+  z-index: 99;
 }
-.sections .manipulate div{
-  color:white;
+.sections .manipulate div {
+  color: white;
 }
 
 #frameList {
   display: flex;
   /* border: 1px solid black; */
-  flex-direction:row;
+  flex-direction: row;
   justify-content: center;
   width: 100%;
   overflow: auto;
@@ -216,7 +231,7 @@ button {
   align-items: center;
   justify-content: center;
   background-position: center center;
-  background-repeat:no-repeat;
+  background-repeat: no-repeat;
 }
 
 .cursor-pointer {
@@ -232,6 +247,16 @@ button {
   overflow: auto;
   max-height: 500px;
   transition: max-height 0.5s;
+}
+
+.api-head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.api-head:hover {
+  background-color: #292b31;
 }
 
 .hide {

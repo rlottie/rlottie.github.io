@@ -35,3 +35,10 @@ function onChangeBackGround(e) {
 function resetLottie() {
   RLottieModule.reload(RLottieModule.json);
 }
+
+function openURLprompt() {
+  var input = prompt("enter lottie url from https://lottiefiles.com/featured");
+  if (input) {
+    getLottieFromUrl(input);
+  }
+}
