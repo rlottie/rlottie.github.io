@@ -233,6 +233,7 @@ var RLottieModule = (function () {
           t.select();
           document.execCommand("copy");
           document.body.removeChild(t);
+          openSnackbar()
         });
       } else {
         continue;
