@@ -34,6 +34,7 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0;
+  min-width: 1333px;
 }
 
 header {
@@ -138,6 +139,7 @@ button {
   /* display: flex;
   flex-direction: row; */
   /* justify-content: space-between; */
+  position: relative;
   height: 100%;
   padding-top: 50px;
 }
@@ -199,7 +201,7 @@ button {
   overflow: auto;
 }
 #frameList canvas {
-  height: 50px;
+  height: 100%;
 }
 
 #bg-color {
@@ -256,4 +258,18 @@ button {
 }
 li:hover {
   background: rgb(41, 43, 49);
+}
+
+
+.api-creator{
+  margin-top: 5px;
+  background-color:  #373737;
+  border-radius: 5px;
+  padding: 5px;
+}
+.argument{
+  background-color: #454545;
+  border-radius: 5px;
+  padding: 5px;
+  margin:5px 0;
 }

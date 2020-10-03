@@ -1,5 +1,6 @@
 
 var apiList = null;
+var opneCreator=false;
 
 (function loadApiList() {
   var xhr = new XMLHttpRequest();
@@ -78,6 +79,13 @@ function onFoldClick(event) {
 }
 
 function openApiCreator() {
+  //add
+  if(this.opneCreator){
+    alert("already open creator");
+    return;
+  }
+  this.opneCreator=true;
+
   var ref = document.getElementById("api-creator-section");
 
   var apiCreator = document.getElementById("api-creator");
@@ -88,6 +96,7 @@ function openApiCreator() {
 
 function closeApiCreator() {
   var ref = document.getElementById("api-creator-section");
+  this.opneCreator=false;
 
   while (ref.hasChildNodes()) {
     ref.removeChild(ref.lastChild);
@@ -143,6 +152,8 @@ function onLimitChange(event) {
 }
 
 function addAPI(event) {
+  //add 
+  this.opneCreator=false;
   var apiCreator = event.target.parentNode;
 
   var targetObject = apiCreator.getElementsByClassName("target-object")[0]
