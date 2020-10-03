@@ -164,7 +164,9 @@ button {
 }
 .sections .layers {
   width: 300px;
+  /* width: 100%; */
   padding: 10px;
+  /* min-width: 300px; */
 }
 .sections .display {
   background: white;
@@ -186,6 +188,7 @@ button {
 .sections .manipulate {
   width: 250px;
   padding: 10px;
+  overflow: auto;
 }
 .sections .manipulate div{
   color:white;
@@ -223,7 +226,8 @@ button {
 }
 
 .api-card {
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  margin: 5px auto;
 }
 
 .api-body {
@@ -253,4 +257,7 @@ button {
 }
 #snackbar.show {
   opacity: 1;
+}
+li:hover {
+  background: rgb(41, 43, 49);
 }

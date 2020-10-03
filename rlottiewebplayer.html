@@ -18,7 +18,6 @@
             <small style="margin:10px;">or</small>
             <button class="drop-zone">
               Upload JSON
-              <!-- <span class="drop-zone__prompt">Drop file here or click to upload</span> -->
               <input type="file" name="myFile" class="drop-zone__input" id="fileSelector" accept=".json">
             </button>
             <small style="margin:10px;">or</small>
@@ -26,13 +25,6 @@
               <input type="text" id="urlInput"/>
               <button id="getByUrl" onclick="getLottieFromUrl()">Use Lottie URL</button>
             </div>
-            <!-- <div class="modal-bg">
-              <div class="upload-modal">
-                <div style="margin-left:auto;cursor:pointer;" id="modalCloseBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="30px" height="30px"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-                </div>
-              </div>
-            </div> -->
           </div>
       </header>
       <div class="sections">
@@ -74,21 +66,6 @@
         </section>
         <section class="manipulate">
           <div class="flex">
-            <div
-              class="bg_color_container bg-grey-lighter border-grey-light rounded border"
-            >
-              <div class="text-grey-darkest font-bold justify-center text-xs" style="color:white;padding:5px;">
-                Background Control
-              </div>
-              <input id="bg-color" data-jscolor="">
-              <input
-              ref="imageInput"
-              accept="image/*"
-              type="file"
-              onchange="onChangeBackGround(event)"
-            />
-            <button onclick="resetBackGround()">reset Background</button>
-            </div>
             <div class="speed bg-grey-lighter border-grey-light rounded border">
               <div
                 class="margin-left-10px text-grey-darkest font-bold justify-center text-xs"
@@ -107,22 +84,63 @@
                 oninput="onResizeSliderDrag(this.value)"
               />
             </div>
+            <div
+              class="bg_color_container bg-grey-lighter border-grey-light rounded border"
+            >
+              <div class="text-grey-darkest font-bold justify-center text-xs" style="color:white;padding:5px;">
+                Background Control
+              </div>
+              <input id="bg-color" data-jscolor="">
+              <div class="text-grey-darkest font-bold justify-center text-xs" style="color:white;padding:5px;">
+                Background Image
+              </div>
+              <div style="display:flex;flex-direction:row;justify-content:space-between;">
+                <button class="drop-zone" style="width:70%;">
+                  Upload Image
+                  <input ref="imageInput" type="file" class="drop-zone__input" ref="imageInput" onchange="onChangeBackGround(event)" accept="image/*">
+                </button>
+                <button style="background:rgb(190, 93, 93);width:30%;" onclick="resetBackGround()">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="speed bg-grey-lighter border-grey-light rounded border">
+              <div
+                class="margin-left-10px text-grey-darkest font-bold justify-center text-xs"
+                style="color:white;padding:5px;"
+              >
+                Background Resize
+              </div>
+              <input
+                id="resizeSlider"
+                class="margin-left-10px"
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                style="width:100%;"
+                oninput="onBackgroundSliderDrag(this.value)"
+              />
+            </div>
+            <hr>
           </div>
           <div id="snackbar">
             Copied to clipboard
-            <span onclick="closeSnackbar()">[X]</span>
+            <span onclick="closeSnackbar()">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </span>
           </div>
           <div id="api-controller-section"></div>
           <div id="api-creator-section"></div>
 
           <template id="api-card">
             <div class="api-card">
-              <div class="api-head">
+              <div class="api-head" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
                 <div class="api-name"></div>
-                <button class="api-fold" type="button" onclick="onFoldClick(event)">show/hide</button>
+                <button class="api-fold" type="button" style="width: 80px;padding:5px;" onclick="onFoldClick(event)">show/hide</button>
               </div>
               <div class="api-body hide">
-                <button class="api-exec" type="button" onclick="onExecClick(event)">execute</button>
+                <button class="api-exec" type="button" style="margin:5px auto;" onclick="onExecClick(event)">execute</button>
               </div>
             </div>
           </template>
