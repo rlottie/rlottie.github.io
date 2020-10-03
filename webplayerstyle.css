@@ -30,7 +30,7 @@ body {
   flex-direction: column;
   align-items: center; */
   background: var(--color-black);
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
   margin: 0;
   padding: 0;
@@ -42,6 +42,7 @@ header {
   top: 0;
   left: 0;
   width: 100vw;
+  min-width: 1050px;
   height: 50px;
   padding: 15px;
   display: flex;
@@ -49,6 +50,7 @@ header {
   justify-content: space-between;
   align-items: center;
   color: white;
+  z-index: 100;
 }
 header h4 {
   margin: 0;
@@ -132,32 +134,9 @@ button {
   display: none
 }
 
-.drop-zone__thumb {
-  width: 150px;
-  height: 150px;
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: #cccccc;
-  background-size: cover;
-  position: relative;
-}
-
-.drop-zone__thumb::after {
-  content: attr(data-label);
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 5px 0;
-  color: #ffffff;
-  background: rgba(0, 0, 0, 0.75);
-  font-size: 14px;
-  text-align: center;
-}
-
 .sections {
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-direction: row; */
   /* justify-content: space-between; */
   height: 100%;
   padding-top: 50px;
@@ -166,16 +145,24 @@ button {
   height: 100%;
 }
 .sections .layers {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 300px;
-  /* width: 100%; */
-  padding: 10px;
-  /* min-width: 300px; */
+  min-width: 300px;
+  padding: 50px 10px 10px 10px;
+  height: 100%;
+  z-index: 99;
 }
 .sections .display {
+  position: absolute;
   background: white;
+  left: 300px;
+  right: 300px;
+  top: 0;
+  padding-top: 50px;
   display: flex;
   flex-direction: column;
-  width: 1000px;
   justify-content: space-between;
   /* align-items: center */
 }
@@ -189,9 +176,15 @@ button {
   background:#eeeeee;
 }
 .sections .manipulate {
-  width: 250px;
-  padding: 10px;
+  position: absolute;
+  top:0;
+  right:0;
+  min-width: 300px;
+  right: 0;
+  padding: 50px 10px 10px 10px;
+  width: 300px;
   overflow: auto;
+  z-index:99;
 }
 .sections .manipulate div{
   color:white;
@@ -250,7 +243,7 @@ button {
   line-height: 32px;
   border-radius: 4px;
   box-shadow: 0px 1px 3px 1px #808080;
-  position: absolute;
+  position: fixed;
   opacity: 0;
   top: 100px;
   left: 50%;
