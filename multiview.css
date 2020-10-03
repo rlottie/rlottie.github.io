@@ -1,0 +1,187 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+aside {
+  border: black solid 3px;
+  width: 20vw;
+}
+
+.window {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.to-flex {
+  display: flex;
+}
+
+.header {
+  height: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  height: 75%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-position: center center;
+}
+
+.renderer {
+  width: 300px;
+  height: 300px;
+  background-color: red;
+}
+
+footer .flex {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  height: 15%;
+  min-width: 250px;
+}
+
+.slider {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+}
+
+.bg_color_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 33%;
+  height: 50px;
+}
+
+.speed {
+  width: 20%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.border {
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: groove;
+}
+
+.color_text {
+}
+
+.color_button_group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 140px;
+  max-width: 140px;
+  background: lightergrey;
+}
+.color_button {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+.btn_white {
+  background-color: white;
+}
+.btn_black {
+  background-color: black;
+}
+.btn_red {
+  background-color: red;
+}
+.btn_green {
+  background-color: green;
+}
+.btn_blue {
+  background-color: blue;
+}
+
+.card {
+  #box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+// copied
+
+.justify-center {
+  justify-content: center;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.border-grey-light {
+  border-color: #dae1e7;
+}
+
+.bg-grey-lighter {
+  background-color: #f1f5f8;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+
+.text-grey-darkest {
+  color: #3d4852;
+}
+.font-bold {
+  font-weight: 700;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.margin-left-10px {
+  margin-left: 10px;
+}
+.playbar {
+  width: 80%;
+}
+
+#frameList {
+  display: flex;
+  border: 1px solid black;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+}
+#frameList canvas {
+  height: 40px;
+}
+
+.b {
+  border: 1px solid black;
+}
+
+.d {
+  overflow: auto;
+  max-height: 500px;
+  transition: max-height 0.5s;
+}
+
+.hide {
+  max-height: 0px;
+}
