@@ -51,7 +51,7 @@ var RLottieModule = (function () {
     obj.layerList = resource.layers;
     document.getElementById("layerlist").innerHTML = "";
     getAllLayers(obj.layerList, document.getElementById("layerlist"));
-    new AccordionMenu('.lllist')
+    new AccordionMenu(".lllist");
     obj.lottieHandle = new Module.RlottieWasm(JSON.stringify(resource));
     obj.json = JSON.stringify(resource);
     obj.frameCount = obj.lottieHandle.frames();
@@ -128,7 +128,7 @@ var RLottieModule = (function () {
     obj.layerList = JSON.parse(jsString).layers;
     document.getElementById("layerlist").innerHTML = "";
     getAllLayers(obj.layerList, document.getElementById("layerlist"));
-    new AccordionMenu('.lllist')
+    new AccordionMenu(".lllist");
     obj.frameCount = obj.lottieHandle.frames();
     obj.curFrame = 0;
     obj.frameRate = 0;
@@ -216,12 +216,12 @@ var RLottieModule = (function () {
   }
 
   function getAllLayers(list, par) {
-    var layers = document.createElement("UL")
+    var layers = document.createElement("UL");
     for (var i in list) {
       if (list[i].nm != null) {
         var layer = document.createElement("LI");
         var textArea = document.createElement("SPAN");
-        var tex = document.createElement("SPAN")
+        var tex = document.createElement("SPAN");
         tex.innerHTML = list[i].nm;
         tex.addEventListener("click", function (e) {
           e.stopPropagation();
@@ -241,8 +241,9 @@ var RLottieModule = (function () {
           document.body.removeChild(t);
           openSnackbar();
         });
-        textArea.appendChild(tex)
-        layer.appendChild(textArea)
+        textArea.appendChild(tex);
+        textArea.classList.add("cursor-pointer");
+        layer.appendChild(textArea);
       } else {
         continue;
       }
@@ -253,7 +254,7 @@ var RLottieModule = (function () {
       }
       layers.appendChild(layer);
     }
-    par.appendChild(layers)
+    par.appendChild(layers);
   }
   return obj;
 })();
