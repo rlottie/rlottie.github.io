@@ -144,6 +144,9 @@ p {
 .drop-zone__input {
   display: none;
 }
+#apiInput {
+  display: none;
+}
 .background__input {
   display: none;
 }

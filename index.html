@@ -143,7 +143,6 @@
               >
                 Upload Image
                 <input
-                  ref="imageInput"
                   type="file"
                   class="drop-zone__input"
                   ref="imageInput"
@@ -223,6 +222,19 @@
           style="margin-top: 8px"
         >
           Save API List
+        </button>
+        <button
+          class="w-100"
+          onclick="loadApiListFile()"
+          style="margin-top: 8px"
+        >
+        <input
+            type="file"
+            id="apiInput"
+            onchange="onloadApiListFile(event)"
+            accept=".json"
+          />
+          Load API List
         </button>
         <hr />
         <div id="api-creator-section"></div>
