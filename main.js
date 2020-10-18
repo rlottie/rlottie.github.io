@@ -1,14 +1,21 @@
 (function () {
     // load the script depending on web worker support
-    var src;
+    var srcs;
     if (typeof(Worker) !== "undefined") {
-        src = 'module-rlottie.js';
+        srcs = [
+            "index.js",
+            "rlottie-module.js",
+            "rlottie-handler.js"
+        ];
     } else {
-        src = 'module-rlottie.js';
+        srcs = [];
     }
     var head = document.head;
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = src;
-    head.appendChild(script);
+
+    srcs.forEach(src => {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = src;
+        head.appendChild(script);
+    });
 })();
