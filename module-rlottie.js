@@ -271,7 +271,7 @@ var RLottieModule = (function () {
       }
       for (var j in list[i]) {
         if (Array.isArray(list[i][j])) {
-          getAllLayers(list[i][j], layer,depth+1);
+          getAllLayers(list[i][j], layer,origin,depth+1);
         }
       }
       layers.appendChild(layer);
