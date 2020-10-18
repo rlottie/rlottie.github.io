@@ -443,63 +443,66 @@ function openURLprompt() {
   }
 }
 
-let AccordionMenu = function(selector) {
+let AccordionMenu = function (selector) {
   this.colMenu = document.querySelectorAll(`${selector} li`);
   let This = this;
-  this.colMenu.forEach(function(items) {
-      if (items.querySelector('ul')) {
-          items.firstElementChild.insertAdjacentHTML('beforeend', '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 451.847 451.847" xml:space="preserve"> <g> <path d="M225.923,354.706c-8.098,0-16.195-3.092-22.369-9.263L9.27,151.157c-12.359-12.359-12.359-32.397,0-44.751 c12.354-12.354,32.388-12.354,44.748,0l171.905,171.915l171.906-171.909c12.359-12.354,32.391-12.354,44.744,0 c12.365,12.354,12.365,32.392,0,44.751L248.292,345.449C242.115,351.621,234.018,354.706,225.923,354.706z"/> </g> </svg>');
+  this.colMenu.forEach(function (items) {
+    if (items.querySelector("ul")) {
+      items.firstElementChild.insertAdjacentHTML(
+        "beforeend",
+        '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 451.847 451.847" xml:space="preserve"> <g> <path d="M225.923,354.706c-8.098,0-16.195-3.092-22.369-9.263L9.27,151.157c-12.359-12.359-12.359-32.397,0-44.751 c12.354-12.354,32.388-12.354,44.748,0l171.905,171.915l171.906-171.909c12.359-12.354,32.391-12.354,44.744,0 c12.365,12.354,12.365,32.392,0,44.751L248.292,345.449C242.115,351.621,234.018,354.706,225.923,354.706z"/> </g> </svg>'
+      );
 
-          items.firstElementChild.onclick = function(e) {
-              e.preventDefault();
-              
-              let isTrue = this.parentElement.classList.toggle('open');
+      items.firstElementChild.onclick = function (e) {
+        e.preventDefault();
 
-              if (isTrue) {
-                  This.show(this.nextElementSibling);
-              } else {
-                  This.hide(this.nextElementSibling);
-              }
-          }
-      } 
-  })
-}
+        let isTrue = this.parentElement.classList.toggle("open");
+
+        if (isTrue) {
+          This.show(this.nextElementSibling);
+        } else {
+          This.hide(this.nextElementSibling);
+        }
+      };
+    }
+  });
+};
 
 // Show an element
-AccordionMenu.prototype.show = function(elem) {
+AccordionMenu.prototype.show = function (elem) {
   // Get the natural height of the element
-  var getHeight = function() {
-      elem.style.display = 'block'; // Make it visible
-      var height = elem.scrollHeight + 'px'; // Get it's height
-      return height;
+  var getHeight = function () {
+    elem.style.display = "block"; // Make it visible
+    var height = elem.scrollHeight + "px"; // Get it's height
+    return height;
   };
 
   var height = getHeight(); // Get the natural height
   elem.style.height = height; // Update the height
-  
-  setTimeout(function() {
-      elem.style.height = 'auto';
+
+  setTimeout(function () {
+    elem.style.height = "auto";
   }, 350);
 };
 
 // Hide an element
-AccordionMenu.prototype.hide = function(elem) {
+AccordionMenu.prototype.hide = function (elem) {
   // Give the element a height to change from
-  elem.style.height = elem.scrollHeight + 'px';
+  elem.style.height = elem.scrollHeight + "px";
 
   // Set the height back to 0
-  setTimeout(function() {
-      elem.style.height = '0';
+  setTimeout(function () {
+    elem.style.height = "0";
   }, 110);
 
-  setTimeout(function() {
-      elem.style.display = '';
+  setTimeout(function () {
+    elem.style.display = "";
   }, 700);
 };
 //moved api_dom.js
 
 var apiList = null;
-var openCreator=false;
+var openCreator = false;
 
 (function loadApiList() {
   var xhr = new XMLHttpRequest();
@@ -507,7 +510,7 @@ var openCreator=false;
     if (xhr.status == 200) {
       var data = xhr.responseText;
       apiList = JSON.parse(data);
-      createApiController()
+      createApiController();
     } else {
       alert("Please check if there is a './CppAPI.json' file");
     }
@@ -516,16 +519,32 @@ var openCreator=false;
   xhr.open("GET", "CppAPI.json");
   xhr.send(null);
 })();
+function onloadApiListFile(e) {
+  const file = e.target.files[0];
+  if (!!file) {
+    var read = new FileReader();
+    read.readAsText(file);
+    read.onloadend = function () {
+      console.log(read.result);
+      apiList = JSON.parse(read.result);
+      createApiController();
+    };
+  }
+}
+
+function loadApiListFile() {
+  document.getElementById("apiInput").click();
+}
 
 function createApiController() {
   var section = document.getElementById("api-controller-section");
-  while(section.hasChildNodes()) {
+  while (section.hasChildNodes()) {
     section.removeChild(section.lastChild);
   }
 
-  for(var type in apiList) {
+  for (var type in apiList) {
     var apis = apiList[type];
-    for(let i = 0; i < apis.length; i++) {
+    for (let i = 0; i < apis.length; i++) {
       var api = apis[i];
       var apiCard = document.getElementById("api-card");
       apiCard = document.importNode(apiCard.content, true);
@@ -535,7 +554,7 @@ function createApiController() {
 
       var apiBody = apiCard.querySelectorAll(".api-body")[0];
       var apiExec = apiBody.querySelectorAll(".api-exec")[0];
-      for(let j = 0; j < api.argc; j++) {
+      for (let j = 0; j < api.argc; j++) {
         var arg = api.argv[j];
         var apiArg = document.getElementById("api-arg");
         apiArg = document.importNode(apiArg.content, true);
@@ -544,17 +563,17 @@ function createApiController() {
         argDesc.innerText = arg.desc;
         var argType = apiArg.querySelectorAll(".arg-type")[0];
         argType.innerText = "(type: " + arg.type + ")";
-        
+
         var argInput = apiArg.querySelectorAll(".arg-input")[0];
-        if(arg.type == "string") {
+        if (arg.type == "string") {
           argInput.type = "text";
-        } else if(arg.type == "float") {
+        } else if (arg.type == "float") {
           argInput.type = "number";
           argInput.step = "0.01";
-          if(arg.min != undefined) {
+          if (arg.min != undefined) {
             argInput.min = arg.min;
           }
-          if(arg.max != undefined) {
+          if (arg.max != undefined) {
             argInput.max = arg.max;
           }
         }
@@ -563,7 +582,7 @@ function createApiController() {
 
         apiBody.insertBefore(apiArg, apiExec);
       }
-      
+
       section.appendChild(apiCard);
     }
   }
@@ -577,13 +596,13 @@ function onFoldClick(event) {
   apiBody.classList.toggle("hide");
 }
 
-function openApiCreator() { 
+function openApiCreator() {
   //add
-  if(openCreator){
+  if (openCreator) {
     alert("already open creator");
     return;
   }
-  openCreator=true;
+  openCreator = true;
   openApiCreatorModal();
   var ref = document.getElementById("api-creator-section");
 
@@ -595,9 +614,9 @@ function openApiCreator() {
 
 function closeApiCreator() {
   var ref = document.getElementById("api-creator-section");
-  openCreator=false;
+  openCreator = false;
   var shadow = document.getElementById("shadow");
-  shadow.style.display="none";
+  shadow.style.display = "none";
   while (ref.hasChildNodes()) {
     ref.removeChild(ref.lastChild);
   }
@@ -652,11 +671,12 @@ function onLimitChange(event) {
 }
 
 function addAPI(event) {
-  //add 
-  openCreator=false;
+  //add
+  openCreator = false;
   var apiCreator = event.target.parentNode;
 
-  var targetObject = apiCreator.getElementsByClassName("target-object")[0].value;
+  var targetObject = apiCreator.getElementsByClassName("target-object")[0]
+    .value;
   var name = apiCreator.getElementsByClassName("api-name")[0].value;
 
   var arguments = apiCreator.getElementsByClassName("argument");
@@ -689,26 +709,24 @@ function addAPI(event) {
 }
 
 function downloadApiList() {
-  var blob = new Blob([JSON.stringify(apiList, null, 2)], {type: 'application/json'});
+  var blob = new Blob([JSON.stringify(apiList, null, 2)], {
+    type: "application/json",
+  });
   var url = URL.createObjectURL(blob);
   var link = document.createElement("a");
 
-  link.setAttribute('href', url);
-  link.setAttribute('download', 'CppAPI.json');
+  link.setAttribute("href", url);
+  link.setAttribute("download", "CppAPI.json");
   link.click();
 }
 
-
-function openApiCreatorModal(){
-  var modal=document.getElementById("api-creator-section");
-  modal.style.display="block";
+function openApiCreatorModal() {
+  var modal = document.getElementById("api-creator-section");
+  modal.style.display = "block";
 
   var shadow = document.getElementById("shadow");
-  shadow.style.display="block";
-
+  shadow.style.display = "block";
 }
-
-
 
 var resource = {
   v: "5.1.8",
