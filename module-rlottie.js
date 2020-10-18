@@ -43,7 +43,7 @@ var RLottieModule = (function () {
 
     obj.layerList = resource.layers;
     document.getElementById("layerlist").innerHTML = "";
-    getAllLayers(obj.layerList, document.getElementById("layerlist"));
+    getAllLayers(obj.layerList, document.getElementById("layerlist"),JSON.parse(JSON.stringify(resource)),0);
     new AccordionMenu(".lllist");
     obj.lottieHandle = new Module.RlottieWasm(JSON.stringify(resource));
     obj.json = JSON.stringify(resource);
@@ -120,7 +120,7 @@ var RLottieModule = (function () {
     obj.json = jsString;
     obj.layerList = JSON.parse(jsString).layers;
     document.getElementById("layerlist").innerHTML = "";
-    getAllLayers(obj.layerList, document.getElementById("layerlist"));
+    getAllLayers(obj.layerList, document.getElementById("layerlist"),JSON.parse(jsString),0);
     new AccordionMenu(".lllist");
     obj.frameCount = obj.lottieHandle.frames();
     obj.curFrame = 0;
@@ -208,13 +208,19 @@ var RLottieModule = (function () {
     obj.resizeId = setTimeout(windowResizeDone, 150);
   }
 
-  function getAllLayers(list, par) {
+  function getAllLayers(list, par,origin,depth) {
     var layers = document.createElement("UL");
     for (var i in list) {
       if (list[i].nm != null) {
+        if(depth==0){
+          origin.layers=[];
+          origin.layers.push(list[i]);
+        }
+        
         var layer = document.createElement("LI");
         var textArea = document.createElement("SPAN");
         var tex = document.createElement("SPAN");
+      
         tex.innerHTML = list[i].nm;
         tex.addEventListener("click", function (e) {
           e.stopPropagation();
@@ -236,13 +242,36 @@ var RLottieModule = (function () {
         });
         textArea.appendChild(tex);
         textArea.classList.add("cursor-pointer");
+        if(depth==0){
+            try {
+              var layerCanvas = document.createElement("canvas");
+              layerCanvas.className="layer-class";
+              var LayerLottieHandle = new Module.RlottieWasm(JSON.stringify(origin));
+              var size=70;
+              var buffer = LayerLottieHandle.render(    
+                20,
+                size,
+                size
+              );
+              var result = Uint8ClampedArray.from(buffer);
+              var context = layerCanvas.getContext("2d");
+              var imageData = new ImageData(result, size, size);
+              layerCanvas.width=size;
+              layerCanvas.height=size;
+              context.putImageData(imageData, 0, 0);
+              textArea.appendChild(layerCanvas);
+            } catch (e) {
+              // console.log(e);
+            }
+       }
+
         layer.appendChild(textArea);
       } else {
         continue;
       }
       for (var j in list[i]) {
         if (Array.isArray(list[i][j])) {
-          getAllLayers(list[i][j], layer);
+          getAllLayers(list[i][j], layer,depth+1);
         }
       }
       layers.appendChild(layer);
