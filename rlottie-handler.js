@@ -33,9 +33,16 @@ class RLottieHandler {
   }
 
   reload(jsString) {
-    this.rlottieModule.forEach(rm => rm.lottieHandle.load(jsString));
+    this.rlottieModule.forEach(rm => {
+      rm.lottieHandle.load(jsString)
+      rm.totalFrame = rm.lottieHandle.frames();
+      rm.curFrame = 0;
+    });
+
     this.jsString = jsString;
     this.totalFrame = this.rlottieModule[0].totalFrame;
+    this.curFrame = 0;
+    
     this.slider.max = this.totalFrame;
     this.slider.value = 0;
     this.frameCount.innerText = String(this.totalFrame - 1);
