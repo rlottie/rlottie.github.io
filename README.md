@@ -21,7 +21,7 @@ PrettyView is the most convenient lottie web player. It is created to help commu
 ## Getting Started
 ### Env Setup
 
-- Setup the emscripten sdk environment. Follow  DoDown and Install steps [emscripten](https://emscripten.org/docs/getting_started/downloads.html)
+- Setup the emscripten sdk environment. Follow  Down and Install steps [emscripten](https://emscripten.org/docs/getting_started/downloads.html)
 - Clone the repo
 ```bash
 $ git clone --recurse-submodules https://github.com/rlottie/rlottie.github.io.git
