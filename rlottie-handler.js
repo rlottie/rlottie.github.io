@@ -64,7 +64,9 @@ class RLottieHandler {
   }
 
   update() {
+    this.curFrame -= this.playSpeed;
     this.rlottieModule.forEach(rm => rm.curFrame = this.curFrame);
+    this.render();
   }
 
   seek(value) {
