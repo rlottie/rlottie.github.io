@@ -7,7 +7,7 @@
   <meta name="description" content="rlottie viewer">
   <meta name="keywords" content="lottie, rlottie, lottie viewer, rlottie viewer, prettyview">
   <meta name="author" content="Subhransu, Chae Lin Shin, Sun Hwan Park, Chaewon Shin, Seunghyun Shin, Seungjae Yoon">
-  <title>rlottie Viewer</title>
+  <title>PrettyView</title>
   <!-- style.css -->
   <link rel="stylesheet" href="style.css">
   <!-- bootstrap -->
@@ -93,10 +93,10 @@
       </div>
 
       <!-- right panel - property component -->
-      <property 
+      <rightpanel 
         class="col-3"
         :keypath="keypath"
-      ></property>
+      ></rightpanel>
     </div>
   </v-app>
 
@@ -136,7 +136,7 @@
       components: {
         'navbar': httpVueLoader('./components/navbar.vue'),
         'leftpanel': httpVueLoader('./components/leftPanel.vue'),
-        'property': httpVueLoader('./components/property.vue'),
+        'rightpanel': httpVueLoader('./components/rightPanel.vue'),
       },
       data() {
         return {
