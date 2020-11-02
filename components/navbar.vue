@@ -4,7 +4,7 @@
     <div class="d-flex align-items-center">
       <img
         class="logo"
-        src="https://github.com/Samsung/rlottie/blob/master/.Gifs/rlottie_player.png"
+        src="https://github.com/rlottie/rlottie.github.io/blob/master/.res/rlottie_player.png"
         alt="logo"
       >
     </div>
