@@ -172,3 +172,24 @@ function setScale(keypath, width, height) {
 function setRotation(keypath, degree) {
   rlottieHandler.rlottieModule[0].lottieHandle.setRotation(keypath, degree);
 }
+
+function onResizeSliderDrag(value) {
+  var width = document.getElementById("player").clientWidth;
+  var height = document.getElementById("player").clientHeight;
+  width = width / 4 * 3;
+  height = height / 4 * 3;
+
+  var size = width < height ? width : height;
+  size = size * (value / 100);
+
+  if (size < 20)
+    size = 20;
+
+  rlottieHandler.rlottieModule.forEach(rm => {
+    rm.canvas.width = size;
+    rm.canvas.height = size;
+    rm.canvas.style.width = size + "px";
+    rm.canvas.style.height = size + "px";
+  });
+  rlottieHandler.update();
+}

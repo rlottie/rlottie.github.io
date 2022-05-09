@@ -67,7 +67,7 @@
             >
               <em class="fas fa-pause"></em>
             </span>
-            <div class="d-flex flex-column align-items-between">
+            <div class="d-flex flex-column align-items-between player-slider-container">
               <input
                 class="player-slider my-1"
                 id="slider"
@@ -87,6 +87,16 @@
                   id="frameCount"
                 ></span>
               </div>
+            </div>
+            <div class="color_button_group">
+              <button class="color_button btn_white cursor-pointer" onclick="document.getElementById('player').style.backgroundColor = 'white'"> </button>
+              <button class="color_button btn_black cursor-pointer" onclick="document.getElementById('player').style.backgroundColor = 'black'"> </button>
+              <button class="color_button btn_red cursor-pointer" onclick="document.getElementById('player').style.backgroundColor = 'red'"> </button>
+              <button class="color_button btn_green cursor-pointer" onclick="document.getElementById('player').style.backgroundColor = 'green'"> </button>
+              <button class="color_button btn_blue cursor-pointer" onclick="document.getElementById('player').style.backgroundColor = 'blue'"> </button>
+            </div>
+            <div class="d-flex flex-column align-items-between">
+              <input type="range" id="slider" min="0" max="100" value="100" oninput="onResizeSliderDrag(this.value)">
             </div>
           </div>
         </div>

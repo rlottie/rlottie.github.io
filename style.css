@@ -185,8 +185,12 @@ html, body {
   height: 10vh;
 }
 
+.player-slider-container {
+  flex: 0.9 1 0;
+}
+
 .player-slider {
-  width: 40vw;
+  width: 100%;
 }
 
 .scroll-sect {
