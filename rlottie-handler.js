@@ -43,9 +43,9 @@ class RLottieHandler {
     this.totalFrame = this.rlottieModule[0].totalFrame;
     this.curFrame = 0;
     
-    this.slider.max = this.totalFrame;
-    this.slider.value = 0;
     this.frameCount.innerText = String(this.totalFrame - 1);
+    this.slider.max = this.totalFrame - 1;
+    this.slider.value = 0;
 
     document.getElementById("playButton").innerHTML = "<em class='fas fa-pause'></em>";
     this.play();
